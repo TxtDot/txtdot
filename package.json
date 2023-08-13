@@ -1,6 +1,7 @@
 {
-  "name": "dottxt",
+  "name": "txtdot",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "dist/app.js",
   "dependencies": {

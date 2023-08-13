@@ -1,10 +1,9 @@
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
 import express from "express";
-import axios from "axios";
-import { JSDOM } from "jsdom";
-import { Readability } from "@mozilla/readability";
 import NodeCache from "node-cache";
+import { readability } from "./handlers/readability";
+import minify from "./handlers/main";
 
 class App {
   config: IConfigService;
@@ -37,12 +36,8 @@ class App {
       const url = (req.query.url || "/nothing") as string;
       const type = (req.query.type || "html") as string;
 
-      axios
-        .get(url)
-        .then((response) => {
-          const dom = new JSDOM(response.data, { url: url });
-          const reader = new Readability(dom.window.document);
-          const parsed = reader.parse();
+      minify(url)
+        .then((parsed) => {
           const content =
             type === "html" ? parsed?.content : parsed?.textContent;
 
@@ -50,8 +45,16 @@ class App {
           res.send(content);
         })
         .catch((err) => {
-          res.status(500).send(err);
+          res.status(500).send({ error: err.message });
         });
+    });
+
+    app.get("/readability", async (req, res) => {
+      const url = (req.query.url || "/nothing") as string;
+      const parsed = await readability(url);
+
+      this.cache.set(req.originalUrl || req.url, parsed);
+      res.send(parsed);
     });
 
     app.listen(this.config.get("PORT"), () => {
