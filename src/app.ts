@@ -5,8 +5,9 @@ import Fastify from "fastify";
 import fastifyView from "@fastify/view";
 import ejs from "ejs";
 
-import mainRoute from "./routes/main-route";
-import parseRoute from "./routes/parseRoute";
+import mainRoute from "./routes/main";
+import parseRoute from "./routes/parse";
+import startRoute from "./routes/start";
 
 class App {
   config: IConfigService;
@@ -28,6 +29,7 @@ class App {
 
     fastify.register(mainRoute);
     fastify.register(parseRoute);
+    fastify.register(startRoute);
 
     fastify.listen({ port: Number(this.config.get("PORT")) }, (err) => {
       err && console.log(err);
