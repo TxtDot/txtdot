@@ -1,13 +1,14 @@
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
-import { Cached } from "./types/requests";
 
 import NodeCache from "node-cache";
 
 import Fastify from "fastify";
 import middie from "@fastify/middie";
+import fastifyView from "@fastify/view";
+import ejs from "ejs";
 
-import getRoute from "./routes/getRoute";
+import mainRoute from "./routes/main-route";
 import parseRoute from "./routes/parseRoute";
 
 class App {
@@ -25,25 +26,13 @@ class App {
     });
 
     await fastify.register(middie);
-
-    fastify.use((req, res, next) => {
-      const url = req.originalUrl || req.url || "/";
-
-      if (req.query.purge) {
-        this.cache.del(url);
-        next();
-      }
-
-      const cached: Cached | undefined = this.cache.get(url);
-      if (cached) {
-        res.setHeader("content-type", `${cached.contentType}; charset=utf-8`);
-        res.end(cached.content);
-      } else {
-        next();
+    await fastify.register(fastifyView, {
+      engine: {
+        ejs: ejs,
       }
     });
 
-    fastify.register(getRoute(this.cache));
+    fastify.register(mainRoute(this.cache));
     fastify.register(parseRoute(this.cache));
 
     fastify.listen({ port: Number(this.config.get("PORT")) }, () => {
