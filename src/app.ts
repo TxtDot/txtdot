@@ -1,5 +1,6 @@
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
+
 import NodeCache from "node-cache";
 import Fastify from "fastify";
 import middie from "@fastify/middie";
@@ -9,10 +10,12 @@ import parseRoute from "./routes/parseRoute";
 class App {
   config: IConfigService;
   cache: NodeCache;
+
   constructor() {
     this.config = new ConfigService();
     this.cache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
   }
+
   async init() {
     const fastify = Fastify({
       logger: true,
@@ -22,9 +25,8 @@ class App {
 
     fastify.use((req, res, next) => {
       const url = req.originalUrl || req.url || "/";
-      const purge = req.query.purge ? true : false;
 
-      if (purge) {
+      if (req.query.purge) {
         this.cache.del(url);
         next();
       }
