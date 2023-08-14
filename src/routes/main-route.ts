@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 
 import { GetRequest } from "../types/requests";
 import handlePage from "../handlers/main";
+import { generateOriginUrl } from "../utils";
 
 export default async function mainRoute(fastify: FastifyInstance) {
   fastify.get("/", async (request: GetRequest, reply) => {
@@ -18,7 +19,15 @@ export default async function mainRoute(fastify: FastifyInstance) {
       format = "html";
     }
 
-    const parsed = await handlePage(remoteUrl, engine);
+    const parsed = await handlePage(
+      remoteUrl,
+      generateOriginUrl(
+        request.protocol,
+        request.hostname,
+        request.originalUrl
+      ),
+      engine
+    );
 
     if (format === "text") {
       return parsed.textContent;
