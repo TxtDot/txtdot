@@ -1,5 +1,4 @@
-import { FastifyInstance, FastifyRequest } from "fastify";
-import NodeCache from "node-cache";
+import { FastifyRequest } from "fastify";
 
 export type GetRequest = FastifyRequest<{
   Querystring: {
@@ -15,7 +14,3 @@ export type EngineRequest = FastifyRequest<{
     engine?: string;
   };
 }>;
-
-export interface IFastifyInstance extends FastifyInstance {
-  cache: NodeCache;
-}

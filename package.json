@@ -5,15 +5,13 @@
   "description": "",
   "main": "dist/app.js",
   "dependencies": {
-    "@fastify/middie": "^8.3.0",
     "@fastify/view": "^8.0.0",
     "@mozilla/readability": "^0.4.4",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "fastify": "^4.21.0",
-    "jsdom": "^22.1.0",
-    "node-cache": "^5.1.2"
+    "jsdom": "^22.1.0"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.2",
@@ -24,13 +22,15 @@
     "@typescript-eslint/parser": "^6.3.0",
     "eslint": "^8.47.0",
     "ts-node": "^10.9.1",
+    "tsc-watch": "^6.0.4",
     "typescript": "^5.1.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "dev": "ts-node src/app.ts",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "watch": "tsc-watch --onSuccess \"node dist/app.js\""
   },
   "keywords": [],
   "authors": [
