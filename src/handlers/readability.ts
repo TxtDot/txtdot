@@ -6,6 +6,7 @@ import { IHandlerOutput } from "./handler.interface";
 export async function readability(url: string): Promise<IHandlerOutput> {
   const response = await axios.get(url);
   const dom = new JSDOM(response.data, { url: url });
+
   const reader = new Readability(dom.window.document);
   const parsed = reader.parse();
 
