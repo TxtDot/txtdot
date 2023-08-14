@@ -1,5 +1,4 @@
 import { Readability } from "@mozilla/readability";
-// import { JSDOM } from "jsdom";
 import { IHandlerOutput } from "./handler.interface";
 
 export async function readability(document: Document): Promise<IHandlerOutput> {
