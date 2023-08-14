@@ -1,10 +1,10 @@
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
-import express from "express";
 import NodeCache from "node-cache";
 import { readability } from "./handlers/readability";
 import minify from "./handlers/main";
-
+import Fastify, { FastifyRequest } from "fastify";
+import middie from "@fastify/middie";
 class App {
   config: IConfigService;
   cache: NodeCache;
@@ -12,11 +12,15 @@ class App {
     this.config = new ConfigService();
     this.cache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
   }
-  init() {
-    const app = express();
+  async init() {
+    const fastify = Fastify({
+      logger: true,
+    });
 
-    app.use((req, res, next) => {
-      const url = req.originalUrl || req.url;
+    await fastify.register(middie);
+
+    fastify.use((req, res, next) => {
+      const url = req.originalUrl || req.url || "/";
       const purge = req.query.purge ? true : false;
 
       if (purge) {
@@ -24,44 +28,64 @@ class App {
         next();
       }
 
-      const cached = this.cache.get(url);
+      const cached: Cached | undefined = this.cache.get(url);
       if (cached) {
-        res.send(cached);
+        res.setHeader("content-type", `${cached.contentType}; charset=utf-8`);
+        res.end(cached.content);
       } else {
         next();
       }
     });
 
-    app.get("/get", (req, res) => {
-      const url = (req.query.url || "/nothing") as string;
-      const type = (req.query.type || "html") as string;
+    fastify.get("/get", async (req: GetRequest, res) => {
+      const url = req.query.url;
+      const type = req.query.type || "html";
+      const contentType =
+        type === "html"
+          ? "text/html; charset=utf-8"
+          : "text/plain; charset=utf-8";
 
-      minify(url)
-        .then((parsed) => {
-          const content =
-            type === "html" ? parsed?.content : parsed?.textContent;
+      const parsed = await minify(url);
+      const content = type === "html" ? parsed?.content : parsed?.textContent;
 
-          this.cache.set(req.originalUrl || req.url, content);
-          res.send(content);
-        })
-        .catch((err) => {
-          res.status(500).send({ error: err.message });
-        });
+      this.cache.set(req.originalUrl || req.url, {
+        content,
+        contentType: contentType,
+      });
+
+      res.type(contentType);
+      return content;
     });
 
-    app.get("/readability", async (req, res) => {
-      const url = (req.query.url || "/nothing") as string;
+    fastify.get("/readability", async (req: EngineRequest) => {
+      const url = req.query.url;
       const parsed = await readability(url);
 
-      this.cache.set(req.originalUrl || req.url, parsed);
-      res.send(parsed);
+      this.cache.set(req.originalUrl || req.url, {
+        content: parsed,
+        contentType: "text/json",
+      });
+      return parsed;
     });
 
-    app.listen(this.config.get("PORT"), () => {
+    fastify.listen({ port: Number(this.config.get("PORT")) }, () => {
       console.log(`Listening on port ${this.config.get("PORT")}`);
     });
   }
 }
+
+type GetRequest = FastifyRequest<{
+  Querystring: { url: string; type?: string };
+}>;
+
+type EngineRequest = FastifyRequest<{
+  Querystring: { url: string };
+}>;
+
+type Cached = {
+  content: string;
+  contentType: string;
+};
 
 const app = new App();
 app.init();
