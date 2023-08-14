@@ -1,12 +1,15 @@
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
+import { Cached } from "./types/requests";
 
 import NodeCache from "node-cache";
+
 import Fastify from "fastify";
 import middie from "@fastify/middie";
-import { Cached } from "./types/requests";
+
 import getRoute from "./routes/getRoute";
 import parseRoute from "./routes/parseRoute";
+
 class App {
   config: IConfigService;
   cache: NodeCache;
