@@ -1,28 +1,27 @@
 import { IHandlerOutput } from "./handler.interface";
 import { readability } from "./readability";
 
-export default function handlePage(url: string, engine: string): Promise<IHandlerOutput> {
-  const func = engines[engine];
-  if (!func) {
-    throw new Error('No such engine')
+type EngineFunction = (url: string) => Promise<IHandlerOutput>
+
+export default function handlePage(url: string, engine?: string): Promise<IHandlerOutput> {
+  let func: EngineFunction | undefined = engines[engine || ""];
+
+  if (func === undefined) {
+    const host = new URL(url).hostname;
+    func = fallback[host] || fallback["*"];
   }
 
-  return func(url)
+  return func(url);
+}
+
+interface Engines {
+  [key: string]: EngineFunction;
 }
 
 export const engines: Engines = {
   "readability": readability,
 };
 
-interface Engines {
-  [name: string]: (url: string) => Promise<IHandlerOutput>;
-}
-
-/*
 const fallback: Engines = {
   "*": engines.readability,
 };
-interface Engines {
-  [host: string]: (url: string) => Promise<IHandlerOutput>;
-}
-*/
