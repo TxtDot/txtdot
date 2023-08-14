@@ -32,11 +32,11 @@ class App {
       }
     });
 
-    fastify.register(mainRoute(this.cache));
-    fastify.register(parseRoute(this.cache));
+    fastify.register(mainRoute);
+    fastify.register(parseRoute);
 
-    fastify.listen({ port: Number(this.config.get("PORT")) }, () => {
-      console.log(`Listening on port ${this.config.get("PORT")}`);
+    fastify.listen({ port: Number(this.config.get("PORT")) }, (err) => {
+      err && console.log(err);
     });
   }
 }
