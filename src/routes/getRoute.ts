@@ -1,5 +1,5 @@
 import NodeCache from "node-cache";
-import getCorrespondingReaderView from "../handlers/main";
+import handlePage from "../handlers/main";
 import { GetRequest } from "../types/requests";
 import { FastifyInstance } from "fastify";
 
@@ -13,7 +13,7 @@ export default function getRoute(cache: NodeCache) {
           ? "text/html; charset=utf-8"
           : "text/plain; charset=utf-8";
 
-      const parsed = await getCorrespondingReaderView(url);
+      const parsed = await handlePage(url);
       const content = type === "html" ? parsed?.content : parsed?.textContent;
 
       cache.set(req.originalUrl || req.url, {
