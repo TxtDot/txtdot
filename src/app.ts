@@ -5,9 +5,9 @@ import Fastify from "fastify";
 import fastifyView from "@fastify/view";
 import ejs from "ejs";
 
-import mainRoute from "./routes/main-route";
-import parseRoute from "./routes/parse-route";
-import startRoute from "./routes/start-route";
+import mainRoute from "./routes/main";
+import parseRoute from "./routes/parse";
+import startRoute from "./routes/start";
 
 class App {
   config: IConfigService;
