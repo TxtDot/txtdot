@@ -1,17 +1,22 @@
 import { IHandlerOutput } from "./handler.interface";
 import { readability } from "./readability";
 
-type EngineFunction = (url: string) => Promise<IHandlerOutput>
+type EngineFunction = (url: string) => Promise<IHandlerOutput>;
 
-export default function handlePage(url: string, engine?: string): Promise<IHandlerOutput> {
-  let func: EngineFunction | undefined = engines[engine || ""];
-
-  if (func === undefined) {
-    const host = new URL(url).hostname;
-    func = fallback[host] || fallback["*"];
+export default function handlePage(
+  url: string,
+  engine?: string
+): Promise<IHandlerOutput> {
+  if (engine && engineList.indexOf(engine) === -1) {
+    throw new Error("Invalid engine");
   }
 
-  return func(url);
+  if (engine) {
+    return engines[engine](url);
+  }
+
+  const host = new URL(url).hostname;
+  return fallback[host](url) || fallback["*"](url);
 }
 
 interface Engines {
@@ -19,8 +24,10 @@ interface Engines {
 }
 
 export const engines: Engines = {
-  "readability": readability,
+  readability: readability,
 };
+
+export const engineList: string[] = Object.keys(engines);
 
 const fallback: Engines = {
   "*": engines.readability,
