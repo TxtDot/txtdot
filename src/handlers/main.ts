@@ -1,7 +1,9 @@
 import { IHandlerOutput } from "./handler.interface";
 import { readability } from "./readability";
 
-export default function minify(url: string): Promise<IHandlerOutput> {
+export default function getCorrespondingReaderView(
+  url: string
+): Promise<IHandlerOutput> {
   const host = new URL(url).hostname;
 
   return fallback[host]?.(url) || fallback["*"](url);
