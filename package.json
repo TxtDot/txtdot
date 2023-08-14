@@ -28,9 +28,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev": "ts-node src/app.ts",
+    "start-ts": "ts-node src/app.ts",
     "start": "node dist/app.js",
-    "watch": "tsc-watch --onSuccess \"node dist/app.js\""
+    "dev": "tsc-watch --onSuccess \"node dist/app.js\""
   },
   "keywords": [],
   "authors": [
