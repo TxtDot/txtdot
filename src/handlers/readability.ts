@@ -1,5 +1,5 @@
 import { Readability } from "@mozilla/readability";
-import axios from "axios";
+import axios from "../types/axios";
 import { JSDOM } from "jsdom";
 import { IHandlerOutput } from "./handler.interface";
 
