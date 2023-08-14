@@ -3,8 +3,9 @@ import { ConfigService } from "./config/config.service";
 import NodeCache from "node-cache";
 import { readability } from "./handlers/readability";
 import minify from "./handlers/main";
-import Fastify, { FastifyRequest } from "fastify";
+import Fastify from "fastify";
 import middie from "@fastify/middie";
+import { Cached, EngineRequest, GetRequest } from "./schema/requests.types";
 class App {
   config: IConfigService;
   cache: NodeCache;
@@ -73,19 +74,6 @@ class App {
     });
   }
 }
-
-type GetRequest = FastifyRequest<{
-  Querystring: { url: string; type?: string };
-}>;
-
-type EngineRequest = FastifyRequest<{
-  Querystring: { url: string };
-}>;
-
-type Cached = {
-  content: string;
-  contentType: string;
-};
 
 const app = new App();
 app.init();
