@@ -9,10 +9,13 @@ export default function getCorrespondingReaderView(
   return fallback[host]?.(url) || fallback["*"](url);
 }
 
-const fallback: Fallback = {
-  "*": readability,
+export const engines: Engines = {
+  readability,
 };
 
-interface Fallback {
+const fallback: Engines = {
+  "*": engines.readability,
+};
+interface Engines {
   [host: string]: (url: string) => Promise<IHandlerOutput>;
 }

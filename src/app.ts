@@ -1,11 +1,11 @@
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
 import NodeCache from "node-cache";
-import { readability } from "./handlers/readability";
-import getCorrespondingReaderView from "./handlers/main";
 import Fastify from "fastify";
 import middie from "@fastify/middie";
-import { Cached, EngineRequest, GetRequest } from "./schema/requests.types";
+import { Cached } from "./types/requests";
+import getRoute from "./routes/getRoute";
+import parseRoute from "./routes/parseRoute";
 class App {
   config: IConfigService;
   cache: NodeCache;
@@ -38,36 +38,8 @@ class App {
       }
     });
 
-    fastify.get("/get", async (req: GetRequest, res) => {
-      const url = req.query.url;
-      const type = req.query.type || "html";
-      const contentType =
-        type === "html"
-          ? "text/html; charset=utf-8"
-          : "text/plain; charset=utf-8";
-
-      const parsed = await getCorrespondingReaderView(url);
-      const content = type === "html" ? parsed?.content : parsed?.textContent;
-
-      this.cache.set(req.originalUrl || req.url, {
-        content,
-        contentType: contentType,
-      });
-
-      res.type(contentType);
-      return content;
-    });
-
-    fastify.get("/readability", async (req: EngineRequest) => {
-      const url = req.query.url;
-      const parsed = await readability(url);
-
-      this.cache.set(req.originalUrl || req.url, {
-        content: parsed,
-        contentType: "text/json",
-      });
-      return parsed;
-    });
+    fastify.register(getRoute(this.cache));
+    fastify.register(parseRoute(this.cache));
 
     fastify.listen({ port: Number(this.config.get("PORT")) }, () => {
       console.log(`Listening on port ${this.config.get("PORT")}`);
