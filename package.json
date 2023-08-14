@@ -30,6 +30,10 @@
     "start": "node dist/app.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "authors": [
+    "Artemy Egorov <me@artegoser.ru> https://github.com/artegoser",
+    "DarkCat09 <darkcat09@vivaldi.net> https://dc09.ru/",
+    "megahomyak https://github.com/megahomyak"
+  ],
+  "license": "MIT"
 }
