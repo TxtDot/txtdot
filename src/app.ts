@@ -4,7 +4,7 @@ import { ConfigService } from "./config/config.service";
 import NodeCache from "node-cache";
 
 import { readability } from "./handlers/readability";
-import getCorrespondingReaderView from "./handlers/main";
+import handlePage from "./handlers/main";
 
 import Fastify from "fastify";
 import middie from "@fastify/middie";
@@ -52,7 +52,7 @@ class App {
           ? "text/html; charset=utf-8"
           : "text/plain; charset=utf-8";
 
-      const parsed = await getCorrespondingReaderView(url);
+      const parsed = await handlePage(url);
       const content = type === "html" ? parsed?.content : parsed?.textContent;
 
       this.cache.set(req.originalUrl || req.url, {
