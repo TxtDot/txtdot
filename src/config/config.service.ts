@@ -3,8 +3,10 @@ import { IConfigService } from "./config.interface";
 
 export class ConfigService implements IConfigService {
   private config: DotenvParseOutput;
+
   constructor() {
     const { error, parsed } = config();
+  
     if (error) {
       throw new Error(".env file not found");
     }
@@ -18,6 +20,7 @@ export class ConfigService implements IConfigService {
 
   get(key: string): string {
     const res = this.config[key];
+
     if (!res) {
       throw new Error(`Key ${key} not found`);
     }
