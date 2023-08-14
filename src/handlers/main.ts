@@ -1,9 +1,11 @@
+import axios from "../types/axios";
 import { IHandlerOutput } from "./handler.interface";
 import { readability } from "./readability";
+import { JSDOM } from "jsdom";
 
-type EngineFunction = (url: string) => Promise<IHandlerOutput>;
+type EngineFunction = (url: JSDOM) => Promise<IHandlerOutput>;
 
-export default function handlePage(
+export default async function handlePage(
   url: string,
   engine?: string
 ): Promise<IHandlerOutput> {
@@ -11,12 +13,15 @@ export default function handlePage(
     throw new Error("Invalid engine");
   }
 
+  const response = await axios.get(url);
+  const dom = new JSDOM(response.data, { url: url });
+
   if (engine) {
-    return engines[engine](url);
+    return engines[engine](dom);
   }
 
   const host = new URL(url).hostname;
-  return fallback[host](url) || fallback["*"](url);
+  return fallback[host](dom) || fallback["*"](dom);
 }
 
 interface Engines {
