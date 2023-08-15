@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 
 import { GetRequest } from "../types/requests";
 import handlePage from "../handlers/main";
-import { generateOriginUrl } from "../utils";
+import { generateRequestUrl } from "../utils";
 
 export default async function getRoute(fastify: FastifyInstance) {
   fastify.get("/get", async (request: GetRequest, reply) => {
@@ -21,7 +21,7 @@ export default async function getRoute(fastify: FastifyInstance) {
 
     const parsed = await handlePage(
       remoteUrl,
-      generateOriginUrl(
+      generateRequestUrl(
         request.protocol,
         request.hostname,
         request.originalUrl
