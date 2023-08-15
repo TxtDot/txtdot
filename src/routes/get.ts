@@ -32,7 +32,7 @@ export default async function getRoute(fastify: FastifyInstance) {
     if (format === "text") {
       return parsed.textContent;
     } else {
-      return reply.view("/templates/index.ejs", { parsed: parsed });
+      return reply.view("/templates/get.ejs", { parsed: parsed });
     }
   });
 }
