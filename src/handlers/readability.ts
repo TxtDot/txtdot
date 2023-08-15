@@ -1,8 +1,11 @@
 import { Readability } from "@mozilla/readability";
 import { IHandlerOutput } from "./handler.interface";
+import { DOMWindow } from "jsdom";
 
-export async function readability(document: Document): Promise<IHandlerOutput> {
-  const reader = new Readability(document);
+export default async function readability(
+  window: DOMWindow
+): Promise<IHandlerOutput> {
+  const reader = new Readability(window.document);
   const parsed = reader.parse();
 
   if (!parsed) {

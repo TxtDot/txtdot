@@ -1,9 +1,10 @@
-import axios from "../types/axios";
 import { IHandlerOutput } from "./handler.interface";
-import { readability } from "./readability";
+
+import axios from "../types/axios";
 import { JSDOM } from "jsdom";
 
-type EngineFunction = (url: Document) => Promise<IHandlerOutput>;
+import readability from "./readability";
+import { DOMWindow } from "jsdom";
 
 export default async function handlePage(
   url: string,
@@ -15,26 +16,28 @@ export default async function handlePage(
   }
 
   const response = await axios.get(url);
-  const document = new JSDOM(response.data, { url: url }).window.document;
+  const window = new JSDOM(response.data, { url: url }).window;
   const UrlParsed = new URL(originalUrl);
 
-  [...document.getElementsByTagName("a")].forEach((link) => {
+  [...window.document.getElementsByTagName("a")].forEach((link) => {
     link.href = `${UrlParsed.origin}/?url=${link.href}${
       engine && `&engine=${engine}`
     }`;
   });
 
   if (engine) {
-    return engines[engine](document);
+    return engines[engine](window);
   }
 
   const host = new URL(url).hostname;
-  return fallback[host](document) || fallback["*"](document);
+  return fallback[host](window) || fallback["*"](window);
 }
 
 interface Engines {
   [key: string]: EngineFunction;
 }
+
+type EngineFunction = (window: DOMWindow) => Promise<IHandlerOutput>;
 
 export const engines: Engines = {
   readability,
