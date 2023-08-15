@@ -1,7 +1,10 @@
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
 
+import path from "path";
+
 import Fastify from "fastify";
+import fastifyStatic from "@fastify/static";
 import fastifyView from "@fastify/view";
 import ejs from "ejs";
 
@@ -21,7 +24,13 @@ class App {
       logger: true,
     });
 
-    await fastify.register(fastifyView, {
+    fastify.register(fastifyStatic, {
+      root: path.join(__dirname, '..', 'static'),
+      prefix: '/static/',
+    });
+
+    fastify.register(fastifyView, {
+      root: path.join(__dirname, '..'),
       engine: {
         ejs: ejs,
       },

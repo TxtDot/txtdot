@@ -5,6 +5,7 @@
   "description": "",
   "main": "dist/app.js",
   "dependencies": {
+    "@fastify/static": "^6.10.2",
     "@fastify/view": "^8.0.0",
     "@mozilla/readability": "^0.4.4",
     "axios": "^1.4.0",

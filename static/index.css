@@ -1,0 +1,23 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-grid {
+  display: grid;
+  /* 2 columns: auto width, min-content width */
+  grid-template-columns: auto min-content;
+
+  width: fit-content;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#url {
+  width: 100%;
+}
