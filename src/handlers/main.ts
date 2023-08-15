@@ -4,8 +4,8 @@ import axios from "../types/axios";
 import { JSDOM } from "jsdom";
 
 import readability from "./readability";
+import google from "./google";
 import { DOMWindow } from "jsdom";
-
 export default async function handlePage(
   url: string,
   originalUrl: string,
@@ -16,12 +16,13 @@ export default async function handlePage(
   }
 
   const response = await axios.get(url);
+
   const window = new JSDOM(response.data, { url: url }).window;
   const UrlParsed = new URL(originalUrl);
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
     link.href = `${UrlParsed.origin}/?url=${link.href}${
-      engine && `&engine=${engine}`
+      engine ? `&engine=${engine}` : ""
     }`;
   });
 
@@ -30,7 +31,8 @@ export default async function handlePage(
   }
 
   const host = new URL(url).hostname;
-  return fallback[host](window) || fallback["*"](window);
+
+  return fallback[host]?.(window) || fallback["*"](window);
 }
 
 interface Engines {
@@ -41,10 +43,12 @@ type EngineFunction = (window: DOMWindow) => Promise<IHandlerOutput>;
 
 export const engines: Engines = {
   readability,
+  google,
 };
 
 export const engineList: string[] = Object.keys(engines);
 
 const fallback: Engines = {
+  "www.google.com": engines.google,
   "*": engines.readability,
 };

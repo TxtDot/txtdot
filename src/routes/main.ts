@@ -7,7 +7,7 @@ import { generateOriginUrl } from "../utils";
 export default async function mainRoute(fastify: FastifyInstance) {
   fastify.get("/", async (request: GetRequest, reply) => {
     const remoteUrl = request.query.url;
-    const engine = request.query.engine || "readability";
+    const engine = request.query.engine;
 
     let format: string;
 
