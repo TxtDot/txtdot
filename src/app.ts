@@ -1,13 +1,16 @@
 import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
 
+import path from "path";
+
 import Fastify from "fastify";
+import fastifyStatic from "@fastify/static";
 import fastifyView from "@fastify/view";
 import ejs from "ejs";
 
-import mainRoute from "./routes/main";
+import getRoute from "./routes/get";
 import parseRoute from "./routes/parse";
-import startRoute from "./routes/start";
+import indexRoute from "./routes/index";
 
 class App {
   config: IConfigService;
@@ -21,15 +24,20 @@ class App {
       logger: true,
     });
 
-    await fastify.register(fastifyView, {
+    fastify.register(fastifyStatic, {
+      root: path.join(process.cwd(), "static"),
+      prefix: "/static/",
+    });
+
+    fastify.register(fastifyView, {
       engine: {
         ejs: ejs,
       },
     });
 
-    fastify.register(mainRoute);
+    fastify.register(indexRoute);
+    fastify.register(getRoute);
     fastify.register(parseRoute);
-    fastify.register(startRoute);
 
     fastify.listen({ port: Number(this.config.get("PORT")) }, (err) => {
       err && console.log(err);

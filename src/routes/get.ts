@@ -2,10 +2,10 @@ import { FastifyInstance } from "fastify";
 
 import { GetRequest } from "../types/requests";
 import handlePage from "../handlers/main";
-import { generateOriginUrl } from "../utils";
+import { generateRequestUrl } from "../utils";
 
-export default async function mainRoute(fastify: FastifyInstance) {
-  fastify.get("/", async (request: GetRequest, reply) => {
+export default async function getRoute(fastify: FastifyInstance) {
+  fastify.get("/get", async (request: GetRequest, reply) => {
     const remoteUrl = request.query.url;
     const engine = request.query.engine;
 
@@ -21,7 +21,7 @@ export default async function mainRoute(fastify: FastifyInstance) {
 
     const parsed = await handlePage(
       remoteUrl,
-      generateOriginUrl(
+      generateRequestUrl(
         request.protocol,
         request.hostname,
         request.originalUrl
@@ -32,7 +32,7 @@ export default async function mainRoute(fastify: FastifyInstance) {
     if (format === "text") {
       return parsed.textContent;
     } else {
-      return reply.view("/templates/index.ejs", { parsed: parsed });
+      return reply.view("/templates/get.ejs", { parsed: parsed });
     }
   });
 }

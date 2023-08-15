@@ -1,30 +1,31 @@
 import { IHandlerOutput } from "./handler.interface";
-
 import axios from "../types/axios";
+
 import { JSDOM } from "jsdom";
+import { DOMWindow } from "jsdom";
 
 import readability from "./readability";
 import google from "./google";
-import { DOMWindow } from "jsdom";
+import { generateProxyUrl } from "../utils";
+
 export default async function handlePage(
   url: string,
-  originalUrl: string,
-  engine?: string
+  requestUrl: URL,
+  engine?: string,
 ): Promise<IHandlerOutput> {
+
   if (engine && engineList.indexOf(engine) === -1) {
     throw new Error("Invalid engine");
   }
 
   const response = await axios.get(url);
-
   const window = new JSDOM(response.data, { url: url }).window;
-  const UrlParsed = new URL(originalUrl);
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
-    link.href = `${UrlParsed.origin}/?url=${link.href}${
-      engine ? `&engine=${engine}` : ""
-    }`;
+    link.href = generateProxyUrl(requestUrl, link.href, engine);
   });
+
+  // maybe implement image proxy?
 
   if (engine) {
     return engines[engine](window);

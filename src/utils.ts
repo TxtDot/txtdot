@@ -1,7 +1,18 @@
-export function generateOriginUrl(
+export function generateRequestUrl(
   protocol: string,
   host: string,
-  originalUrl: string
+  originalUrl: string,
+): URL {
+  return new URL(`${protocol}://${host}${originalUrl}`);
+}
+
+export function generateProxyUrl(
+  requestUrl: URL,
+  href: string,
+  engine?: string,
 ): string {
-  return `${protocol}://${host}${originalUrl}`;
+  const urlParam = `?url=${encodeURIComponent(href)}`;
+  const engineParam = engine ? `&engine=${engine}` : "";
+  // formatParam is not needed for now
+  return requestUrl.origin + "/get" + urlParam + engineParam;
 }
