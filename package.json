@@ -21,17 +21,21 @@
     "@types/node": "^20.4.10",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
+    "clean-css-cli": "^5.6.2",
+    "concurrently": "^8.2.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.47.0",
-    "ts-node": "^10.9.1",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.1.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "start-ts": "ts-node src/app.ts",
-    "start": "node dist/app.js",
-    "dev": "tsc-watch --onSuccess \"node dist/app.js\""
+    "build": "npm run clean-css && copyfiles ./templates/*.ejs ./dist/src/ && tsc",
+    "start": "node dist/src/app.js",
+    "clean-css": "cleancss --batch static/*.css -o dist/static --batch-suffix \"\"",
+    "clean-css:watch": "npm run clean-css -- --watch",
+    "tsc-watch": "tsc-watch --onSuccess \"npm run start\"",
+    "dev": "concurrently --kill-others \"npm run tsc-watch\" \"npm run clean-css:watch\""
   },
   "keywords": [],
   "authors": [
