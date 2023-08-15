@@ -17,7 +17,12 @@
       <label for="engine">Engine</label>
       <select name="engine">
         <option selected value>Standard</option>
-        <option value="readability">Readability</option>
+        <% engineList.forEach((engine)=>{
+          %>
+          <option value="<%= engine %>">
+            <%= engine %>
+          </option>
+          <% }) %>
       </select>
     </p>
     <p>
