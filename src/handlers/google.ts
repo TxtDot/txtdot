@@ -29,10 +29,14 @@ export default async function google(
     return convertToFormat(result, false);
   });
 
+  const search = window.document.getElementById(
+    "APjFqb"
+  ) as HTMLTextAreaElement;
+
   const searchForm = `
-  <form onsubmit="window.location.href = '/?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+'); return false">
-    <input type="text" name="q" id="q">
-    <input type="button" value="Search" onclick="window.location.href = '/?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+');">
+  <form onsubmit="window.location.href = '/get?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+'); return false">
+    <input type="text" name="q" id="q" value="${search?.value}">
+    <input type="button" value="Search" onclick="window.location.href = '/get?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+');">
   </form>
   `;
 

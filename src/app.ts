@@ -25,12 +25,11 @@ class App {
     });
 
     fastify.register(fastifyStatic, {
-      root: path.join(__dirname, '..', 'static'),
-      prefix: '/static/',
+      root: path.join(process.cwd(), "static"),
+      prefix: "/static/",
     });
 
     fastify.register(fastifyView, {
-      root: path.join(__dirname, '..'),
       engine: {
         ejs: ejs,
       },
