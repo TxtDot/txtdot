@@ -1,16 +1,18 @@
 import { IHandlerOutput } from "./handler.interface";
-
 import axios from "../types/axios";
+
 import { JSDOM } from "jsdom";
+import { DOMWindow } from "jsdom";
 
 import readability from "./readability";
 import google from "./google";
-import { DOMWindow } from "jsdom";
+
 export default async function handlePage(
   url: string,
   originalUrl: string,
   engine?: string
 ): Promise<IHandlerOutput> {
+
   if (engine && engineList.indexOf(engine) === -1) {
     throw new Error("Invalid engine");
   }
@@ -21,7 +23,7 @@ export default async function handlePage(
   const UrlParsed = new URL(originalUrl);
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
-    link.href = `${UrlParsed.origin}/?url=${link.href}${
+    link.href = `${UrlParsed.origin}/get?url=${link.href}${
       engine ? `&engine=${engine}` : ""
     }`;
   });

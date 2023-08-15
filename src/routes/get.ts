@@ -4,8 +4,8 @@ import { GetRequest } from "../types/requests";
 import handlePage from "../handlers/main";
 import { generateOriginUrl } from "../utils";
 
-export default async function mainRoute(fastify: FastifyInstance) {
-  fastify.get("/", async (request: GetRequest, reply) => {
+export default async function getRoute(fastify: FastifyInstance) {
+  fastify.get("/get", async (request: GetRequest, reply) => {
     const remoteUrl = request.query.url;
     const engine = request.query.engine;
 
