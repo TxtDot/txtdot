@@ -30,9 +30,9 @@ export default async function google(
   });
 
   const searchForm = `
-  <form onsubmit="window.location.href = '/?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+'); return false">
+  <form onsubmit="window.location.href = '/get?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+'); return false">
     <input type="text" name="q" id="q">
-    <input type="button" value="Search" onclick="window.location.href = '/?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+');">
+    <input type="button" value="Search" onclick="window.location.href = '/get?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+');">
   </form>
   `;
 
