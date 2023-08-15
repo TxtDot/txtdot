@@ -1,9 +1,6 @@
-<% const
-  desc="txtdot is a HTTP proxy that parses text, links and pictures from pages reducing internet traffic, removing ads and heavy scripts"
-  %>
-  <!DOCTYPE html>
-  <html>
-
+<% const desc="txtdot is a HTTP proxy that parses text, links and pictures from pages reducing internet traffic, removing ads and heavy scripts" %>
+<!DOCTYPE html>
+<html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +10,6 @@
     <link rel="stylesheet" href="/static/common.css">
     <link rel="stylesheet" href="/static/index.css">
   </head>
-
   <body>
     <main>
       <header>
@@ -34,11 +30,14 @@
             <label for="engine">Engine</label>
             <select name="engine">
               <option value="" selected>Default</option>
-              <% engineList.forEach((engine)=> { %>
-                <option value="<%= engine %>">
-                  <%= engine %>
-                </option>
-                <% }) %>
+              <% engineList.forEach((engine)=> { 
+                  %>
+                  <option value="<%= engine %>">
+                    <%= engine %>
+                  </option>
+                  <% 
+                }) 
+              %>
             </select>
           </div>
           <div class="input">
@@ -52,5 +51,4 @@
       </form>
     </main>
   </body>
-
-  </html>
+</html>
