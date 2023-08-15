@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="<%= parsed.lang %>">
-
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>
-    <%= parsed.title %>
-  </title>
-  <meta name="description" content="<%= parsed.textContent %>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex, nofollow">
+  <title><%= parsed.title %></title>
 </head>
-
 <body>
-  <h1>
-    <%= parsed.title %>
-  </h1>
+  <h1><%= parsed.title %></h1>
   <main><%- parsed.content %></main>
 </body>
-
 </html>
