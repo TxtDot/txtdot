@@ -36,22 +36,3 @@ main {
   width: 100%;
   margin: auto;
 }
-
-a {
-  color: var(--link);
-}
-a:hover {
-  color: var(--link-hl);
-}
-
-pre {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-}
