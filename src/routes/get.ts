@@ -38,7 +38,7 @@ export default async function getRoute(fastify: FastifyInstance) {
         return parsed.textContent;
       } else {
         reply.type("text/html; charset=utf-8");
-        return reply.view("/templates/get.ejs", { parsed: parsed });
+        return reply.view("/templates/get.ejs", { parsed, remoteUrl });
       }
     }
   );
