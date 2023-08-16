@@ -9,7 +9,7 @@ export default async function readability(
   const parsed = reader.parse();
 
   if (!parsed) {
-    throw new Error("Failed to parse [readability]");
+    throw new EngineParseError("Failed to parse [readability]");
   }
 
   return {
