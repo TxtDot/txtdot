@@ -8,25 +8,22 @@ import readability from "./readability";
 import google from "./google";
 import { generateProxyUrl } from "../utils";
 
-import { InvalidParameterError, NotHtmlMimetypeError } from "../errors";
+import { InvalidParameterError, NotHtmlMimetypeError } from "../errors/main";
 
 export default async function handlePage(
   url: string,
   requestUrl: URL,
-  engine?: string,
+  engine?: string
 ): Promise<IHandlerOutput> {
-
   if (engine && engineList.indexOf(engine) === -1) {
     throw new InvalidParameterError("Invalid engine");
   }
 
   const response = await axios.get(url);
-  const mime: string | undefined = (
-    response.headers["content-type"]?.toString()
-  );
+  const mime: string | undefined = response.headers["content-type"]?.toString();
 
   if (mime && mime.indexOf("text/html") === -1) {
-    throw new NotHtmlMimetypeError();
+    throw new NotHtmlMimetypeError({ url });
   }
 
   const window = new JSDOM(response.data, { url: url }).window;
