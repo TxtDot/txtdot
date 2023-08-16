@@ -16,6 +16,7 @@ import indexRoute from "./routes/index";
 import rawHtml from "./routes/raw-html";
 
 import publicConfig from "./publicConfig";
+import errorHandler from "./errors/handler";
 
 class App {
   config: IConfigService;
@@ -55,6 +56,8 @@ class App {
     fastify.register(getRoute);
     fastify.register(parseRoute);
     fastify.register(rawHtml);
+
+    fastify.setErrorHandler(errorHandler);
 
     fastify.listen({ port: Number(this.config.get("PORT")) }, (err) => {
       err && console.log(err);
