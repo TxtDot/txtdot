@@ -1,0 +1,27 @@
+a {
+  color: var(--link);
+}
+a:hover {
+  color: var(--link-hl);
+}
+
+pre {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+img, picture, video {
+  max-width: 100%;
+  height: auto;
+}
+
+frame, iframe {
+  max-width: 100%;
+}
