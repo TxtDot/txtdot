@@ -1,8 +1,19 @@
+.menu {
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.25rem;
+
+  font-size: 0.9rem;
+}
+.title {
+  font-weight: 500;
+}
+
 a {
-  color: var(--link);
+  color: var(--accent);
 }
 a:hover {
-  color: var(--link-hl);
+  color: var(--accent-hl);
 }
 
 pre {

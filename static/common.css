@@ -6,8 +6,11 @@
   --bg: #fff;
   --fg: #111;
 
-  --link: hsl(207, 100%, 40%);
-  --link-hl: hsl(207, 100%, 20%);
+  --bg2: #bbb;
+  --fg2: #333;
+
+  --accent: hsl(207, 100%, 40%);
+  --accent-hl: hsl(207, 100%, 20%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,8 +18,11 @@
     --bg: #222;
     --fg: #eee;
 
-    --link: hsl(207, 100%, 60%);
-    --link-hl: hsl(207, 100%, 80%);
+    --bg2: #444;
+    --fg2: #bbb;
+
+    --accent: hsl(207, 100%, 60%);
+    --accent-hl: hsl(207, 100%, 80%);
   }
 }
 
@@ -35,4 +41,24 @@ main {
   max-width: 50rem;
   width: 100%;
   margin: auto;
+}
+
+.button {
+  padding: 0.25rem 0.75rem;
+
+  border: 0.125rem solid var(--accent);
+  border-radius: 0.25rem;
+
+  background: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+
+  cursor: pointer;
+}
+.button.secondary {
+  border-color: var(--bg2);
+}
+.button:hover {
+  background: var(--bg2);
+  color: var(--fg);
 }
