@@ -1,5 +1,6 @@
 import { DOMWindow } from "jsdom";
 import { IHandlerOutput } from "./handler.interface";
+import { EngineParseError } from "../errors";
 
 export default async function google(
   window: DOMWindow
