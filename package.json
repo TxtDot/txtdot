@@ -7,6 +7,7 @@
   "dependencies": {
     "@fastify/static": "^6.10.2",
     "@fastify/swagger": "^8.8.0",
+    "@fastify/swagger-ui": "^1.9.3",
     "@fastify/view": "^8.0.0",
     "@mozilla/readability": "^0.4.4",
     "axios": "^1.4.0",

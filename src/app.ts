@@ -7,6 +7,7 @@ import Fastify from "fastify";
 import fastifyStatic from "@fastify/static";
 import fastifyView from "@fastify/view";
 import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
 import ejs from "ejs";
 
 import getRoute from "./routes/get";
@@ -37,17 +38,8 @@ class App {
       },
     });
 
-    await fastify.register(fastifySwagger, {
-      swagger: {
-        info: {
-          title: "Dottxt",
-          version: "1.0.0",
-        },
-        externalDocs: {
-          url: "https://github.com/dottxt/dottxt",
-        },
-      },
-    });
+    await fastify.register(fastifySwagger);
+    await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
 
     fastify.register(indexRoute);
     fastify.register(getRoute);
