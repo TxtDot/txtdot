@@ -15,6 +15,8 @@ import parseRoute from "./routes/parse";
 import indexRoute from "./routes/index";
 import rawHtml from "./routes/raw-html";
 
+import publicConfig from "./publicConfig";
+
 class App {
   config: IConfigService;
 
@@ -38,7 +40,15 @@ class App {
       },
     });
 
-    await fastify.register(fastifySwagger);
+    await fastify.register(fastifySwagger, {
+      swagger: {
+        info: {
+          title: "TXTDot API",
+          description: publicConfig.description,
+          version: publicConfig.version,
+        },
+      },
+    });
     await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
 
     fastify.register(indexRoute);
