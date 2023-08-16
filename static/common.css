@@ -7,6 +7,7 @@
   --fg: #111;
 
   --bg2: #bbb;
+  --fg2: #333;
 
   --accent: hsl(207, 100%, 40%);
   --accent-hl: hsl(207, 100%, 20%);
@@ -18,6 +19,7 @@
     --fg: #eee;
 
     --bg2: #444;
+    --fg2: #bbb;
 
     --accent: hsl(207, 100%, 60%);
     --accent-hl: hsl(207, 100%, 80%);
@@ -42,7 +44,7 @@ main {
 }
 
 .button {
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.75rem;
 
   border: 0.125rem solid var(--accent);
   border-radius: 0.25rem;
