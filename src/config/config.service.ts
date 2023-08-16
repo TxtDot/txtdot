@@ -1,30 +1,17 @@
-import { config, DotenvParseOutput } from "dotenv";
-import { IConfigService } from "./config.interface";
+import { config } from "dotenv";
 
-export class ConfigService implements IConfigService {
-  private config: DotenvParseOutput;
+export class ConfigService {
+  public readonly host: string;
+  public readonly port: number;
 
   constructor() {
-    const { error, parsed } = config();
-  
-    if (error) {
-      throw new Error(".env file not found");
-    }
+    const parsed = config().parsed;
 
     if (!parsed) {
       throw new Error("Invalid .env file");
     }
 
-    this.config = parsed;
-  }
-
-  get(key: string): string {
-    const res = this.config[key];
-
-    if (!res) {
-      throw new Error(`Key ${key} not found`);
-    }
-
-    return res;
+    this.host = process.env.HOST || 'localhost';
+    this.port = Number(process.env.PORT) || 8080;
   }
 }

@@ -1,4 +1,3 @@
-import { IConfigService } from "./config/config.interface";
 import { ConfigService } from "./config/config.service";
 
 import path from "path";
@@ -19,7 +18,7 @@ import publicConfig from "./publicConfig";
 import errorHandler from "./errors/handler";
 
 class App {
-  config: IConfigService;
+  config: ConfigService;
 
   constructor() {
     this.config = new ConfigService();
@@ -59,7 +58,7 @@ class App {
 
     fastify.setErrorHandler(errorHandler);
 
-    fastify.listen({ port: Number(this.config.get("PORT")) }, (err) => {
+    fastify.listen({ host: this.config.host, port: this.config.port }, (err) => {
       err && console.log(err);
     });
   }
