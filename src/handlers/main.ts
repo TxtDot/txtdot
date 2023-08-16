@@ -8,6 +8,8 @@ import readability from "./readability";
 import google from "./google";
 import { generateProxyUrl } from "../utils";
 
+import { InvalidParameterError, NotHtmlMimetypeError } from "../errors";
+
 export default async function handlePage(
   url: string,
   requestUrl: URL,
@@ -15,17 +17,23 @@ export default async function handlePage(
 ): Promise<IHandlerOutput> {
 
   if (engine && engineList.indexOf(engine) === -1) {
-    throw new Error("Invalid engine");
+    throw new InvalidParameterError("Invalid engine");
   }
 
   const response = await axios.get(url);
+  const mime: string | undefined = (
+    response.headers["content-type"]?.toString()
+  );
+
+  if (mime && mime.indexOf("text/html") === -1) {
+    throw new NotHtmlMimetypeError();
+  }
+
   const window = new JSDOM(response.data, { url: url }).window;
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
     link.href = generateProxyUrl(requestUrl, link.href, engine);
   });
-
-  // maybe implement image proxy?
 
   if (engine) {
     return engines[engine](window);

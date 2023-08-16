@@ -1,5 +1,6 @@
 import { DOMWindow } from "jsdom";
 import { IHandlerOutput } from "./handler.interface";
+import { EngineParseError } from "../errors";
 
 export default async function google(
   window: DOMWindow
@@ -9,7 +10,9 @@ export default async function google(
   );
 
   if (!googleAnchors) {
-    throw new Error("Failed to find anchors in search result [google]");
+    throw new EngineParseError(
+      "Failed to find anchors in search result [google]"
+    );
   }
   const results = [...googleAnchors];
 

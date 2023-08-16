@@ -1,6 +1,7 @@
 import { Readability } from "@mozilla/readability";
 import { IHandlerOutput } from "./handler.interface";
 import { DOMWindow } from "jsdom";
+import { EngineParseError } from "../errors";
 
 export default async function readability(
   window: DOMWindow
@@ -9,7 +10,7 @@ export default async function readability(
   const parsed = reader.parse();
 
   if (!parsed) {
-    throw new Error("Failed to parse [readability]");
+    throw new EngineParseError("Failed to parse [readability]");
   }
 
   return {
