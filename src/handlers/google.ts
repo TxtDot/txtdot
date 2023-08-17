@@ -5,24 +5,37 @@ import { EngineParseError } from "../errors/main";
 export default async function google(
   window: DOMWindow
 ): Promise<IHandlerOutput> {
-  const googleAnchors = window.document.querySelectorAll("a[jsname=ACyKwe]");
+  const googleAnchors = [
+    ...window.document.querySelectorAll("a[jsname=ACyKwe]"),
+  ] as HTMLAnchorElement[];
+  const googleNames = [...window.document.querySelectorAll(".VuuXrf")];
+
+  const results = googleAnchors.map(
+    (a: HTMLAnchorElement, i: number): GoogleProps => {
+      return {
+        href: a.href!,
+        siteName: googleNames[i].textContent!,
+        heading: a.childNodes[1].textContent!,
+      };
+    }
+  );
 
   if (!googleAnchors) {
     throw new EngineParseError(
       "Failed to find anchors in search result [google]"
     );
   }
-  const results = [...googleAnchors];
 
-  const convertToFormat = (result: Element, isHtml: boolean) => {
-    const anchor = result as HTMLAnchorElement;
-    const heading = anchor.childNodes[1] as HTMLHeadingElement;
-    if (!heading) {
-      return "";
-    }
+  if (!googleNames) {
+    throw new EngineParseError(
+      "Failed to find names in search result [google]"
+    );
+  }
+
+  const convertToFormat = (result: GoogleProps, isHtml: boolean) => {
     return isHtml
-      ? `<p><a href="${anchor.href}">${heading.innerHTML}</p>`
-      : `${heading.innerHTML} > ${anchor.href}`;
+      ? `<p><a href="${result.href}">${result.siteName} - ${result.heading}</p>`
+      : `${result.siteName} - ${result.heading} > ${result.href}`;
   };
 
   const content = results.map((result) => {
@@ -72,4 +85,10 @@ export default async function google(
     title: window.document.title,
     lang: window.document.documentElement.lang,
   };
+}
+
+interface GoogleProps {
+  href: string;
+  siteName: string;
+  heading: string;
 }
