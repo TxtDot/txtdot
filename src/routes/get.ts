@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 
 import { GetSchema, IGetSchema } from "../types/requests";
 import handlePage from "../handlers/main";
-import { generateRequestUrl } from "../utils";
+import { generateRequestUrl } from "../utils/generate";
 
 export default async function getRoute(fastify: FastifyInstance) {
   fastify.get<IGetSchema>(

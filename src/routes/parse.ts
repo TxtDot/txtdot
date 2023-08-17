@@ -1,7 +1,7 @@
 import { EngineRequest, IParseSchema, parseSchema } from "../types/requests";
 import { FastifyInstance } from "fastify";
 import handlePage from "../handlers/main";
-import { generateRequestUrl } from "../utils";
+import { generateRequestUrl } from "../utils/generate";
 
 export default async function parseRoute(fastify: FastifyInstance) {
   fastify.get<IParseSchema>(

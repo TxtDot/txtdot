@@ -7,17 +7,20 @@ import { DOMWindow } from "jsdom";
 import readability from "./readability";
 import google from "./google";
 
-import { generateProxyUrl } from "../utils";
-import isLocalResource from "../islocal";
+import { generateProxyUrl } from "../utils/generate";
+import isLocalResource from "../utils/islocal";
 
-import { InvalidParameterError, LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
+import {
+  InvalidParameterError,
+  LocalResourceError,
+  NotHtmlMimetypeError,
+} from "../errors/main";
 
 export default async function handlePage(
-  url: string,      // remote URL
-  requestUrl: URL,  // proxy URL
+  url: string, // remote URL
+  requestUrl: URL, // proxy URL
   engine?: string
 ): Promise<IHandlerOutput> {
-
   const urlObj = new URL(url);
 
   if (await isLocalResource(urlObj)) {
