@@ -6,15 +6,24 @@ import { DOMWindow } from "jsdom";
 
 import readability from "./readability";
 import google from "./google";
-import { generateProxyUrl } from "../utils";
 
-import { InvalidParameterError, NotHtmlMimetypeError } from "../errors/main";
+import { generateProxyUrl } from "../utils";
+import isLocalResource from "../islocal";
+
+import { InvalidParameterError, LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
 
 export default async function handlePage(
-  url: string,
-  requestUrl: URL,
+  url: string,      // remote URL
+  requestUrl: URL,  // proxy URL
   engine?: string
 ): Promise<IHandlerOutput> {
+
+  const urlObj = new URL(url);
+
+  if (await isLocalResource(urlObj)) {
+    throw new LocalResourceError();
+  }
+
   if (engine && engineList.indexOf(engine) === -1) {
     throw new InvalidParameterError("Invalid engine");
   }
@@ -26,7 +35,7 @@ export default async function handlePage(
     throw new NotHtmlMimetypeError({ url });
   }
 
-  const window = new JSDOM(response.data, { url: url }).window;
+  const window = new JSDOM(response.data, { url }).window;
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
     link.href = generateProxyUrl(requestUrl, link.href, engine);
@@ -36,9 +45,7 @@ export default async function handlePage(
     return engines[engine](window);
   }
 
-  const host = new URL(url).hostname;
-
-  return fallback[host]?.(window) || fallback["*"](window);
+  return fallback[urlObj.host]?.(window) || fallback["*"](window);
 }
 
 interface Engines {
