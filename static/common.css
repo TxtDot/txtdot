@@ -62,3 +62,7 @@ main {
   background: var(--bg2);
   color: var(--fg);
 }
+
+a {
+  text-decoration: none;
+}
