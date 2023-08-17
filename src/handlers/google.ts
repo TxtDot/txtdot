@@ -44,8 +44,30 @@ export default async function google(
   </form>
   `;
 
+  const navLinks = [
+    ...window.document.querySelectorAll(
+      "table[class=AaVjTc] > tbody > tr > td > a"
+    ),
+  ].map((l) => {
+    const link = l as HTMLAnchorElement;
+    return `<td><a href="${link.href}">${link.innerHTML}</a></td>`;
+  });
+
+  const currPage = (
+    window.document.querySelector(".YyVfkd") as HTMLTableCellElement
+  ).cellIndex;
+
+  const pageTd = `<td>${currPage}</td>`;
+
+  if (currPage === 1) navLinks.splice(currPage - 1, 0, pageTd);
+  else navLinks.splice(currPage, 0, pageTd);
+
+  const navigation = `<table>
+    <tbody><tr>${navLinks.join("")}</tr></tbody>
+  </table>`;
+
   return {
-    content: `${searchForm}${content.join("")}`,
+    content: `${searchForm}${content.join("")}${navigation}`,
     textContent: textContent.join("\n"),
     title: window.document.title,
     lang: window.document.documentElement.lang,
