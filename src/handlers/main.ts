@@ -18,7 +18,6 @@ import {
 
 export default async function handlePage(
   url: string, // remote URL
-  requestUrl: URL, // proxy URL
   engine?: string
 ): Promise<IHandlerOutput> {
   const urlObj = new URL(url);
@@ -41,7 +40,7 @@ export default async function handlePage(
   const window = new JSDOM(response.data, { url }).window;
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
-    link.href = generateProxyUrl(requestUrl, link.href, engine);
+    link.href = generateProxyUrl(link.href, engine);
   });
 
   if (engine) {
