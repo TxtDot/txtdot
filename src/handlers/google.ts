@@ -5,9 +5,7 @@ import { EngineParseError } from "../errors/main";
 export default async function google(
   window: DOMWindow
 ): Promise<IHandlerOutput> {
-  const googleAnchors = window.document.querySelectorAll(
-    "#rso > div > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)"
-  );
+  const googleAnchors = window.document.querySelectorAll("a[jsname=ACyKwe]");
 
   if (!googleAnchors) {
     throw new EngineParseError(
@@ -19,6 +17,9 @@ export default async function google(
   const convertToFormat = (result: Element, isHtml: boolean) => {
     const anchor = result as HTMLAnchorElement;
     const heading = anchor.childNodes[1] as HTMLHeadingElement;
+    if (!heading) {
+      return "";
+    }
     return isHtml
       ? `<p><a href="${anchor.href}">${heading.innerHTML}</p>`
       : `${heading.innerHTML} > ${anchor.href}`;
