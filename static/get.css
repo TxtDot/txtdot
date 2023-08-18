@@ -6,7 +6,8 @@
   font-size: 0.9rem;
 }
 .title {
-  font-weight: 500;
+  font-weight: 1000;
+  margin: 1rem;
 }
 
 a {
@@ -28,11 +29,14 @@ table {
   overflow-x: auto;
 }
 
-img, picture, video {
+img,
+picture,
+video {
   max-width: 100%;
   height: auto;
 }
 
-frame, iframe {
+frame,
+iframe {
   max-width: 100%;
 }
