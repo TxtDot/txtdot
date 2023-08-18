@@ -10,15 +10,15 @@ export default async function google(
   ] as HTMLAnchorElement[];
   const googleNames = [...window.document.querySelectorAll(".VuuXrf")];
 
-  const results = googleAnchors.map(
-    (a: HTMLAnchorElement, i: number): GoogleProps => {
+  const results = googleAnchors
+    .map((a: HTMLAnchorElement, i: number): GoogleProps => {
       return {
         href: a.href!,
         siteName: googleNames[i].textContent!,
-        heading: a.childNodes[1].textContent!,
+        heading: a.childNodes[1]?.textContent,
       };
-    }
-  );
+    })
+    .filter((a) => a.heading);
 
   if (!googleAnchors) {
     throw new EngineParseError(
@@ -90,5 +90,5 @@ export default async function google(
 interface GoogleProps {
   href: string;
   siteName: string;
-  heading: string;
+  heading: string | null;
 }
