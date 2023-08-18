@@ -8,27 +8,21 @@ export default async function google(
   const googleAnchors = [
     ...window.document.querySelectorAll("a[jsname=ACyKwe]"),
   ] as HTMLAnchorElement[];
-  const googleNames = [...window.document.querySelectorAll(".VuuXrf")];
 
-  const results = googleAnchors.map(
-    (a: HTMLAnchorElement, i: number): GoogleProps => {
+  const results = googleAnchors
+    .map((a: HTMLAnchorElement): GoogleProps => {
+      const parsedHref = new URL(new URL(a.href).searchParams.get("url")!);
       return {
         href: a.href!,
-        siteName: googleNames[i].textContent!,
-        heading: a.childNodes[1].textContent!,
+        siteName: parsedHref.hostname,
+        heading: a.childNodes[1]?.textContent,
       };
-    }
-  );
+    })
+    .filter((a) => a.heading);
 
   if (!googleAnchors) {
     throw new EngineParseError(
       "Failed to find anchors in search result [google]"
-    );
-  }
-
-  if (!googleNames) {
-    throw new EngineParseError(
-      "Failed to find names in search result [google]"
     );
   }
 
@@ -90,5 +84,5 @@ export default async function google(
 interface GoogleProps {
   href: string;
   siteName: string;
-  heading: string;
+  heading: string | null;
 }

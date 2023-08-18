@@ -27,6 +27,7 @@ class App {
   async init() {
     const fastify = Fastify({
       logger: true,
+      trustProxy: this.config.reverse_proxy_enabled,
     });
 
     fastify.register(fastifyStatic, {
@@ -58,9 +59,12 @@ class App {
 
     fastify.setErrorHandler(errorHandler);
 
-    fastify.listen({ host: this.config.host, port: this.config.port }, (err) => {
-      err && console.log(err);
-    });
+    fastify.listen(
+      { host: this.config.host, port: this.config.port },
+      (err) => {
+        err && console.log(err);
+      }
+    );
   }
 }
 
