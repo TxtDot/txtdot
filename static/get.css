@@ -28,11 +28,14 @@ table {
   overflow-x: auto;
 }
 
-img, picture, video {
+img,
+picture,
+video {
   max-width: 100%;
   height: auto;
 }
 
-frame, iframe {
+frame,
+iframe {
   max-width: 100%;
 }

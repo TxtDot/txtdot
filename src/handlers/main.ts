@@ -15,6 +15,7 @@ import {
   LocalResourceError,
   NotHtmlMimetypeError,
 } from "../errors/main";
+import stackoverflow from "./stackoverflow/main";
 
 export default async function handlePage(
   url: string, // remote URL
@@ -60,11 +61,13 @@ type EngineFunction = (window: DOMWindow) => Promise<IHandlerOutput>;
 export const engines: Engines = {
   readability,
   google,
+  stackoverflow,
 };
 
 export const engineList: string[] = Object.keys(engines);
 
 const fallback: Engines = {
+  "stackoverflow.com": engines.stackoverflow,
   "www.google.com": engines.google,
   "*": engines.readability,
 };
