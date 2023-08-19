@@ -11,7 +11,10 @@ export function generateProxyUrl(
   href: string,
   engine?: string
 ): string {
-  const urlParam = `?url=${encodeURIComponent(href)}`;
+  const parsedHref = new URL(href);
+  const hrefWithoutHash = href.replace(parsedHref.hash, "");
+
+  const urlParam = `?url=${encodeURIComponent(hrefWithoutHash)}`;
   const engineParam = engine ? `&engine=${engine}` : "";
-  return `${requestUrl.origin}/get${urlParam}${engineParam}`;
+  return `${requestUrl.origin}/get${urlParam}${engineParam}${parsedHref.hash}`;
 }
