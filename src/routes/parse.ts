@@ -5,7 +5,7 @@ import { generateRequestUrl } from "../utils/generate";
 
 export default async function parseRoute(fastify: FastifyInstance) {
   fastify.get<IParseSchema>(
-    "/parse",
+    "/api/parse",
     { schema: parseSchema },
     async (request: EngineRequest) => {
       return await handlePage(

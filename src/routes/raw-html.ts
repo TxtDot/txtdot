@@ -6,7 +6,7 @@ import { generateRequestUrl } from "../utils/generate";
 
 export default async function rawHtml(fastify: FastifyInstance) {
   fastify.get<IParseSchema>(
-    "/raw-html",
+    "/api/raw-html",
     { schema: rawHtmlSchema },
     async (request: GetRequest) => {
       return (
