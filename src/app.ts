@@ -48,7 +48,7 @@ class App {
           description: publicConfig.description,
           version: publicConfig.version,
         },
-      },
+      }
     });
     await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
 

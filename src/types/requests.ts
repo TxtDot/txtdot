@@ -31,6 +31,7 @@ export interface IParseSchema {
 
 export const indexSchema = {
   produces: ["text/html"],
+  hide: true
 };
 
 export const getQuerySchema = {
@@ -70,6 +71,7 @@ export const parseQuerySchema = {
 
 export const GetSchema: FastifySchema = {
   description: "Get page",
+  hide: true,
   querystring: getQuerySchema,
   produces: ["text/html", "text/plain"],
 };
