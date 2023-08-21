@@ -6,16 +6,15 @@ import { DOMWindow } from "jsdom";
 
 import readability from "./readability";
 import google from "./google";
+import stackoverflow from "./stackoverflow/main";
 
 import { generateProxyUrl } from "../utils/generate";
 import isLocalResource from "../utils/islocal";
 
 import {
-  InvalidParameterError,
   LocalResourceError,
   NotHtmlMimetypeError,
 } from "../errors/main";
-import stackoverflow from "./stackoverflow/main";
 
 export default async function handlePage(
   url: string, // remote URL
@@ -28,10 +27,6 @@ export default async function handlePage(
     throw new LocalResourceError();
   }
 
-  if (engine && engineList.indexOf(engine) === -1) {
-    throw new InvalidParameterError("engine");
-  }
-
   const response = await axios.get(url);
   const mime: string | undefined = response.headers["content-type"]?.toString();
 
@@ -42,7 +37,11 @@ export default async function handlePage(
   const window = new JSDOM(response.data, { url }).window;
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
-    link.href = generateProxyUrl(requestUrl, link.href, engine);
+    try {
+      link.href = generateProxyUrl(requestUrl, link.href, engine);
+    } catch (_err) {
+      // ignore TypeError: Invalid URL
+    }
   });
 
   if (engine) {
