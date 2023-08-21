@@ -9,8 +9,10 @@
   --bg2: #bbb;
   --fg2: #333;
 
-  --accent: hsl(207, 100%, 40%);
-  --accent-hl: hsl(207, 100%, 20%);
+  --accent: #0070cc; /* hsl(207, 100%, 40%) */
+  --accent-hl: #003866; /* hsl(207, 100%, 20%) */
+
+  --error: #ff9400;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,8 +23,8 @@
     --bg2: #444;
     --fg2: #bbb;
 
-    --accent: hsl(207, 100%, 60%);
-    --accent-hl: hsl(207, 100%, 80%);
+    --accent: #33a3ff; /* hsl(207, 100%, 60%) */
+    --accent-hl: #99d1ff; /* hsl(207, 100%, 80%) */
   }
 }
 
