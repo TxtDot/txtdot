@@ -27,7 +27,7 @@ class App {
   async init() {
     const fastify = Fastify({
       logger: true,
-      trustProxy: this.config.reverse_proxy_enabled,
+      trustProxy: this.config.reverse_proxy,
     });
 
     fastify.register(fastifyStatic, {
