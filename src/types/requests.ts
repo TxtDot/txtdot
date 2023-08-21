@@ -3,11 +3,7 @@ import { handlerSchema } from "../handlers/handler.interface";
 import { engineList } from "../handlers/main";
 
 export type GetRequest = FastifyRequest<{
-  Querystring: {
-    url: string;
-    format?: string;
-    engine?: string;
-  };
+  Querystring: IGetQuery;
 }>;
 
 export interface IGetQuery {

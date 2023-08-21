@@ -29,14 +29,14 @@ export default async function handlePage(
   }
 
   if (engine && engineList.indexOf(engine) === -1) {
-    throw new InvalidParameterError("Invalid engine");
+    throw new InvalidParameterError("engine");
   }
 
   const response = await axios.get(url);
   const mime: string | undefined = response.headers["content-type"]?.toString();
 
   if (mime && mime.indexOf("text/html") === -1) {
-    throw new NotHtmlMimetypeError({ url });
+    throw new NotHtmlMimetypeError(url);
   }
 
   const window = new JSDOM(response.data, { url }).window;
