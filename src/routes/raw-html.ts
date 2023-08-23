@@ -1,6 +1,8 @@
 import { FastifyInstance } from "fastify";
 
-import { GetRequest, IParseSchema, rawHtmlSchema } from "../types/requests";
+import { IParseSchema, rawHtmlSchema } from "../types/requests/api";
+import { GetRequest } from "../types/requests/browser";
+
 import handlePage from "../handlers/main";
 import { generateRequestUrl } from "../utils/generate";
 

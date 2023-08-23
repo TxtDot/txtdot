@@ -5,9 +5,10 @@
 
   font-size: 0.9rem;
 }
+
 .title {
+  border-bottom: 0.125rem solid var(--bg2);
   font-weight: 600;
-  margin: 1rem;
 }
 
 a {
