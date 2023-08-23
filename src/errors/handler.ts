@@ -4,12 +4,40 @@ import { getFastifyError } from "./validation";
 
 export default function errorHandler(
   error: Error,
-  _: FastifyRequest,
+  req: FastifyRequest,
   reply: FastifyReply
 ) {
-  // TODO: check if req.url starts with "/api/" and return JSON
-
+  if (req.originalUrl.startsWith("/api/")) {
+    return apiErrorHandler(error, reply);
+  }
   return htmlErrorHandler(error, reply);
+}
+
+function apiErrorHandler(error: Error, reply: FastifyReply) {
+  function generateResponse(code: number) {
+    return reply.code(code).send({
+      data: null,
+      error: {
+        code: code,
+        name: error.name,
+        message: error.message,
+      },
+    });
+  }
+
+  if (error instanceof NotHtmlMimetypeError) {
+    return generateResponse(501);
+  }
+
+  if (getFastifyError(error)?.statusCode === 400) {
+    return generateResponse(400);
+  }
+
+  if (error instanceof TxtDotError) {
+    return generateResponse(error.code);
+  }
+
+  return generateResponse(500);
 }
 
 function htmlErrorHandler(error: Error, reply: FastifyReply) {
