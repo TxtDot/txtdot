@@ -12,9 +12,12 @@ export function generateProxyUrl(
   engine?: string
 ): string {
   const parsedHref = new URL(href);
-  const hrefWithoutHash = href.replace(parsedHref.hash, "");
 
-  const urlParam = `?url=${encodeURIComponent(hrefWithoutHash)}`;
+  const hash = parsedHref.hash;  // save #hash
+  parsedHref.hash = "";  // remove
+
+  const urlParam = `?url=${encodeURIComponent(parsedHref.toString())}`;
   const engineParam = engine ? `&engine=${engine}` : "";
-  return `${requestUrl.origin}/get${urlParam}${engineParam}${parsedHref.hash}`;
+
+  return `${requestUrl.origin}/get${urlParam}${engineParam}${hash}`;
 }
