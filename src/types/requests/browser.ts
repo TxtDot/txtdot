@@ -1,18 +1,9 @@
-import { FastifyRequest, FastifySchema } from "fastify";
+import { FastifySchema } from "fastify";
 import { engineList } from "../../handlers/main";
-
-export type GetRequest = FastifyRequest<{
-  Querystring: IGetQuery;
-}>;
-
-export interface IGetQuery {
-  url: string;
-  format?: string;
-  engine?: string;
-}
+import { FromSchema } from "json-schema-to-ts";
 
 export interface IGetSchema {
-  Querystring: IGetQuery;
+  Querystring: IGetQuerySchema;
 }
 
 export const indexSchema = {
@@ -38,7 +29,8 @@ export const getQuerySchema = {
       enum: [...engineList, ""],
     },
   },
-};
+} as const;
+export type IGetQuerySchema = FromSchema<typeof getQuerySchema>;
 
 export const GetSchema: FastifySchema = {
   description: "Get page",

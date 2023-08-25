@@ -2,19 +2,11 @@ import { FastifySchema, FastifyRequest } from "fastify";
 import { IApiError, errorResponseSchema } from "../../errors/api";
 import { handlerSchema } from "../../handlers/handler.interface";
 import { engineList } from "../../handlers/main";
+import { FromSchema } from "json-schema-to-ts";
 
 export interface IApiResponse<T> {
   data?: T;
   error?: IApiError;
-}
-
-export interface IParseQuery {
-  url: string;
-  engine?: string;
-}
-
-export interface IParseSchema {
-  Querystring: IParseQuery;
 }
 
 export const parseQuerySchema = {
@@ -30,7 +22,7 @@ export const parseQuerySchema = {
       enum: [...engineList, ""],
     },
   },
-};
+} as const;
 
 export const parseSchema: FastifySchema = {
   description: "Parse the page and get all data from the engine",
@@ -51,6 +43,10 @@ export const parseSchema: FastifySchema = {
   },
   produces: ["text/json"],
 };
+
+export interface IParseSchema {
+  Querystring: FromSchema<typeof parseQuerySchema>;
+}
 
 export const rawHtmlSchema: FastifySchema = {
   description: "Parse the page and get raw HTML from the engine",
