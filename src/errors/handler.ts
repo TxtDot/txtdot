@@ -1,14 +1,66 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { NotHtmlMimetypeError } from "./main";
+import { NotHtmlMimetypeError, TxtDotError } from "./main";
+import { getFastifyError } from "./validation";
 
 export default function errorHandler(
   error: Error,
-  _: FastifyRequest,
+  req: FastifyRequest,
   reply: FastifyReply
 ) {
+  if (req.originalUrl.startsWith("/api/")) {
+    return apiErrorHandler(error, reply);
+  }
+  return htmlErrorHandler(error, reply);
+}
+
+function apiErrorHandler(error: Error, reply: FastifyReply) {
+  function generateResponse(code: number) {
+    return reply.code(code).send({
+      data: null,
+      error: {
+        code: code,
+        name: error.name,
+        message: error.message,
+      },
+    });
+  }
+
+  if (error instanceof NotHtmlMimetypeError) {
+    return generateResponse(501);
+  }
+
+  if (getFastifyError(error)?.statusCode === 400) {
+    return generateResponse(400);
+  }
+
+  if (error instanceof TxtDotError) {
+    return generateResponse(error.code);
+  }
+
+  return generateResponse(500);
+}
+
+function htmlErrorHandler(error: Error, reply: FastifyReply) {
   if (error instanceof NotHtmlMimetypeError) {
     return reply.redirect(301, error.url);
-  } else {
-    return error;
   }
+
+  if (getFastifyError(error)?.statusCode === 400) {
+    return reply.code(400).view("/templates/error.ejs", {
+      code: 400,
+      description: `Invalid parameter specified: ${error.message}`,
+    })
+  }
+
+  if (error instanceof TxtDotError) {
+    return reply.code(error.code).view("/templates/error.ejs", {
+      code: error.code,
+      description: error.description,
+    });
+  }
+
+  return reply.code(500).view("/templates/error.ejs", {
+    code: 500,
+    description: `${error.name}: ${error.message}`,
+  });
 }

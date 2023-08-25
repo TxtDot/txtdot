@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 
-import { GetSchema, IGetSchema } from "../types/requests";
+import { GetSchema, IGetSchema } from "../types/requests/browser";
 import handlePage from "../handlers/main";
 import { generateRequestUrl } from "../utils/generate";
 
