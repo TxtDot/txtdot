@@ -15,7 +15,8 @@
     "ejs": "^3.1.9",
     "fastify": "^4.21.0",
     "ip-range-check": "^0.2.0",
-    "jsdom": "^22.1.0"
+    "jsdom": "^22.1.0",
+    "json-schema-to-ts": "^2.9.2"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.2",
