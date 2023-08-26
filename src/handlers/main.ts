@@ -19,7 +19,8 @@ import {
 export default async function handlePage(
   url: string, // remote URL
   requestUrl: URL, // proxy URL
-  engine?: string
+  engine?: string,
+  redirect_path: string = "get"
 ): Promise<IHandlerOutput> {
   const urlObj = new URL(url);
 
@@ -38,7 +39,7 @@ export default async function handlePage(
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
     try {
-      link.href = generateProxyUrl(requestUrl, link.href, engine);
+      link.href = generateProxyUrl(requestUrl, link.href, engine, redirect_path);
     } catch (_err) {
       // ignore TypeError: Invalid URL
     }

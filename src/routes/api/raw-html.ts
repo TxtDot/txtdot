@@ -9,7 +9,8 @@ export default async function rawHtml(fastify: FastifyInstance) {
   fastify.get<IParseSchema>(
     "/api/raw-html",
     { schema: rawHtmlSchema },
-    async (request) => {
+    async (request, reply) => {
+      reply.type("text/html; charset=utf-8");
       return (
         await handlePage(
           request.query.url,
@@ -17,7 +18,9 @@ export default async function rawHtml(fastify: FastifyInstance) {
             request.protocol,
             request.hostname,
             request.originalUrl
-          )
+          ),
+          request.query.engine,
+          "api/raw-html"
         )
       ).content;
     }
