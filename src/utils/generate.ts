@@ -9,7 +9,8 @@ export function generateRequestUrl(
 export function generateProxyUrl(
   requestUrl: URL,
   href: string,
-  engine?: string
+  engine?: string,
+  redirect_url: string = "get"
 ): string {
   const parsedHref = new URL(href);
 
@@ -19,5 +20,5 @@ export function generateProxyUrl(
   const urlParam = `?url=${encodeURIComponent(parsedHref.toString())}`;
   const engineParam = engine ? `&engine=${engine}` : "";
 
-  return `${requestUrl.origin}/get${urlParam}${engineParam}${hash}`;
+  return `${requestUrl.origin}/${redirect_url}${urlParam}${engineParam}${hash}`;
 }
