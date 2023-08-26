@@ -9,10 +9,10 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import ejs from "ejs";
 
-import getRoute from "./routes/get";
-import parseRoute from "./routes/parse";
-import indexRoute from "./routes/index";
-import rawHtml from "./routes/raw-html";
+import getRoute from "./routes/browser/get";
+import parseRoute from "./routes/api/parse";
+import indexRoute from "./routes/browser/index";
+import rawHtml from "./routes/api/raw-html";
 
 import publicConfig from "./publicConfig";
 import errorHandler from "./errors/handler";

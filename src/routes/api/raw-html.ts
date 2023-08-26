@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
 
-import { IParseSchema, rawHtmlSchema } from "../types/requests/api";
+import { IParseSchema, rawHtmlSchema } from "../../types/requests/api";
 
-import handlePage from "../handlers/main";
-import { generateRequestUrl } from "../utils/generate";
+import handlePage from "../../handlers/main";
+import { generateRequestUrl } from "../../utils/generate";
 
 export default async function rawHtml(fastify: FastifyInstance) {
   fastify.get<IParseSchema>(
