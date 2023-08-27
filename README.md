@@ -33,3 +33,9 @@ npm run dev
 npm run build
 npm run start
 ```
+
+### Docker
+```bash
+sudo docker build -t txtdot/txtdot:1.2.0 .
+sudo docker run --network host -d txtdot/txtdot:1.2.0
+```
