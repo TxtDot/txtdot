@@ -8,7 +8,7 @@ export class ConfigService {
   constructor() {
     config();
 
-    this.host = process.env.HOST || "localhost";
+    this.host = process.env.HOST || "0.0.0.0";
     this.port = Number(process.env.PORT) || 8080;
 
     this.reverse_proxy = Boolean(process.env.REVERSE_PROXY) || false;

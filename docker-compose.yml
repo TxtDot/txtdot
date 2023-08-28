@@ -2,11 +2,11 @@ version: "3"
 
 services:
   txtdot:
-    image: darkcat09/txtdot:latest
+    build: .
+    ports:
+      - "8080:8080"
     restart: unless-stopped
-    network_mode: host
     environment:
-      - HOST=127.0.0.1
+      - HOST=0.0.0.0
       - PORT=8080
       - REVERSE_PROXY=true
-    # env_file: .env
