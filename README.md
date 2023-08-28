@@ -37,6 +37,6 @@ npm run start
 ### Docker
 
 ```bash
-sudo docker build -t txtdot/txtdot:latest .
-sudo docker run --network host -d txtdot/txtdot:latest
+docker compose build
+docker compose up -d
 ```

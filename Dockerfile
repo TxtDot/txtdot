@@ -1,16 +1,12 @@
-FROM node:18-alpine
-
+FROM node:18-alpine as build
 WORKDIR /app
-
-COPY package*.json .
-
-RUN npm install
-
 COPY . .
-
+RUN npm install
 RUN npm run build
 
-ENV PORT=8080
+FROM node:18-alpine as run
+WORKDIR /app
+COPY /app/dist /app/package*.json . --from=build
+RUN npm install --omit=dev
+CMD npm start
 EXPOSE 8080
-
-CMD ["npm", "start"]

@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  txtdot:
+    image: darkcat09/txtdot:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - HOST=127.0.0.1
+      - PORT=8080
+      - REVERSE_PROXY=true
+    # env_file: .env
