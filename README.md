@@ -33,3 +33,10 @@ npm run dev
 npm run build
 npm run start
 ```
+
+### Docker
+
+```bash
+docker compose build
+docker compose up -d
+```
