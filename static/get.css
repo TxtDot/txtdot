@@ -8,6 +8,7 @@
 
 .title {
   border-bottom: 0.125rem solid var(--bg2);
+  padding-bottom: 0.125rem;
   font-weight: 600;
 }
 
