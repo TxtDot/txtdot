@@ -35,7 +35,7 @@ body {
   background: var(--bg);
   color: var(--fg);
 
-  font-family: system-ui, sans-serif;
+  font-family: 'Noto Sans', 'Cantarell', 'Roboto', system-ui, sans-serif;
   font-size: 1.1rem;
 }
 
