@@ -1,9 +1,5 @@
 #!/sbin/openrc-run
 
-#export HOST=127.0.0.1
-#export PORT=8080
-#export REVERSE_PROXY=true
-
 name=$RC_SVCNAME
 command="/usr/bin/node"
 command_args="./src/app.js"
