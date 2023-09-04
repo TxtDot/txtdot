@@ -5,22 +5,21 @@ import { JSDOM } from "jsdom";
 import { DOMWindow } from "jsdom";
 
 import readability from "./readability";
-import google from "./google";
-import stackoverflow from "./stackoverflow/main";
+import google, { GoogleDomains } from "./google";
+import stackoverflow, { StackOverflowDomains } from "./stackoverflow/main";
 
 import { generateProxyUrl } from "../utils/generate";
 import isLocalResource from "../utils/islocal";
 
-import {
-  LocalResourceError,
-  NotHtmlMimetypeError,
-} from "../errors/main";
+import micromatch from "micromatch";
+
+import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
 
 export default async function handlePage(
   url: string, // remote URL
   requestUrl: URL, // proxy URL
   engine?: string,
-  redirect_path: string = "get"
+  redirect_path: string = "get",
 ): Promise<IHandlerOutput> {
   const urlObj = new URL(url);
 
@@ -39,7 +38,12 @@ export default async function handlePage(
 
   [...window.document.getElementsByTagName("a")].forEach((link) => {
     try {
-      link.href = generateProxyUrl(requestUrl, link.href, engine, redirect_path);
+      link.href = generateProxyUrl(
+        requestUrl,
+        link.href,
+        engine,
+        redirect_path,
+      );
     } catch (_err) {
       // ignore TypeError: Invalid URL
     }
@@ -49,14 +53,18 @@ export default async function handlePage(
     return engines[engine](window);
   }
 
-  return fallback[urlObj.host]?.(window) || fallback["*"](window);
+  for (let match of fallback) {
+    if (micromatch.isMatch(urlObj.hostname, match.pattern)) {
+      return match.engine(window);
+    }
+  }
+
+  return engines.readability(window);
 }
 
 interface Engines {
   [key: string]: EngineFunction;
 }
-
-type EngineFunction = (window: DOMWindow) => Promise<IHandlerOutput>;
 
 export const engines: Engines = {
   readability,
@@ -64,10 +72,22 @@ export const engines: Engines = {
   stackoverflow,
 };
 
+type EngineFunction = (window: DOMWindow) => Promise<IHandlerOutput>;
+export type EngineMatch = {
+  pattern: string | string[];
+  engine: EngineFunction;
+};
+export type EnginesMatch = EngineMatch[];
+
 export const engineList: string[] = Object.keys(engines);
 
-const fallback: Engines = {
-  "stackoverflow.com": engines.stackoverflow,
-  "www.google.com": engines.google,
-  "*": engines.readability,
-};
+export const fallback: EnginesMatch = [
+  {
+    pattern: GoogleDomains,
+    engine: engines.google,
+  },
+  {
+    pattern: StackOverflowDomains,
+    engine: engines.stackoverflow,
+  },
+];

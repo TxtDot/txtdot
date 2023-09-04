@@ -4,7 +4,7 @@ import { EngineParseError } from "../../errors/main";
 import qPostsHandler from "./questions-posts";
 
 export default async function stackoverflow(
-  window: DOMWindow
+  window: DOMWindow,
 ): Promise<IHandlerOutput> {
   const url = new URL(window.location.href);
 
@@ -29,3 +29,14 @@ export default async function stackoverflow(
 
   return result;
 }
+
+export const StackOverflowDomains = [
+  "stackoverflow.com",
+  "*.stackoverflow.com",
+  "*.stackexchange.com",
+  "askubuntu.com",
+  "stackapps.com",
+  "mathoverflow.net",
+  "superuser.com",
+  "serverfault.com",
+];
