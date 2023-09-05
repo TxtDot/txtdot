@@ -3,11 +3,17 @@ import { IHandlerOutput } from "./handler.interface";
 import { EngineParseError } from "../errors/main";
 
 export default async function google(
-  window: DOMWindow
+  window: DOMWindow,
 ): Promise<IHandlerOutput> {
   const googleAnchors = [
     ...window.document.querySelectorAll("a[jsname=ACyKwe]"),
   ] as HTMLAnchorElement[];
+
+  if (!googleAnchors) {
+    throw new EngineParseError(
+      "Failed to find anchors in search result [google]",
+    );
+  }
 
   const results = googleAnchors
     .map((a: HTMLAnchorElement): GoogleProps => {
@@ -19,12 +25,6 @@ export default async function google(
       };
     })
     .filter((a) => a.heading);
-
-  if (!googleAnchors) {
-    throw new EngineParseError(
-      "Failed to find anchors in search result [google]"
-    );
-  }
 
   const convertToFormat = (result: GoogleProps, isHtml: boolean) => {
     return isHtml
@@ -41,12 +41,12 @@ export default async function google(
   });
 
   const search = window.document.getElementById(
-    "APjFqb"
+    "APjFqb",
   ) as HTMLTextAreaElement;
 
   const navLinks = [
     ...window.document.querySelectorAll(
-      "table[class=AaVjTc] > tbody > tr > td > a"
+      "table[class=AaVjTc] > tbody > tr > td > a",
     ),
   ].map((l) => {
     const link = l as HTMLAnchorElement;
@@ -80,6 +80,15 @@ export default async function google(
     lang: window.document.documentElement.lang,
   };
 }
+
+export const GoogleDomains = [
+  "google.*",
+  "google.co.*",
+  "google.com.*",
+  "www.google.*",
+  "www.google.co.*",
+  "www.google.com.*",
+];
 
 interface GoogleProps {
   href: string;
