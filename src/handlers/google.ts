@@ -9,6 +9,12 @@ export default async function google(
     ...window.document.querySelectorAll("a[jsname=ACyKwe]"),
   ] as HTMLAnchorElement[];
 
+  if (!googleAnchors) {
+    throw new EngineParseError(
+      "Failed to find anchors in search result [google]",
+    );
+  }
+
   const results = googleAnchors
     .map((a: HTMLAnchorElement): GoogleProps => {
       const parsedHref = new URL(new URL(a.href).searchParams.get("url")!);
@@ -19,12 +25,6 @@ export default async function google(
       };
     })
     .filter((a) => a.heading);
-
-  if (!googleAnchors) {
-    throw new EngineParseError(
-      "Failed to find anchors in search result [google]",
-    );
-  }
 
   const convertToFormat = (result: GoogleProps, isHtml: boolean) => {
     return isHtml
