@@ -53,9 +53,12 @@ export default async function handlePage(
     return engines[engine](window);
   }
 
-  for (let match of fallback) {
+  const title = window.document.title;
+  const lang = window.document.documentElement.lang;
+
+  for (const match of fallback) {
     if (micromatch.isMatch(urlObj.hostname, match.pattern)) {
-      return match.engine(window);
+      return { title, lang, ...match.engine(window) };
     }
   }
 

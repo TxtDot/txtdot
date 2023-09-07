@@ -1,8 +1,8 @@
 export interface IHandlerOutput {
   content: string;
   textContent: string;
-  title: string;
-  lang: string;
+  title?: string;
+  lang?: string;
 }
 
 export const handlerSchema = {
