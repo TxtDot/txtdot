@@ -76,8 +76,6 @@ export default async function google(
   return {
     content: `${searchForm}${content.join("")}${navigation}`,
     textContent: textContent.join("\n"),
-    title: window.document.title,
-    lang: window.document.documentElement.lang,
   };
 }
 
