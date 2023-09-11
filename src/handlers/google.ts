@@ -5,10 +5,10 @@ import { EngineParseError } from "../errors/main";
 export default async function google(
   input: HandlerInput,
 ): Promise<IHandlerOutput> {
-  const document = input.parseDom().window.document;
+  const window = input.parseDom().window;
 
   const googleAnchors = [
-    ...document.querySelectorAll("a[jsname=ACyKwe]"),
+    ...window.document.querySelectorAll("a[jsname=ACyKwe]"),
   ] as HTMLAnchorElement[];
 
   if (!googleAnchors) {
