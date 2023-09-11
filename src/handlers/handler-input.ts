@@ -22,7 +22,7 @@ export class HandlerInput {
     this.redirectPath = redirectPath;
   }
 
-  parseDom() {
+  parseDom(): JSDOM {
     const dom = new JSDOM(this.data, { url: this.url });
 
     const links = dom.window.document.getElementsByTagName("a");
@@ -38,9 +38,11 @@ export class HandlerInput {
         // ignore TypeError: Invalid URL
       }
     }
+
+    return dom;
   }
 
-  getUrl() {
+  getUrl(): string {
     return this.url;
   }
 }
