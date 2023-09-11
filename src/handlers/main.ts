@@ -2,15 +2,12 @@ import { IHandlerOutput } from "./handler.interface";
 import { Engines, EngineFunction, EnginesMatch } from "../types/handlers";
 import axios from "../types/axios";
 
-import { JSDOM } from "jsdom";
-
 import micromatch from "micromatch";
 
 import readability from "./readability";
 import google, { GoogleDomains } from "./google";
 import stackoverflow, { StackOverflowDomains } from "./stackoverflow/main";
 
-import { generateProxyUrl } from "../utils/generate";
 import isLocalResource from "../utils/islocal";
 
 import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
