@@ -4,14 +4,14 @@ import axios from "../types/axios";
 import { JSDOM } from "jsdom";
 import { DOMWindow } from "jsdom";
 
+import micromatch from "micromatch";
+
 import readability from "./readability";
 import google, { GoogleDomains } from "./google";
 import stackoverflow, { StackOverflowDomains } from "./stackoverflow/main";
 
 import { generateProxyUrl } from "../utils/generate";
 import isLocalResource from "../utils/islocal";
-
-import micromatch from "micromatch";
 
 import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
 
@@ -49,20 +49,19 @@ export default async function handlePage(
     }
   });
 
-  if (engine) {
-    return engines[engine](window);
+  return getFallbackEngine(urlObj.hostname, engine)(window);
+}
+
+function getFallbackEngine(host: string, specified?: string): EngineFunction {
+  if (specified) {
+    return engines[specified];
   }
-
-  const title = window.document.title;
-  const lang = window.document.documentElement.lang;
-
-  for (const match of fallback) {
-    if (micromatch.isMatch(urlObj.hostname, match.pattern)) {
-      return { title, lang, ...match.engine(window) };
+  for (const engine of fallback) {
+    if (micromatch.isMatch(host, engine.pattern)) {
+      return engine.engine;
     }
   }
-
-  return engines.readability(window);
+  return engines.readability;
 }
 
 interface Engines {
