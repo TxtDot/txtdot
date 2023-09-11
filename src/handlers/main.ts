@@ -1,8 +1,8 @@
 import { IHandlerOutput } from "./handler.interface";
+import { Engines, EngineFunction, EnginesMatch } from "../types/handlers";
 import axios from "../types/axios";
 
 import { JSDOM } from "jsdom";
-import { DOMWindow } from "jsdom";
 
 import micromatch from "micromatch";
 
@@ -64,22 +64,11 @@ function getFallbackEngine(host: string, specified?: string): EngineFunction {
   return engines.readability;
 }
 
-interface Engines {
-  [key: string]: EngineFunction;
-}
-
 export const engines: Engines = {
   readability,
   google,
   stackoverflow,
 };
-
-type EngineFunction = (window: DOMWindow) => Promise<IHandlerOutput>;
-export type EngineMatch = {
-  pattern: string | string[];
-  engine: EngineFunction;
-};
-export type EnginesMatch = EngineMatch[];
 
 export const engineList: string[] = Object.keys(engines);
 
