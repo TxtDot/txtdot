@@ -14,12 +14,13 @@ import { generateProxyUrl } from "../utils/generate";
 import isLocalResource from "../utils/islocal";
 
 import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
+import { HandlerInput } from "./handler-input";
 
 export default async function handlePage(
   url: string, // remote URL
   requestUrl: URL, // proxy URL
   engine?: string,
-  redirect_path: string = "get",
+  redirectPath: string = "get",
 ): Promise<IHandlerOutput> {
   const urlObj = new URL(url);
 
@@ -34,22 +35,15 @@ export default async function handlePage(
     throw new NotHtmlMimetypeError(url);
   }
 
-  const window = new JSDOM(response.data, { url }).window;
-
-  [...window.document.getElementsByTagName("a")].forEach((link) => {
-    try {
-      link.href = generateProxyUrl(
-        requestUrl,
-        link.href,
-        engine,
-        redirect_path,
-      );
-    } catch (_err) {
-      // ignore TypeError: Invalid URL
-    }
-  });
-
-  return getFallbackEngine(urlObj.hostname, engine)(window);
+  return getFallbackEngine(urlObj.hostname, engine)(
+    new HandlerInput(
+      response.data,
+      url,
+      requestUrl,
+      engine,
+      redirectPath,
+    )
+  );
 }
 
 function getFallbackEngine(host: string, specified?: string): EngineFunction {

@@ -1,4 +1,4 @@
-import { DOMWindow } from "jsdom";
+import { HandlerInput } from "../handlers/handler-input";
 import { IHandlerOutput } from "../handlers/handler.interface";
 
 export interface Engines {
@@ -10,5 +10,5 @@ export type EngineMatch = {
   engine: EngineFunction;
 };
 
-export type EngineFunction = (window: DOMWindow) => Promise<IHandlerOutput>;
+export type EngineFunction = (input: HandlerInput) => Promise<IHandlerOutput>;
 export type EnginesMatch = EngineMatch[];
