@@ -1,10 +1,12 @@
-import { DOMWindow } from "jsdom";
+import { HandlerInput } from "./handler-input";
 import { IHandlerOutput } from "./handler.interface";
 import { EngineParseError } from "../errors/main";
 
 export default async function google(
-  window: DOMWindow,
+  input: HandlerInput,
 ): Promise<IHandlerOutput> {
+  const window = input.parseDom().window;
+
   const googleAnchors = [
     ...window.document.querySelectorAll("a[jsname=ACyKwe]"),
   ] as HTMLAnchorElement[];

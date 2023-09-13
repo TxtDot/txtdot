@@ -1,13 +1,14 @@
+import { HandlerInput } from "../handler-input";
 import { IHandlerOutput } from "../handler.interface";
-import { DOMWindow } from "jsdom";
 import { EngineParseError } from "../../errors/main";
 import qPostsHandler from "./questions-posts";
 
 export default async function stackoverflow(
-  window: DOMWindow,
+  input: HandlerInput,
 ): Promise<IHandlerOutput> {
-  const url = new URL(window.location.href);
+  const window = input.parseDom().window;
 
+  const url = new URL(window.location.href);
   const path = url.pathname.split("/").filter((p) => p !== "");
 
   let result: IHandlerOutput = {

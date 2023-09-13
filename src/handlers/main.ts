@@ -1,25 +1,23 @@
 import { IHandlerOutput } from "./handler.interface";
+import { Engines, EngineFunction, EnginesMatch } from "../types/handlers";
 import axios from "../types/axios";
 
-import { JSDOM } from "jsdom";
-import { DOMWindow } from "jsdom";
+import micromatch from "micromatch";
 
 import readability from "./readability";
 import google, { GoogleDomains } from "./google";
 import stackoverflow, { StackOverflowDomains } from "./stackoverflow/main";
 
-import { generateProxyUrl } from "../utils/generate";
 import isLocalResource from "../utils/islocal";
 
-import micromatch from "micromatch";
-
 import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
+import { HandlerInput } from "./handler-input";
 
 export default async function handlePage(
   url: string, // remote URL
   requestUrl: URL, // proxy URL
   engine?: string,
-  redirect_path: string = "get",
+  redirectPath: string = "get",
 ): Promise<IHandlerOutput> {
   const urlObj = new URL(url);
 
@@ -34,39 +32,27 @@ export default async function handlePage(
     throw new NotHtmlMimetypeError(url);
   }
 
-  const window = new JSDOM(response.data, { url }).window;
-
-  [...window.document.getElementsByTagName("a")].forEach((link) => {
-    try {
-      link.href = generateProxyUrl(
-        requestUrl,
-        link.href,
-        engine,
-        redirect_path,
-      );
-    } catch (_err) {
-      // ignore TypeError: Invalid URL
-    }
-  });
-
-  if (engine) {
-    return engines[engine](window);
-  }
-
-  const title = window.document.title;
-  const lang = window.document.documentElement.lang;
-
-  for (const match of fallback) {
-    if (micromatch.isMatch(urlObj.hostname, match.pattern)) {
-      return { title, lang, ...match.engine(window) };
-    }
-  }
-
-  return engines.readability(window);
+  return getFallbackEngine(urlObj.hostname, engine)(
+    new HandlerInput(
+      response.data,
+      url,
+      requestUrl,
+      engine,
+      redirectPath,
+    )
+  );
 }
 
-interface Engines {
-  [key: string]: EngineFunction;
+function getFallbackEngine(host: string, specified?: string): EngineFunction {
+  if (specified) {
+    return engines[specified];
+  }
+  for (const engine of fallback) {
+    if (micromatch.isMatch(host, engine.pattern)) {
+      return engine.engine;
+    }
+  }
+  return engines.readability;
 }
 
 export const engines: Engines = {
@@ -74,13 +60,6 @@ export const engines: Engines = {
   google,
   stackoverflow,
 };
-
-type EngineFunction = (window: DOMWindow) => Promise<IHandlerOutput>;
-export type EngineMatch = {
-  pattern: string | string[];
-  engine: EngineFunction;
-};
-export type EnginesMatch = EngineMatch[];
 
 export const engineList: string[] = Object.keys(engines);
 
