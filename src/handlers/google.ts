@@ -3,17 +3,17 @@ import { IHandlerOutput } from "./handler.interface";
 import { EngineParseError } from "../errors/main";
 
 export default async function google(
-  input: HandlerInput,
+  input: HandlerInput
 ): Promise<IHandlerOutput> {
   const window = input.parseDom().window;
 
   const googleAnchors = [
-    ...window.document.querySelectorAll("a[jsname=ACyKwe]"),
+    ...window.document.querySelectorAll("a[jsname=UWckNb]"),
   ] as HTMLAnchorElement[];
 
   if (!googleAnchors) {
     throw new EngineParseError(
-      "Failed to find anchors in search result [google]",
+      "Failed to find anchors in search result [google]"
     );
   }
 
@@ -43,30 +43,8 @@ export default async function google(
   });
 
   const search = window.document.getElementById(
-    "APjFqb",
+    "APjFqb"
   ) as HTMLTextAreaElement;
-
-  const navLinks = [
-    ...window.document.querySelectorAll(
-      "table[class=AaVjTc] > tbody > tr > td > a",
-    ),
-  ].map((l) => {
-    const link = l as HTMLAnchorElement;
-    return `<td><a href="${link.href}">${link.innerHTML}</a></td>`;
-  });
-
-  const currPage =
-    (window.document.querySelector(".YyVfkd") as HTMLTableCellElement)
-      ?.cellIndex || 0;
-
-  const pageTd = `<td>${currPage}</td>`;
-
-  if (currPage === 1) navLinks.splice(currPage - 1, 0, pageTd);
-  else if (currPage !== 0) navLinks.splice(currPage, 0, pageTd);
-
-  const navigation = `<table>
-    <tbody><tr>${navLinks.join("")}</tr></tbody>
-  </table>`;
 
   const searchForm = `
   <form onsubmit="window.location.href = '/get?url=https://www.google.com/search?q='+ document.getElementById('q').value.split(' ').join('+'); return false">
@@ -76,7 +54,7 @@ export default async function google(
   `;
 
   return {
-    content: `${searchForm}${content.join("")}${navigation}`,
+    content: `${searchForm}${content.join("")}`,
     textContent: textContent.join("\n"),
   };
 }
