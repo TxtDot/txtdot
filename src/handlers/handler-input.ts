@@ -7,6 +7,7 @@ export class HandlerInput {
   private requestUrl: URL;
   private engine?: string;
   private redirectPath: string;
+  private dom?: JSDOM;
 
   constructor(
     data: string,
@@ -23,9 +24,13 @@ export class HandlerInput {
   }
 
   parseDom(): JSDOM {
-    const dom = new JSDOM(this.data, { url: this.url });
+    if (this.dom) {
+      return this.dom;
+    }
 
-    const links = dom.window.document.getElementsByTagName("a");
+    this.dom = new JSDOM(this.data, { url: this.url });
+
+    const links = this.dom.window.document.getElementsByTagName("a");
     for (const link of links) {
       try {
         link.href = generateProxyUrl(
@@ -39,7 +44,7 @@ export class HandlerInput {
       }
     }
 
-    return dom;
+    return this.dom;
   }
 
   getUrl(): string {
