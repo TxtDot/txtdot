@@ -1,8 +1,4 @@
-.menu {
-  display: flex;
-  flex-direction: row;
-  column-gap: 0.25rem;
-
+.menu .button {
   font-size: 0.9rem;
 }
 
