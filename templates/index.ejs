@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <% const desc="txtdot is a HTTP proxy that parses text, links and pictures from pages reducing internet traffic, removing ads and heavy scripts" %>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="<%= desc %>">
+    <meta name="description" content="<%= publicConfig.description %>">
     <title>txt. main page</title>
     <link rel="stylesheet" href="/static/common.css">
     <link rel="stylesheet" href="/static/index.css">
@@ -16,10 +15,11 @@
       <header>
         <h1>txt<span class="dot">.</span></h1>
         <p class="menu">
+          <a href="https://github.com/TxtDot/txtdot/releases/latest" class="button secondary">v<%= publicConfig.version %></a>
           <a href="https://github.com/txtdot/txtdot" class="button secondary">GitHub</a>
           <a href="https://txtdot.github.io/documentation" class="button secondary">Docs</a>
         </p>
-        <p><%= desc %></p>
+        <p><%= publicConfig.description %></p>
       </header>
       <form action="/get" method="get" class="input-grid">
         <div class="input">
