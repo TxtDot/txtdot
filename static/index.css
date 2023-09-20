@@ -16,3 +16,7 @@ h1 > .dot {
 h1 > .dot-err {
   color: var(--error);
 }
+
+.menu {
+  justify-content: center;
+}

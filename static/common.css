@@ -45,6 +45,12 @@ main {
   margin: auto;
 }
 
+.menu {
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.25rem;
+}
+
 .button {
   padding: 0.25rem 0.75rem;
 
@@ -54,6 +60,7 @@ main {
   background: var(--bg);
   color: var(--fg);
   text-decoration: none;
+  font-size: 1rem;
 
   cursor: pointer;
 }
