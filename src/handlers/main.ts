@@ -5,6 +5,7 @@ import axios from "../types/axios";
 import micromatch from "micromatch";
 
 import readability from "./readability";
+import engineWithJsUnsafe from "./withJsUnsafe";
 import google, { GoogleDomains } from "./google";
 import stackoverflow, { StackOverflowDomains } from "./stackoverflow/main";
 
@@ -57,6 +58,7 @@ function getFallbackEngine(host: string, specified?: string): EngineFunction {
 
 export const engines: Engines = {
   readability,
+  engineWithJsUnsafe,
   google,
   stackoverflow,
 };

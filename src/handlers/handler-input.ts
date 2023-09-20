@@ -1,4 +1,4 @@
-import { JSDOM } from "jsdom";
+import jsdom, { JSDOM } from "jsdom";
 import { generateProxyUrl } from "../utils/generate";
 
 export class HandlerInput {
@@ -23,12 +23,12 @@ export class HandlerInput {
     this.redirectPath = redirectPath;
   }
 
-  parseDom(): JSDOM {
+  parseDom(options?: jsdom.ConstructorOptions): JSDOM {
     if (this.dom) {
       return this.dom;
     }
 
-    this.dom = new JSDOM(this.data, { url: this.url });
+    this.dom = new JSDOM(this.data, { ...options, url: this.url });
 
     const links = this.dom.window.document.getElementsByTagName("a");
     for (const link of links) {
