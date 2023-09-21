@@ -32,7 +32,7 @@ export default async function handlePage(
   const mime: string | undefined = response.headers["content-type"]?.toString();
 
   if (mime && mime.indexOf("text/html") === -1) {
-    throw new NotHtmlMimetypeError(url);
+    throw new NotHtmlMimetypeError();
   }
 
   return getFallbackEngine(urlObj.hostname, engine)(

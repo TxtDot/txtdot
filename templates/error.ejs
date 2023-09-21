@@ -15,6 +15,14 @@
         <h1>txt<span class="dot-err">.</span></h1>
         <p class="menu">
           <a href="/" class="button">Home</a>
+          <% if (proxyBtn) { %>
+            <a
+              href="/proxy?url=<%= encodeURIComponent(url) %>"
+              class="button secondary"
+            >
+              Proxy
+            </a>
+          <% } %>
           <a href="<%= url %>" class="button secondary">Original page</a>
         </p>
         <p><%= description %></p>

@@ -29,10 +29,6 @@ function apiErrorHandler(error: Error, reply: FastifyReply) {
     });
   }
 
-  if (error instanceof NotHtmlMimetypeError) {
-    return generateResponse(501);
-  }
-
   if (getFastifyError(error)?.statusCode === 400) {
     return generateResponse(400);
   }
@@ -45,10 +41,6 @@ function apiErrorHandler(error: Error, reply: FastifyReply) {
 }
 
 function htmlErrorHandler(error: Error, reply: FastifyReply, url: string) {
-  if (error instanceof NotHtmlMimetypeError) {
-    return reply.redirect(301, error.url);
-  }
-
   if (getFastifyError(error)?.statusCode === 400) {
     return reply.code(400).view("/templates/error.ejs", {
       url,
@@ -62,6 +54,7 @@ function htmlErrorHandler(error: Error, reply: FastifyReply, url: string) {
       url,
       code: error.code,
       description: error.description,
+      proxyBtn: error instanceof NotHtmlMimetypeError,
     });
   }
 
