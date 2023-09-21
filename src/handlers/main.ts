@@ -12,6 +12,8 @@ import isLocalResource from "../utils/islocal";
 
 import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
 import { HandlerInput } from "./handler-input";
+import { Readable } from "stream";
+import { decodeStream, parseEncodingName } from "../utils/http";
 
 export default async function handlePage(
   url: string, // remote URL
@@ -26,6 +28,7 @@ export default async function handlePage(
   }
 
   const response = await axios.get(url);
+  const data: Readable = response.data;
   const mime: string | undefined = response.headers["content-type"]?.toString();
 
   if (mime && mime.indexOf("text/html") === -1) {
@@ -34,7 +37,7 @@ export default async function handlePage(
 
   return getFallbackEngine(urlObj.hostname, engine)(
     new HandlerInput(
-      response.data,
+      await decodeStream(data, parseEncodingName(mime)),
       url,
       requestUrl,
       engine,
