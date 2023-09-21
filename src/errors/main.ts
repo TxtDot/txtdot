@@ -1,3 +1,5 @@
+import getConfig from "../config/main";
+
 export abstract class TxtDotError extends Error {
   code: number;
   name: string;
@@ -40,7 +42,11 @@ export class NotHtmlMimetypeError extends TxtDotError {
     super(
       421,
       "NotHtmlMimetypeError",
-      "Received non-HTML content, use proxy",
+      "Received non-HTML content, " + (
+        getConfig().proxy_res ?
+          "use proxy instead of parser." :
+          "proxying is disabled by the instance admin."
+      ),
     );
   }
 }

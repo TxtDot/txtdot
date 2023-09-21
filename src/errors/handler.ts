@@ -3,6 +3,7 @@ import { NotHtmlMimetypeError, TxtDotError } from "./main";
 import { getFastifyError } from "./validation";
 
 import { IGetSchema } from "../types/requests/browser";
+import getConfig from "../config/main";
 
 export default function errorHandler(
   error: Error,
@@ -54,7 +55,10 @@ function htmlErrorHandler(error: Error, reply: FastifyReply, url: string) {
       url,
       code: error.code,
       description: error.description,
-      proxyBtn: error instanceof NotHtmlMimetypeError,
+      proxyBtn: (
+        error instanceof NotHtmlMimetypeError &&
+        getConfig().proxy_res
+      ),
     });
   }
 
