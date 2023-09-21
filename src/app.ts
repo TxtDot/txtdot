@@ -55,7 +55,10 @@ class App {
 
     fastify.register(indexRoute);
     fastify.register(getRoute);
-    fastify.register(proxyRoute);
+
+    if (this.config.proxy_res)
+      fastify.register(proxyRoute);
+
     fastify.register(parseRoute);
     fastify.register(rawHtml);
 
