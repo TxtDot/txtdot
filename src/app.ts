@@ -9,9 +9,10 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import ejs from "ejs";
 
-import getRoute from "./routes/browser/get";
-import parseRoute from "./routes/api/parse";
 import indexRoute from "./routes/browser/index";
+import getRoute from "./routes/browser/get";
+import proxyRoute from "./routes/browser/proxy";
+import parseRoute from "./routes/api/parse";
 import rawHtml from "./routes/api/raw-html";
 
 import publicConfig from "./publicConfig";
@@ -54,6 +55,7 @@ class App {
 
     fastify.register(indexRoute);
     fastify.register(getRoute);
+    fastify.register(proxyRoute);
     fastify.register(parseRoute);
     fastify.register(rawHtml);
 
