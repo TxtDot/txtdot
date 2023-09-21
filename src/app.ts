@@ -17,18 +17,15 @@ import rawHtml from "./routes/api/raw-html";
 
 import publicConfig from "./publicConfig";
 import errorHandler from "./errors/handler";
+import getConfig from "./config/main";
 
 class App {
-  config: ConfigService;
-
-  constructor() {
-    this.config = new ConfigService();
-  }
-
   async init() {
+    const config = getConfig();
+
     const fastify = Fastify({
       logger: true,
-      trustProxy: this.config.reverse_proxy,
+      trustProxy: config.reverse_proxy,
     });
 
     fastify.register(fastifyStatic, {
@@ -56,7 +53,7 @@ class App {
     fastify.register(indexRoute);
     fastify.register(getRoute);
 
-    if (this.config.proxy_res)
+    if (config.proxy_res)
       fastify.register(proxyRoute);
 
     fastify.register(parseRoute);
@@ -65,7 +62,7 @@ class App {
     fastify.setErrorHandler(errorHandler);
 
     fastify.listen(
-      { host: this.config.host, port: this.config.port },
+      { host: config.host, port: config.port },
       (err) => {
         err && console.log(err);
       }
