@@ -6,7 +6,7 @@ export function generateRequestUrl(
   return new URL(`${protocol}://${host}${originalUrl}`);
 }
 
-export function generateProxyUrl(
+export function generateParserUrl(
   requestUrl: URL,
   href: string,
   engine?: string,
@@ -21,4 +21,12 @@ export function generateProxyUrl(
   const engineParam = engine ? `&engine=${engine}` : "";
 
   return `${requestUrl.origin}/${redirect_url}${urlParam}${engineParam}${hash}`;
+}
+
+export function generateProxyUrl(
+  requestUrl: URL,
+  href: string,
+): string {
+  const urlParam = `?url=${encodeURIComponent(href)}`;
+  return `${requestUrl.origin}/proxy${urlParam}`;
 }
