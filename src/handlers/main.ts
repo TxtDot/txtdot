@@ -4,6 +4,8 @@ import axios from "../types/axios";
 
 import micromatch from "micromatch";
 
+import { JSDOM } from "jsdom";
+
 import readability from "./readability";
 import google, { GoogleDomains } from "./google";
 import stackoverflow, { StackOverflowDomains } from "./stackoverflow/main";
@@ -14,6 +16,7 @@ import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
 import { HandlerInput } from "./handler-input";
 import { Readable } from "stream";
 import { decodeStream, parseEncodingName } from "../utils/http";
+import replaceHref from "../utils/replace-href";
 
 export default async function handlePage(
   url: string, // remote URL
@@ -35,15 +38,21 @@ export default async function handlePage(
     throw new NotHtmlMimetypeError();
   }
 
-  return getFallbackEngine(urlObj.hostname, engine)(
+  const handler = getFallbackEngine(urlObj.hostname, engine);
+  const output = await handler(
     new HandlerInput(
       await decodeStream(data, parseEncodingName(mime)),
       url,
-      requestUrl,
-      engine,
-      redirectPath,
     )
   );
+
+  // post-process
+  const dom = new JSDOM(output.content, { url });
+  replaceHref(dom, requestUrl, engine, redirectPath);
+  output.content = dom.serialize();
+  // TODO: DomPurify
+
+  return output;
 }
 
 function getFallbackEngine(host: string, specified?: string): EngineFunction {
