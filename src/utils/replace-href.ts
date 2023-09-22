@@ -45,14 +45,17 @@ export default function replaceHref(
       proxyUrl,
     );
 
-    const sources = doc.getElementsByTagName("source");
+    const sources = doc.querySelectorAll("source,img");
     for (const source of sources) {
       // split srcset by comma
+      // @ts-ignore
+      if (!source.srcset)
+        continue;
       // @ts-ignore
       source.srcset = source.srcset.split(",").map(
         (src: string) => {
           // split src by space
-          const parts = src.split(" ");
+          const parts = src.trim().split(" ");
           try {
             // first part is URL
             parts[0] = proxyUrl(parts[0]);
