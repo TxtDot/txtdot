@@ -1,5 +1,3 @@
-import { ConfigService } from "./config/config.service";
-
 import path from "path";
 
 import Fastify from "fastify";
