@@ -8,10 +8,7 @@ export default function replaceHref(
   engine?: string,
   redirectPath: string = "get",
 ) {
-  const bytag =
-    (dom: JSDOM, tag: string) => dom.window.document.getElementsByTagName(tag);
-  const bycss =
-    (dom: JSDOM, css: string) => dom.window.document.querySelectorAll(css);
+  const doc = dom.window.document;
 
   const parserUrl = (href: string) => generateParserUrl(
     requestUrl,
@@ -25,30 +22,30 @@ export default function replaceHref(
   );
 
   modifyLinks(
-    bytag(dom, "a"),
+    doc.getElementsByTagName("a"),
     "href",
     parserUrl,
   );
   modifyLinks(
-    bycss(dom, "frame,iframe"),
+    doc.querySelectorAll("frame,iframe"),
     "src",
     parserUrl,
   );
 
   if (getConfig().proxy_res) {
     modifyLinks(
-      bycss(dom, "img,image,video,audio,embed,track,source"),
+      doc.querySelectorAll("img,image,video,audio,embed,track,source"),
       "src",
       proxyUrl,
     );
 
     modifyLinks(
-      bytag(dom, "object"),
+      doc.getElementsByTagName("object"),
       "data",
       proxyUrl,
     );
 
-    const sources = bytag(dom, "source");
+    const sources = doc.getElementsByTagName("source");
     for (const source of sources) {
       // split srcset by comma
       // @ts-ignore
