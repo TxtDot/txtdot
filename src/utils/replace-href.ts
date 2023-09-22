@@ -10,16 +10,18 @@ export default function replaceHref(
 ) {
   const doc = dom.window.document;
 
-  const parserUrl = (href: string) => generateParserUrl(
-    requestUrl,
-    href,
-    engine,
-    redirectPath,
-  );
-  const proxyUrl = (href: string) => generateProxyUrl(
-    requestUrl,
-    href,
-  );
+  const parserUrl = (href: string) =>
+    href.startsWith("http") ? generateParserUrl(
+      requestUrl,
+      href,
+      engine,
+      redirectPath,
+    ) : href;
+  const proxyUrl = (href: string) =>
+    href.startsWith("http") ? generateProxyUrl(
+      requestUrl,
+      href,
+    ) : href;
 
   modifyLinks(
     doc.getElementsByTagName("a"),
@@ -58,6 +60,7 @@ export default function replaceHref(
           const parts = src.trim().split(" ");
           try {
             // first part is URL
+            // (srcset="http 200w 1x,...")
             parts[0] = proxyUrl(parts[0]);
           } catch (_err) { }
           // join by space after splitting
