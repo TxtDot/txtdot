@@ -17,6 +17,7 @@ import { HandlerInput } from "./handler-input";
 import { Readable } from "stream";
 import { decodeStream, parseEncodingName } from "../utils/http";
 import replaceHref from "../utils/replace-href";
+import DOMPurify from "dompurify";
 
 export default async function handlePage(
   url: string, // remote URL
@@ -47,10 +48,12 @@ export default async function handlePage(
   );
 
   // post-process
+
   const dom = new JSDOM(output.content, { url });
   replaceHref(dom, requestUrl, engine, redirectPath);
-  output.content = dom.serialize();
-  // TODO: DomPurify
+
+  const purify = DOMPurify(dom.window);
+  output.content = purify.sanitize(dom.serialize());
 
   return output;
 }
