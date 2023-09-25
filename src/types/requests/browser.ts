@@ -6,10 +6,9 @@ export interface IGetSchema {
   Querystring: IGetQuerySchema;
 }
 
-export const indexSchema = {
-  produces: ["text/html"],
-  hide: true
-};
+export interface IProxySchema {
+  Querystring: IProxyQuerySchema;
+}
 
 export const getQuerySchema = {
   type: "object",
@@ -32,9 +31,32 @@ export const getQuerySchema = {
 } as const;
 export type IGetQuerySchema = FromSchema<typeof getQuerySchema>;
 
+export const proxyQuerySchema = {
+  type: "object",
+  required: ["url"],
+  properties: {
+    url: {
+      type: "string",
+      description: "URL",
+    },
+  }
+} as const;
+export type IProxyQuerySchema = FromSchema<typeof proxyQuerySchema>;
+
+export const indexSchema = {
+  hide: true,
+  produces: ["text/html"],
+};
+
 export const GetSchema: FastifySchema = {
   description: "Get page",
   hide: true,
   querystring: getQuerySchema,
   produces: ["text/html", "text/plain"],
 };
+
+export const ProxySchema: FastifySchema = {
+  description: "Proxy resource",
+  hide: true,
+  querystring: proxyQuerySchema,
+}

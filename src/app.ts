@@ -1,5 +1,3 @@
-import { ConfigService } from "./config/config.service";
-
 import path from "path";
 
 import Fastify from "fastify";
@@ -9,25 +7,23 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import ejs from "ejs";
 
-import getRoute from "./routes/browser/get";
-import parseRoute from "./routes/api/parse";
 import indexRoute from "./routes/browser/index";
+import getRoute from "./routes/browser/get";
+import proxyRoute from "./routes/browser/proxy";
+import parseRoute from "./routes/api/parse";
 import rawHtml from "./routes/api/raw-html";
 
 import publicConfig from "./publicConfig";
 import errorHandler from "./errors/handler";
+import getConfig from "./config/main";
 
 class App {
-  config: ConfigService;
-
-  constructor() {
-    this.config = new ConfigService();
-  }
-
   async init() {
+    const config = getConfig();
+
     const fastify = Fastify({
       logger: true,
-      trustProxy: this.config.reverse_proxy,
+      trustProxy: config.reverse_proxy,
     });
 
     fastify.register(fastifyStatic, {
@@ -41,26 +37,32 @@ class App {
       },
     });
 
-    await fastify.register(fastifySwagger, {
-      swagger: {
-        info: {
-          title: "TXTDot API",
-          description: publicConfig.description,
-          version: publicConfig.version,
-        },
-      }
-    });
-    await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
+    if (config.swagger) {
+      await fastify.register(fastifySwagger, {
+        swagger: {
+          info: {
+            title: "TXTDot API",
+            description: publicConfig.description,
+            version: publicConfig.version,
+          },
+        }
+      });
+      await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
+    }
 
     fastify.register(indexRoute);
     fastify.register(getRoute);
+
+    if (config.proxy_res)
+      fastify.register(proxyRoute);
+
     fastify.register(parseRoute);
     fastify.register(rawHtml);
 
     fastify.setErrorHandler(errorHandler);
 
     fastify.listen(
-      { host: this.config.host, port: this.config.port },
+      { host: config.host, port: config.port },
       (err) => {
         err && console.log(err);
       }
