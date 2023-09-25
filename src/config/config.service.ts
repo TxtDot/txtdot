@@ -5,6 +5,7 @@ export class ConfigService {
   public readonly port: number;
   public readonly reverse_proxy: boolean;
   public readonly proxy_res: boolean;
+  public readonly swagger: boolean;
 
   constructor() {
     config();
@@ -15,6 +16,7 @@ export class ConfigService {
     this.reverse_proxy = this.parseBool(process.env.REVERSE_PROXY, false);
 
     this.proxy_res = this.parseBool(process.env.PROXY_RES, true);
+    this.swagger = this.parseBool(process.env.SWAGGER, false);
   }
 
   parseBool(value: string | undefined, def: boolean): boolean {
