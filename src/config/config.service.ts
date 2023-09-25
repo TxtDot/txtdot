@@ -19,12 +19,6 @@ export class ConfigService {
 
   parseBool(value: string | undefined, def: boolean): boolean {
     if (!value) return def;
-    switch (value) {
-      case "false":
-      case "0":
-        return false;
-      default:
-        return Boolean(value);
-    }
+    return value === "true" || value === "1";
   }
 }
