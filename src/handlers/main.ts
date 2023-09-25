@@ -5,6 +5,9 @@ import axios from "../types/axios";
 import micromatch from "micromatch";
 
 import { JSDOM } from "jsdom";
+import DOMPurify from "dompurify";
+
+import { Readable } from "stream";
 
 import readability from "./readability";
 import google, { GoogleDomains } from "./google";
@@ -14,10 +17,8 @@ import isLocalResource from "../utils/islocal";
 
 import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
 import { HandlerInput } from "./handler-input";
-import { Readable } from "stream";
 import { decodeStream, parseEncodingName } from "../utils/http";
 import replaceHref from "../utils/replace-href";
-import DOMPurify from "dompurify";
 
 export default async function handlePage(
   url: string, // remote URL
