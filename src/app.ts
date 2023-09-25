@@ -37,16 +37,18 @@ class App {
       },
     });
 
-    await fastify.register(fastifySwagger, {
-      swagger: {
-        info: {
-          title: "TXTDot API",
-          description: publicConfig.description,
-          version: publicConfig.version,
-        },
-      }
-    });
-    await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
+    if (config.swagger) {
+      await fastify.register(fastifySwagger, {
+        swagger: {
+          info: {
+            title: "TXTDot API",
+            description: publicConfig.description,
+            version: publicConfig.version,
+          },
+        }
+      });
+      await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
+    }
 
     fastify.register(indexRoute);
     fastify.register(getRoute);
