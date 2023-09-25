@@ -5,6 +5,9 @@ import axios from "../types/axios";
 import micromatch from "micromatch";
 
 import { JSDOM } from "jsdom";
+import DOMPurify from "dompurify";
+
+import { Readable } from "stream";
 
 import readability from "./readability";
 import google, { GoogleDomains } from "./google";
@@ -14,7 +17,6 @@ import isLocalResource from "../utils/islocal";
 
 import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
 import { HandlerInput } from "./handler-input";
-import { Readable } from "stream";
 import { decodeStream, parseEncodingName } from "../utils/http";
 import replaceHref from "../utils/replace-href";
 
@@ -47,10 +49,12 @@ export default async function handlePage(
   );
 
   // post-process
+
   const dom = new JSDOM(output.content, { url });
   replaceHref(dom, requestUrl, engine, redirectPath);
-  output.content = dom.serialize();
-  // TODO: DomPurify
+
+  const purify = DOMPurify(dom.window);
+  output.content = purify.sanitize(dom.serialize());
 
   return output;
 }
