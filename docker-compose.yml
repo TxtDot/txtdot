@@ -2,11 +2,9 @@ version: "3"
 
 services:
   txtdot:
-    build: .
+    image: ghcr.io/txtdot/txtdot:latest
     ports:
       - "8080:8080"
     restart: unless-stopped
-    environment:
-      - HOST=0.0.0.0
-      - PORT=8080
-      - REVERSE_PROXY=true
+    volumes:
+      - ".env:/app/.env"
