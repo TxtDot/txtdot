@@ -1,16 +1,16 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance } from 'fastify';
 
-import { IParseSchema, rawHtmlSchema } from "../../types/requests/api";
+import { IParseSchema, rawHtmlSchema } from '../../types/requests/api';
 
-import handlePage from "../../handlers/main";
-import { generateRequestUrl } from "../../utils/generate";
+import handlePage from '../../handlers/main';
+import { generateRequestUrl } from '../../utils/generate';
 
 export default async function rawHtml(fastify: FastifyInstance) {
   fastify.get<IParseSchema>(
-    "/api/raw-html",
+    '/api/raw-html',
     { schema: rawHtmlSchema },
     async (request, reply) => {
-      reply.type("text/html; charset=utf-8");
+      reply.type('text/html; charset=utf-8');
       return (
         await handlePage(
           request.query.url,
@@ -20,7 +20,7 @@ export default async function rawHtml(fastify: FastifyInstance) {
             request.originalUrl
           ),
           request.query.engine,
-          "api/raw-html"
+          'api/raw-html'
         )
       ).content;
     }

@@ -1,8 +1,8 @@
-import { FastifySchema, FastifyRequest } from "fastify";
-import { IApiError, errorResponseSchema } from "../../errors/api";
-import { handlerSchema } from "../../handlers/handler.interface";
-import { engineList } from "../../handlers/main";
-import { FromSchema } from "json-schema-to-ts";
+import { FastifySchema, FastifyRequest } from 'fastify';
+import { IApiError, errorResponseSchema } from '../../errors/api';
+import { handlerSchema } from '../../handlers/handler.interface';
+import { engineList } from '../../handlers/main';
+import { FromSchema } from 'json-schema-to-ts';
 
 export interface IApiResponse<T> {
   data?: T;
@@ -10,38 +10,38 @@ export interface IApiResponse<T> {
 }
 
 export const parseQuerySchema = {
-  type: "object",
-  required: ["url"],
+  type: 'object',
+  required: ['url'],
   properties: {
     url: {
-      type: "string",
-      description: "URL",
+      type: 'string',
+      description: 'URL',
     },
     engine: {
-      type: "string",
-      enum: [...engineList, ""],
+      type: 'string',
+      enum: [...engineList, ''],
     },
   },
 } as const;
 
 export const parseSchema: FastifySchema = {
-  description: "Parse the page and get all data from the engine",
+  description: 'Parse the page and get all data from the engine',
   querystring: parseQuerySchema,
   response: {
-    "2xx": {
-      type: "object",
+    '2xx': {
+      type: 'object',
       properties: {
         data: handlerSchema,
         error: {
-          type: "object",
+          type: 'object',
           nullable: true,
         },
       },
     },
-    "4xx": errorResponseSchema,
-    "5xx": errorResponseSchema,
+    '4xx': errorResponseSchema,
+    '5xx': errorResponseSchema,
   },
-  produces: ["text/json"],
+  produces: ['text/json'],
 };
 
 export interface IParseSchema {
@@ -49,9 +49,9 @@ export interface IParseSchema {
 }
 
 export const rawHtmlSchema: FastifySchema = {
-  description: "Parse the page and get raw HTML from the engine",
+  description: 'Parse the page and get raw HTML from the engine',
   querystring: parseQuerySchema,
-  produces: ["text/html"],
+  produces: ['text/html'],
 };
 
 export type EngineRequest = FastifyRequest<{

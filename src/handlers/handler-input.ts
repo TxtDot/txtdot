@@ -1,14 +1,11 @@
-import { JSDOM } from "jsdom";
+import { JSDOM } from 'jsdom';
 
 export class HandlerInput {
   private data: string;
   private url: string;
   private dom?: JSDOM;
 
-  constructor(
-    data: string,
-    url: string,
-  ) {
+  constructor(data: string, url: string) {
     this.data = data;
     this.url = url;
   }

@@ -1,30 +1,30 @@
-import { IHandlerOutput } from "./handler.interface";
-import { Engines, EngineFunction, EnginesMatch } from "../types/handlers";
-import axios from "../types/axios";
+import { IHandlerOutput } from './handler.interface';
+import { Engines, EngineFunction, EnginesMatch } from '../types/handlers';
+import axios from '../types/axios';
 
-import micromatch from "micromatch";
+import micromatch from 'micromatch';
 
-import { JSDOM } from "jsdom";
-import DOMPurify from "dompurify";
+import { JSDOM } from 'jsdom';
+import DOMPurify from 'dompurify';
 
-import { Readable } from "stream";
+import { Readable } from 'stream';
 
-import readability from "./readability";
-import google, { GoogleDomains } from "./google";
-import stackoverflow, { StackOverflowDomains } from "./stackoverflow/main";
+import readability from './readability';
+import google, { GoogleDomains } from './google';
+import stackoverflow, { StackOverflowDomains } from './stackoverflow/main';
 
-import isLocalResource from "../utils/islocal";
+import isLocalResource from '../utils/islocal';
 
-import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
-import { HandlerInput } from "./handler-input";
-import { decodeStream, parseEncodingName } from "../utils/http";
-import replaceHref from "../utils/replace-href";
+import { LocalResourceError, NotHtmlMimetypeError } from '../errors/main';
+import { HandlerInput } from './handler-input';
+import { decodeStream, parseEncodingName } from '../utils/http';
+import replaceHref from '../utils/replace-href';
 
 export default async function handlePage(
   url: string, // remote URL
   requestUrl: URL, // proxy URL
   engine?: string,
-  redirectPath: string = "get",
+  redirectPath: string = 'get'
 ): Promise<IHandlerOutput> {
   const urlObj = new URL(url);
 
@@ -34,18 +34,15 @@ export default async function handlePage(
 
   const response = await axios.get(url);
   const data: Readable = response.data;
-  const mime: string | undefined = response.headers["content-type"]?.toString();
+  const mime: string | undefined = response.headers['content-type']?.toString();
 
-  if (mime && mime.indexOf("text/html") === -1) {
+  if (mime && mime.indexOf('text/html') === -1) {
     throw new NotHtmlMimetypeError();
   }
 
   const handler = getFallbackEngine(urlObj.hostname, engine);
   const output = await handler(
-    new HandlerInput(
-      await decodeStream(data, parseEncodingName(mime)),
-      url,
-    )
+    new HandlerInput(await decodeStream(data, parseEncodingName(mime)), url)
   );
 
   // post-process

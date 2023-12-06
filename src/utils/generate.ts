@@ -10,23 +10,20 @@ export function generateParserUrl(
   requestUrl: URL,
   href: string,
   engine?: string,
-  redirect_url: string = "get"
+  redirect_url: string = 'get'
 ): string {
   const parsedHref = new URL(href);
 
-  const hash = parsedHref.hash;  // save #hash
-  parsedHref.hash = "";  // remove
+  const hash = parsedHref.hash; // save #hash
+  parsedHref.hash = ''; // remove
 
   const urlParam = `?url=${encodeURIComponent(parsedHref.toString())}`;
-  const engineParam = engine ? `&engine=${engine}` : "";
+  const engineParam = engine ? `&engine=${engine}` : '';
 
   return `${requestUrl.origin}/${redirect_url}${urlParam}${engineParam}${hash}`;
 }
 
-export function generateProxyUrl(
-  requestUrl: URL,
-  href: string,
-): string {
+export function generateProxyUrl(requestUrl: URL, href: string): string {
   const urlParam = `?url=${encodeURIComponent(href)}`;
   return `${requestUrl.origin}/proxy${urlParam}`;
 }
