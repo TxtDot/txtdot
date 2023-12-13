@@ -21,18 +21,18 @@ import replaceHref from "../utils/replace-href";
 import { parseHTML } from "linkedom";
 
 export default async function handlePage(
-  url: string, // remote URL
+  remoteUrl: string, // remote URL
   requestUrl: URL, // proxy URL
   engine?: string,
-  redirectPath: string = "get",
+  redirectPath: string = "get"
 ): Promise<IHandlerOutput> {
-  const urlObj = new URL(url);
+  const urlObj = new URL(remoteUrl);
 
   if (await isLocalResource(urlObj)) {
     throw new LocalResourceError();
   }
 
-  const response = await axios.get(url);
+  const response = await axios.get(remoteUrl);
   const data: Readable = response.data;
   const mime: string | undefined = response.headers["content-type"]?.toString();
 
@@ -44,14 +44,14 @@ export default async function handlePage(
   const output = await handler(
     new HandlerInput(
       await decodeStream(data, parseEncodingName(mime)),
-      url,
+      remoteUrl
     )
   );
 
   // post-process
 
   const dom = parseHTML(output.content);
-  replaceHref(dom, requestUrl, engine, redirectPath);
+  replaceHref(dom, requestUrl, new URL(remoteUrl), engine, redirectPath);
 
   const purify = DOMPurify(dom.window);
   output.content = purify.sanitize(dom.document.toString());

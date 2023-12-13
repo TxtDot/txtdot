@@ -4,16 +4,17 @@ import getConfig from "../config/main";
 export default function replaceHref(
   dom: Window,
   requestUrl: URL,
+  remoteUrl: URL,
   engine?: string,
   redirectPath: string = "get"
 ) {
   const doc: Document = dom.window.document;
   const parserUrl = (href: string) =>
-    href.startsWith("http")
-      ? generateParserUrl(requestUrl, href, engine, redirectPath)
-      : href;
+    generateParserUrl(requestUrl, remoteUrl, href, engine, redirectPath);
+
   const proxyUrl = (href: string) =>
-    href.startsWith("http") ? generateProxyUrl(requestUrl, href) : href;
+    generateProxyUrl(requestUrl, remoteUrl, href);
+
   modifyLinks(doc.querySelectorAll("a[href]"), "href", parserUrl);
   modifyLinks(doc.querySelectorAll("frame,iframe"), "src", parserUrl);
 
