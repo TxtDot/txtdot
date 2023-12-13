@@ -31,7 +31,7 @@ label {
 
 #url {
   width: 100%;
-  height: 100%;  /* shrink to #submit height */
+  height: 100%; /* shrink to #submit height */
 
   outline: none;
   border: 0;

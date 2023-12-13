@@ -1,8 +1,9 @@
-import { config } from "dotenv";
+import { config } from 'dotenv';
 
 export class ConfigService {
   public readonly host: string;
   public readonly port: number;
+  public readonly timeout: number;
   public readonly reverse_proxy: boolean;
   public readonly proxy_res: boolean;
   public readonly swagger: boolean;
@@ -10,8 +11,10 @@ export class ConfigService {
   constructor() {
     config();
 
-    this.host = process.env.HOST || "0.0.0.0";
+    this.host = process.env.HOST || '0.0.0.0';
     this.port = Number(process.env.PORT) || 8080;
+
+    this.timeout = 1000;
 
     this.reverse_proxy = this.parseBool(process.env.REVERSE_PROXY, false);
 
@@ -21,6 +24,6 @@ export class ConfigService {
 
   parseBool(value: string | undefined, def: boolean): boolean {
     if (!value) return def;
-    return value === "true" || value === "1";
+    return value === 'true' || value === '1';
   }
 }

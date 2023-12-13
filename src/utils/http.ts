@@ -1,12 +1,12 @@
-import { Readable } from "stream";
-import iconv from "iconv-lite";
+import { Readable } from 'stream';
+import iconv from 'iconv-lite';
 
 export async function decodeStream(
   data: Readable,
-  charset: string = "utf-8",
+  charset: string = 'utf-8'
 ): Promise<string> {
   const strm = data.pipe(iconv.decodeStream(charset)) as IconvStream;
-  return await new Promise(resolve => {
+  return await new Promise((resolve) => {
     strm.collect((_err: Error, body: string) => {
       resolve(body);
     });
@@ -16,7 +16,7 @@ export async function decodeStream(
 export function parseEncodingName(ctype?: string): string {
   const match = ctype?.match(/charset=([A-Za-z0-9-]+)$/);
   if (!match) {
-    return "utf-8";
+    return 'utf-8';
   }
   return match[1];
 }
