@@ -1,12 +1,12 @@
-import { generateParserUrl, generateProxyUrl } from "./generate";
-import getConfig from "../config/main";
+import { generateParserUrl, generateProxyUrl } from './generate';
+import getConfig from '../config/main';
 
 export default function replaceHref(
   dom: Window,
   requestUrl: URL,
   remoteUrl: URL,
   engine?: string,
-  redirectPath: string = "get"
+  redirectPath: string = 'get'
 ) {
   const doc: Document = dom.window.document;
   const parserUrl = (href: string) =>
@@ -15,28 +15,28 @@ export default function replaceHref(
   const proxyUrl = (href: string) =>
     generateProxyUrl(requestUrl, remoteUrl, href);
 
-  modifyLinks(doc.querySelectorAll("a[href]"), "href", parserUrl);
-  modifyLinks(doc.querySelectorAll("frame,iframe"), "src", parserUrl);
+  modifyLinks(doc.querySelectorAll('a[href]'), 'href', parserUrl);
+  modifyLinks(doc.querySelectorAll('frame,iframe'), 'src', parserUrl);
 
   if (getConfig().proxy_res) {
     modifyLinks(
-      doc.querySelectorAll("img,image,video,audio,embed,track,source"),
-      "src",
+      doc.querySelectorAll('img,image,video,audio,embed,track,source'),
+      'src',
       proxyUrl
     );
 
-    modifyLinks(doc.getElementsByTagName("object"), "data", proxyUrl);
-    const sources = doc.querySelectorAll("source,img");
+    modifyLinks(doc.getElementsByTagName('object'), 'data', proxyUrl);
+    const sources = doc.querySelectorAll('source,img');
     for (const source of sources) {
       // split srcset by comma
       // @ts-expect-error because I don't know what to do about it.
       if (!source.srcset) continue;
       // @ts-expect-error because I don't know what to do about it.
       source.srcset = source.srcset
-        .split(",")
+        .split(',')
         .map((src: string) => {
           // split src by space
-          const parts = src.trim().split(" ");
+          const parts = src.trim().split(' ');
           try {
             // first part is URL
             // (srcset="http 200w 1x,...")
@@ -45,9 +45,9 @@ export default function replaceHref(
             /* empty */
           }
           // join by space after splitting
-          return parts.join(" ");
+          return parts.join(' ');
         })
-        .join(","); // join by comma
+        .join(','); // join by comma
     }
   }
 }
