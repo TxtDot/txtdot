@@ -45,7 +45,7 @@ class App {
             description: publicConfig.description,
             version: publicConfig.version,
           },
-        }
+        },
       });
       await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
     }
@@ -53,20 +53,16 @@ class App {
     fastify.register(indexRoute);
     fastify.register(getRoute);
 
-    if (config.proxy_res)
-      fastify.register(proxyRoute);
+    if (config.proxy_res) fastify.register(proxyRoute);
 
     fastify.register(parseRoute);
     fastify.register(rawHtml);
 
     fastify.setErrorHandler(errorHandler);
 
-    fastify.listen(
-      { host: config.host, port: config.port },
-      (err) => {
-        err && console.log(err);
-      }
-    );
+    fastify.listen({ host: config.host, port: config.port }, (err) => {
+      err && console.log(err);
+    });
   }
 }
 
