@@ -11,15 +11,15 @@ export function generateParserUrl(
   remoteUrl: URL,
   href: string,
   engine?: string,
-  redirect_url: string = 'get'
+  redirect_url: string = "get"
 ): string {
   const realURL = getRealURL(href, remoteUrl);
 
   const hash = realURL.hash; // save #hash
-  realURL.hash = ''; // remove
+  realURL.hash = ""; // remove
 
   const urlParam = `?url=${encodeURIComponent(realURL.toString())}`;
-  const engineParam = engine ? `&engine=${engine}` : '';
+  const engineParam = engine ? `&engine=${engine}` : "";
 
   return `${requestUrl.origin}/${redirect_url}${urlParam}${engineParam}${hash}`;
 }
@@ -36,7 +36,7 @@ export function generateProxyUrl(
 }
 
 function getRealURL(href: string, remoteUrl: URL) {
-  return href.startsWith('http')
+  return href.startsWith("http")
     ? new URL(href)
     : new URL(href, remoteUrl.href);
 }
