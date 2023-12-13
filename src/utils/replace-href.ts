@@ -1,14 +1,13 @@
-import { JSDOM } from "jsdom";
 import { generateParserUrl, generateProxyUrl } from "./generate";
 import getConfig from "../config/main";
 
 export default function replaceHref(
-  dom: JSDOM,
+  dom: Window,
   requestUrl: URL,
   engine?: string,
   redirectPath: string = "get"
 ) {
-  const doc = dom.window.document;
+  const doc: Document = dom.window.document;
   const parserUrl = (href: string) =>
     href.startsWith("http")
       ? generateParserUrl(requestUrl, href, engine, redirectPath)

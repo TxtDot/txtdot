@@ -4,7 +4,6 @@ import axios from "../types/axios";
 
 import micromatch from "micromatch";
 
-import { JSDOM } from "jsdom";
 import DOMPurify from "dompurify";
 
 import { Readable } from "stream";
@@ -19,6 +18,7 @@ import { LocalResourceError, NotHtmlMimetypeError } from "../errors/main";
 import { HandlerInput } from "./handler-input";
 import { decodeStream, parseEncodingName } from "../utils/http";
 import replaceHref from "../utils/replace-href";
+import { parseHTML } from "linkedom";
 
 export default async function handlePage(
   url: string, // remote URL
@@ -50,11 +50,11 @@ export default async function handlePage(
 
   // post-process
 
-  const dom = new JSDOM(output.content, { url });
+  const dom = parseHTML(output.content);
   replaceHref(dom, requestUrl, engine, redirectPath);
 
   const purify = DOMPurify(dom.window);
-  output.content = purify.sanitize(dom.serialize());
+  output.content = purify.sanitize(dom.document.toString());
 
   return output;
 }

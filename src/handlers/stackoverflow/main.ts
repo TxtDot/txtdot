@@ -4,7 +4,7 @@ import { EngineParseError } from "../../errors/main";
 import qPostsHandler from "./questions-posts";
 
 export default async function stackoverflow(
-  input: HandlerInput,
+  input: HandlerInput
 ): Promise<IHandlerOutput> {
   const window = input.parseDom().window;
 
