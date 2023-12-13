@@ -1,5 +1,5 @@
-import { HandlerInput } from '../handlers/handler-input';
-import { IHandlerOutput } from '../handlers/handler.interface';
+import { HandlerInput } from "../handlers/handler-input";
+import { IHandlerOutput } from "../handlers/handler.interface";
 
 export interface Engines {
   [key: string]: EngineFunction;

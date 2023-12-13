@@ -1,6 +1,6 @@
-import { HandlerInput } from './handler-input';
-import { IHandlerOutput } from './handler.interface';
-import { EngineParseError } from '../errors/main';
+import { HandlerInput } from "./handler-input";
+import { IHandlerOutput } from "./handler.interface";
+import { EngineParseError } from "../errors/main";
 
 export default async function google(
   input: HandlerInput
@@ -8,18 +8,18 @@ export default async function google(
   const window = input.parseDom().window;
 
   const googleAnchors = [
-    ...window.document.querySelectorAll('a[jsname=UWckNb]'),
+    ...window.document.querySelectorAll("a[jsname=UWckNb]"),
   ] as HTMLAnchorElement[];
 
   if (!googleAnchors) {
     throw new EngineParseError(
-      'Failed to find anchors in search result [google]'
+      "Failed to find anchors in search result [google]"
     );
   }
 
   const results = googleAnchors
     .map((a: HTMLAnchorElement): GoogleProps => {
-      const parsedHref = new URL(new URL(a.href).searchParams.get('url')!);
+      const parsedHref = new URL(new URL(a.href).searchParams.get("url")!);
       return {
         href: a.href!,
         siteName: parsedHref.hostname,
@@ -43,7 +43,7 @@ export default async function google(
   });
 
   const search = window.document.getElementById(
-    'APjFqb'
+    "APjFqb"
   ) as HTMLTextAreaElement;
 
   const searchForm = `
@@ -54,18 +54,18 @@ export default async function google(
   `;
 
   return {
-    content: `${searchForm}${content.join('')}`,
-    textContent: textContent.join('\n'),
+    content: `${searchForm}${content.join("")}`,
+    textContent: textContent.join("\n"),
   };
 }
 
 export const GoogleDomains = [
-  'google.*',
-  'google.co.*',
-  'google.com.*',
-  'www.google.*',
-  'www.google.co.*',
-  'www.google.com.*',
+  "google.*",
+  "google.co.*",
+  "google.com.*",
+  "www.google.*",
+  "www.google.co.*",
+  "www.google.com.*",
 ];
 
 interface GoogleProps {

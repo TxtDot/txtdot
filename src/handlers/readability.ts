@@ -1,16 +1,16 @@
-import { Readability } from '@mozilla/readability';
-import { HandlerInput } from './handler-input';
-import { IHandlerOutput } from './handler.interface';
-import { EngineParseError } from '../errors/main';
+import { Readability } from "@mozilla/readability";
+import { HandlerInput } from "./handler-input";
+import { IHandlerOutput } from "./handler.interface";
+import { EngineParseError } from "../errors/main";
 
 export default async function readability(
-  input: HandlerInput
+  input: HandlerInput,
 ): Promise<IHandlerOutput> {
   const reader = new Readability(input.parseDom().window.document);
   const parsed = reader.parse();
 
   if (!parsed) {
-    throw new EngineParseError('Failed to parse [readability]');
+    throw new EngineParseError("Failed to parse [readability]");
   }
 
   return {

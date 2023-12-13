@@ -32,7 +32,6 @@
     "clean-css-cli": "^5.6.2",
     "copyfiles": "^2.4.1",
     "eslint": "^8.47.0",
-    "prettier": "^3.1.0",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.1.6"
   },
@@ -42,9 +41,7 @@
     "start": "cd ./dist && node ./src/app.js",
     "start:docker": "node ./src/app.js",
     "clean-css": "cleancss --batch static/*.css -o dist/static --batch-suffix \"\"",
-    "dev": "tsc-watch --onSuccess \"node ./dist/src/app.js\"",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "dev": "tsc-watch --onSuccess \"node ./dist/src/app.js\""
   },
   "keywords": [],
   "authors": [

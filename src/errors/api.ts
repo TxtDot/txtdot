@@ -5,28 +5,28 @@ export interface IApiError {
 }
 
 export const errorSchema = {
-  type: 'object',
+  type: "object",
   properties: {
     code: {
-      type: 'number',
-      description: 'HTTP error code',
+      type: "number",
+      description: "HTTP error code",
     },
     name: {
-      type: 'string',
-      description: 'Exception class name',
+      type: "string",
+      description: "Exception class name",
     },
     message: {
-      type: 'string',
-      description: 'Exception message',
+      type: "string",
+      description: "Exception message",
     },
   },
 };
 
 export const errorResponseSchema = {
-  type: 'object',
+  type: "object",
   properties: {
     data: {
-      type: 'object',
+      type: "object",
       nullable: true,
     },
     error: errorSchema,
