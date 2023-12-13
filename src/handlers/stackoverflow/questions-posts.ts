@@ -4,22 +4,22 @@ import postParser from "./post-parser";
 export default async function qPostsHandler(
   window: Window
 ): Promise<IHandlerOutput> {
-  const questionEl = window.document.getElementById("question");
+  const questionEl = window.document.getElementById('question');
   const question = postParser(questionEl);
 
   const title =
-    window.document.querySelector(".question-hyperlink")?.innerHTML || "";
+    window.document.querySelector('.question-hyperlink')?.innerHTML || '';
 
-  const allAnswers = [...window.document.querySelectorAll(".answer")];
+  const allAnswers = [...window.document.querySelectorAll('.answer')];
 
   const answers = allAnswers.map((a) => postParser(a));
 
   return {
     content: `${question}<hr>${answers.length} answers <hr>${answers.join(
-      "<hr>"
+      '<hr>'
     )}`,
-    textContent: "question",
+    textContent: 'question',
     title,
-    lang: "en",
+    lang: 'en',
   };
 }

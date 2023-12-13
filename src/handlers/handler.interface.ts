@@ -6,19 +6,19 @@ export interface IHandlerOutput {
 }
 
 export const handlerSchema = {
-  type: "object",
+  type: 'object',
   properties: {
     content: {
-      type: "string",
+      type: 'string',
     },
     textContent: {
-      type: "string",
+      type: 'string',
     },
     title: {
-      type: "string",
+      type: 'string',
     },
     lang: {
-      type: "string",
+      type: 'string',
     },
   },
 };
