@@ -1,6 +1,6 @@
-import { FastifySchema } from "fastify";
-import { engineList } from "../../handlers/main";
-import { FromSchema } from "json-schema-to-ts";
+import { FastifySchema } from 'fastify';
+import { engineList } from '../../handlers/main';
+import { FromSchema } from 'json-schema-to-ts';
 
 export interface IGetSchema {
   Querystring: IGetQuerySchema;
@@ -11,52 +11,52 @@ export interface IProxySchema {
 }
 
 export const getQuerySchema = {
-  type: "object",
-  required: ["url"],
+  type: 'object',
+  required: ['url'],
   properties: {
     url: {
-      type: "string",
-      description: "URL",
+      type: 'string',
+      description: 'URL',
     },
     format: {
-      type: "string",
-      enum: ["text", "html", ""],
-      default: "html",
+      type: 'string',
+      enum: ['text', 'html', ''],
+      default: 'html',
     },
     engine: {
-      type: "string",
-      enum: [...engineList, ""],
+      type: 'string',
+      enum: [...engineList, ''],
     },
   },
 } as const;
 export type IGetQuerySchema = FromSchema<typeof getQuerySchema>;
 
 export const proxyQuerySchema = {
-  type: "object",
-  required: ["url"],
+  type: 'object',
+  required: ['url'],
   properties: {
     url: {
-      type: "string",
-      description: "URL",
+      type: 'string',
+      description: 'URL',
     },
-  }
+  },
 } as const;
 export type IProxyQuerySchema = FromSchema<typeof proxyQuerySchema>;
 
 export const indexSchema = {
   hide: true,
-  produces: ["text/html"],
+  produces: ['text/html'],
 };
 
 export const GetSchema: FastifySchema = {
-  description: "Get page",
+  description: 'Get page',
   hide: true,
   querystring: getQuerySchema,
-  produces: ["text/html", "text/plain"],
+  produces: ['text/html', 'text/plain'],
 };
 
 export const ProxySchema: FastifySchema = {
-  description: "Proxy resource",
+  description: 'Proxy resource',
   hide: true,
   querystring: proxyQuerySchema,
-}
+};

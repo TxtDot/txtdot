@@ -1,4 +1,4 @@
-import { parseHTML } from "linkedom";
+import { parseHTML } from 'linkedom';
 
 export class HandlerInput {
   private data: string;

@@ -1,9 +1,9 @@
 export default function postParser(el: Element | null): string {
   if (!el) {
-    return "";
+    return '';
   }
-  const body = el.querySelector(".js-post-body")?.innerHTML || "";
-  const voteCount = el.querySelector(".js-vote-count")?.textContent || "";
+  const body = el.querySelector('.js-post-body')?.innerHTML || '';
+  const voteCount = el.querySelector('.js-vote-count')?.textContent || '';
 
   return `<h3>${voteCount} votes</h3>${body}`;
 }

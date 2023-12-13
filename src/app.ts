@@ -1,21 +1,21 @@
-import path from "path";
+import path from 'path';
 
-import Fastify from "fastify";
-import fastifyStatic from "@fastify/static";
-import fastifyView from "@fastify/view";
-import fastifySwagger from "@fastify/swagger";
-import fastifySwaggerUi from "@fastify/swagger-ui";
-import ejs from "ejs";
+import Fastify from 'fastify';
+import fastifyStatic from '@fastify/static';
+import fastifyView from '@fastify/view';
+import fastifySwagger from '@fastify/swagger';
+import fastifySwaggerUi from '@fastify/swagger-ui';
+import ejs from 'ejs';
 
-import indexRoute from "./routes/browser/index";
-import getRoute from "./routes/browser/get";
-import proxyRoute from "./routes/browser/proxy";
-import parseRoute from "./routes/api/parse";
-import rawHtml from "./routes/api/raw-html";
+import indexRoute from './routes/browser/index';
+import getRoute from './routes/browser/get';
+import proxyRoute from './routes/browser/proxy';
+import parseRoute from './routes/api/parse';
+import rawHtml from './routes/api/raw-html';
 
-import publicConfig from "./publicConfig";
-import errorHandler from "./errors/handler";
-import getConfig from "./config/main";
+import publicConfig from './publicConfig';
+import errorHandler from './errors/handler';
+import getConfig from './config/main';
 
 class App {
   async init() {
@@ -24,12 +24,12 @@ class App {
     const fastify = Fastify({
       logger: true,
       trustProxy: config.reverse_proxy,
-      connectionTimeout: config.timeout
+      connectionTimeout: config.timeout,
     });
 
     fastify.register(fastifyStatic, {
-      root: path.join(process.cwd(), "static"),
-      prefix: "/static/",
+      root: path.join(process.cwd(), 'static'),
+      prefix: '/static/',
     });
 
     fastify.register(fastifyView, {
@@ -42,13 +42,13 @@ class App {
       await fastify.register(fastifySwagger, {
         swagger: {
           info: {
-            title: "TXTDot API",
+            title: 'TXTDot API',
             description: publicConfig.description,
             version: publicConfig.version,
           },
         },
       });
-      await fastify.register(fastifySwaggerUi, { routePrefix: "/doc" });
+      await fastify.register(fastifySwaggerUi, { routePrefix: '/doc' });
     }
 
     fastify.register(indexRoute);
