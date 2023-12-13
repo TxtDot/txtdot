@@ -43,7 +43,8 @@
     "start:docker": "node ./src/app.js",
     "clean-css": "cleancss --batch static/*.css -o dist/static --batch-suffix \"\"",
     "dev": "tsc-watch --onSuccess \"node ./dist/src/app.js\"",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "authors": [
