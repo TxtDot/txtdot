@@ -4,7 +4,6 @@ import axios from '../types/axios';
 
 import micromatch from 'micromatch';
 
-import { JSDOM } from 'jsdom';
 import DOMPurify from 'dompurify';
 
 import { Readable } from 'stream';
@@ -19,20 +18,21 @@ import { LocalResourceError, NotHtmlMimetypeError } from '../errors/main';
 import { HandlerInput } from './handler-input';
 import { decodeStream, parseEncodingName } from '../utils/http';
 import replaceHref from '../utils/replace-href';
+import { parseHTML } from 'linkedom';
 
 export default async function handlePage(
-  url: string, // remote URL
+  remoteUrl: string, // remote URL
   requestUrl: URL, // proxy URL
   engine?: string,
   redirectPath: string = 'get'
 ): Promise<IHandlerOutput> {
-  const urlObj = new URL(url);
+  const urlObj = new URL(remoteUrl);
 
   if (await isLocalResource(urlObj)) {
     throw new LocalResourceError();
   }
 
-  const response = await axios.get(url);
+  const response = await axios.get(remoteUrl);
   const data: Readable = response.data;
   const mime: string | undefined = response.headers['content-type']?.toString();
 
@@ -42,16 +42,19 @@ export default async function handlePage(
 
   const handler = getFallbackEngine(urlObj.hostname, engine);
   const output = await handler(
-    new HandlerInput(await decodeStream(data, parseEncodingName(mime)), url)
+    new HandlerInput(
+      await decodeStream(data, parseEncodingName(mime)),
+      remoteUrl
+    )
   );
 
   // post-process
 
-  const dom = new JSDOM(output.content, { url });
-  replaceHref(dom, requestUrl, engine, redirectPath);
+  const dom = parseHTML(output.content);
+  replaceHref(dom, requestUrl, new URL(remoteUrl), engine, redirectPath);
 
   const purify = DOMPurify(dom.window);
-  output.content = purify.sanitize(dom.serialize());
+  output.content = purify.sanitize(dom.document.toString());
 
   return output;
 }

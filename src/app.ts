@@ -24,6 +24,7 @@ class App {
     const fastify = Fastify({
       logger: true,
       trustProxy: config.reverse_proxy,
+      connectionTimeout: config.timeout,
     });
 
     fastify.register(fastifyStatic, {

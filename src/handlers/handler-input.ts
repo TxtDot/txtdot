@@ -1,9 +1,9 @@
-import { JSDOM } from 'jsdom';
+import { parseHTML } from 'linkedom';
 
 export class HandlerInput {
   private data: string;
   private url: string;
-  private dom?: JSDOM;
+  private dom?: Window;
 
   constructor(data: string, url: string) {
     this.data = data;
@@ -14,12 +14,12 @@ export class HandlerInput {
     return this.url;
   }
 
-  parseDom(): JSDOM {
+  parseDom(): Window {
     if (this.dom) {
       return this.dom;
     }
 
-    this.dom = new JSDOM(this.data, { url: this.url });
+    this.dom = parseHTML(this.data);
     return this.dom;
   }
 }

@@ -1,9 +1,8 @@
-import { DOMWindow } from 'jsdom';
 import { IHandlerOutput } from '../handler.interface';
 import postParser from './post-parser';
 
 export default async function qPostsHandler(
-  window: DOMWindow
+  window: Window
 ): Promise<IHandlerOutput> {
   const questionEl = window.document.getElementById('question');
   const question = postParser(questionEl);

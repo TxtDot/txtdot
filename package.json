@@ -17,8 +17,8 @@
     "fastify": "^4.21.0",
     "iconv-lite": "^0.6.3",
     "ip-range-check": "^0.2.0",
-    "jsdom": "^22.1.0",
     "json-schema-to-ts": "^2.9.2",
+    "linkedom": "^0.16.4",
     "micromatch": "^4.0.5"
   },
   "devDependencies": {
