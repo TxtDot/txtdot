@@ -21,6 +21,23 @@
         </p>
         <p><%= publicConfig.description %></p>
       </header>
+      <% 
+        if (config.search.enabled) {
+
+          %>
+          <form action="/search" method="get" class="input-grid">
+            <div class="input">
+              <input type="text" name="q" id="search" placeholder="Search">
+            </div>
+            <div class="input">
+              <input type="submit" id="submit" class="button" value="Go">
+            </div>
+          </form>
+          <%
+
+          %><details style="margin-top: 1rem;"><summary>Advanced</summary><%
+        }
+      %>
       <form action="/get" method="get" class="input-grid">
         <div class="input">
           <input type="text" name="url" id="url" placeholder="URL">
@@ -52,6 +69,11 @@
           </div>
         </div>
       </form>
+      <%
+        if (config.search.enabled) {
+          %></details><%
+        }
+      %>
     </main>
   </body>
 </html>

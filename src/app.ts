@@ -16,6 +16,7 @@ import rawHtml from './routes/api/raw-html';
 import publicConfig from './publicConfig';
 import errorHandler from './errors/handler';
 import getConfig from './config/main';
+import searchRoute from './routes/browser/search';
 
 class App {
   async init() {
@@ -53,6 +54,10 @@ class App {
 
     fastify.register(indexRoute);
     fastify.register(getRoute);
+
+    if (config.search.enabled) {
+      fastify.register(searchRoute);
+    }
 
     if (config.proxy_res) fastify.register(proxyRoute);
 

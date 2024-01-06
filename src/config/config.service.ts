@@ -7,6 +7,7 @@ export class ConfigService {
   public readonly reverse_proxy: boolean;
   public readonly proxy_res: boolean;
   public readonly swagger: boolean;
+  public readonly search: SearchConfig;
 
   constructor() {
     config();
@@ -20,10 +21,20 @@ export class ConfigService {
 
     this.proxy_res = this.parseBool(process.env.PROXY_RES, true);
     this.swagger = this.parseBool(process.env.SWAGGER, false);
+
+    this.search = {
+      enabled: this.parseBool(process.env.SEARCH_ENABLED, false),
+      searx_url: process.env.SEARX_URL,
+    };
   }
 
   parseBool(value: string | undefined, def: boolean): boolean {
     if (!value) return def;
     return value === 'true' || value === '1';
   }
+}
+
+interface SearchConfig {
+  enabled: boolean;
+  searx_url?: string;
 }

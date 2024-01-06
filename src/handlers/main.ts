@@ -11,6 +11,7 @@ import { Readable } from 'stream';
 import readability from './readability';
 import google, { GoogleDomains } from './google';
 import stackoverflow, { StackOverflowDomains } from './stackoverflow/main';
+import searx, { SearxDomains } from './searx';
 
 import isLocalResource from '../utils/islocal';
 
@@ -75,6 +76,7 @@ export const engines: Engines = {
   readability,
   google,
   stackoverflow,
+  searx,
 };
 
 export const engineList: string[] = Object.keys(engines);
@@ -87,5 +89,9 @@ export const fallback: EnginesMatch = [
   {
     pattern: StackOverflowDomains,
     engine: engines.stackoverflow,
+  },
+  {
+    pattern: SearxDomains,
+    engine: engines.searx,
   },
 ];
