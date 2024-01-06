@@ -10,6 +10,22 @@ export interface IProxySchema {
   Querystring: IProxyQuerySchema;
 }
 
+export interface ISearchSchema {
+  Querystring: ISearchQuerySchema;
+}
+
+export const searchQuerySchema = {
+  type: 'object',
+  required: ['q'],
+  properties: {
+    q: {
+      type: 'string',
+      description: 'Search query',
+    },
+  },
+} as const;
+export type ISearchQuerySchema = FromSchema<typeof searchQuerySchema>;
+
 export const getQuerySchema = {
   type: 'object',
   required: ['url'],
@@ -46,6 +62,12 @@ export type IProxyQuerySchema = FromSchema<typeof proxyQuerySchema>;
 export const indexSchema = {
   hide: true,
   produces: ['text/html'],
+};
+
+export const searchSchema: FastifySchema = {
+  description: 'Search redirection page',
+  hide: true,
+  querystring: searchQuerySchema,
 };
 
 export const GetSchema: FastifySchema = {
