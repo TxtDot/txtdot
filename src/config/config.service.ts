@@ -15,7 +15,7 @@ export class ConfigService {
     this.host = process.env.HOST || '0.0.0.0';
     this.port = Number(process.env.PORT) || 8080;
 
-    this.timeout = 1000;
+    this.timeout = Number(process.env.TIMEOUT) || 0;
 
     this.reverse_proxy = this.parseBool(process.env.REVERSE_PROXY, false);
 
