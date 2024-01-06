@@ -28,6 +28,8 @@ class App {
       connectionTimeout: config.timeout,
     });
 
+    fastify.setErrorHandler(errorHandler);
+
     fastify.register(fastifyStatic, {
       root: path.join(process.cwd(), 'static'),
       prefix: '/static/',
@@ -63,8 +65,6 @@ class App {
 
     fastify.register(parseRoute);
     fastify.register(rawHtml);
-
-    fastify.setErrorHandler(errorHandler);
 
     fastify.listen({ host: config.host, port: config.port }, (err) => {
       err && console.log(err);
