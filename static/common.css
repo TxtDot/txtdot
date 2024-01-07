@@ -5,6 +5,8 @@
 :root {
   --bg: #fff;
   --fg: #111;
+  --bg-b-p: #f0f0f0;
+  --bg-p-s: var(--bg);
 
   --bg2: #eee;
   --fg2: #333;
@@ -20,7 +22,9 @@
     --bg: #151515;
     --fg: #eee;
 
-    --bg2: #303030;
+    --bg-b-p: #333;
+
+    --bg2: #444;
     --fg2: #bbb;
 
     --accent: #33a3ff; /* hsl(207, 100%, 60%) */
@@ -50,16 +54,19 @@ main {
   flex-direction: row;
   flex-wrap: wrap;
   column-gap: 0.25rem;
+
+  align-items: flex-start;
 }
 
 .button {
   padding: 0.25rem 0.75rem;
 
-  border: 0.1rem solid var(--accent);
+  border: none;
   border-radius: 0.6rem;
 
-  background: var(--bg);
+  background: var(--bg-b-p);
   color: var(--fg);
+
   text-decoration: none;
   font-size: 1rem;
 
@@ -67,7 +74,10 @@ main {
 }
 
 .button.secondary {
+  background: var(--bg-p-s);
   border-color: var(--bg2);
+
+  padding: 0.1rem 0.2rem;
 }
 
 .button:hover {
