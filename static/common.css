@@ -6,7 +6,7 @@
   --bg: #fff;
   --fg: #111;
 
-  --bg2: #bbb;
+  --bg2: #eee;
   --fg2: #333;
 
   --accent: #0070cc; /* hsl(207, 100%, 40%) */
@@ -17,10 +17,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #222;
+    --bg: #151515;
     --fg: #eee;
 
-    --bg2: #444;
+    --bg2: #303030;
     --fg2: #bbb;
 
     --accent: #33a3ff; /* hsl(207, 100%, 60%) */
@@ -48,14 +48,15 @@ main {
 .menu {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   column-gap: 0.25rem;
 }
 
 .button {
   padding: 0.25rem 0.75rem;
 
-  border: 0.125rem solid var(--accent);
-  border-radius: 0.25rem;
+  border: 0.1rem solid var(--accent);
+  border-radius: 0.6rem;
 
   background: var(--bg);
   color: var(--fg);
@@ -64,9 +65,11 @@ main {
 
   cursor: pointer;
 }
+
 .button.secondary {
   border-color: var(--bg2);
 }
+
 .button:hover {
   background: var(--bg2);
   color: var(--fg);

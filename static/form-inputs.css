@@ -1,0 +1,19 @@
+#url,
+#search {
+  outline: none;
+  border: 0;
+  border-bottom: 0.1rem solid var(--fg2);
+
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.75rem;
+
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 1rem;
+}
+
+#url::placeholder,
+#search::placeholder {
+  color: var(--fg2);
+  opacity: 1;
+}
