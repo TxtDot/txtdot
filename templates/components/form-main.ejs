@@ -1,0 +1,55 @@
+<% 
+  if (config.search.enabled) {
+
+    %>
+    <form action="/search" method="get" class="input-grid">
+      <div class="input">
+        <input type="text" name="q" id="search" placeholder="Search">
+      </div>
+      <div class="input">
+        <input type="submit" id="submit" class="button" value="Go">
+      </div>
+    </form>
+    <%
+
+    %><details style="margin-top: 1rem;"><summary>Advanced</summary><%
+  }
+%>
+
+<form action="/get" method="get" class="input-grid">
+  <div class="input">
+    <input type="text" name="url" id="url" placeholder="URL">
+  </div>
+  <div class="input">
+    <input type="submit" id="submit" class="button" value="Parse">
+  </div>
+  <div class="input-row">
+    <div class="input">
+      <label for="engine">Engine</label>
+      <select name="engine">
+        <option value="" selected>Default</option>
+        <% engineList.forEach((engine)=> { 
+            %>
+              <option value="<%= engine %>">
+                <%= engine %>
+              </option>
+            <% 
+          }) 
+        %>
+      </select>
+    </div>
+    <div class="input">
+      <label for="format">Format</label>
+      <select name="format">
+        <option value="html" selected>HTML</option>
+        <option value="text">Text</option>
+      </select>
+    </div>
+  </div>
+</form>
+
+<%
+  if (config.search.enabled) {
+    %></details><%
+  }
+%>
