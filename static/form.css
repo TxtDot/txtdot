@@ -7,6 +7,7 @@
   gap: 0.5rem 0.25rem;
 
   width: fit-content;
+  margin-top: 0.5rem;
 }
 
 .input-row {
@@ -29,4 +30,64 @@
 
 label {
   font-size: 0.9rem;
+}
+
+#switch-search {
+  display: none;
+}
+
+#switch-search:checked~.switch-label>.switch-btn {
+  background: var(--accent);
+  justify-content: end;
+}
+
+#switch-search:not(:checked)~.main-form-search {
+  display: none;
+}
+
+#switch-search:not(:checked)~.main-form-url {
+  display: grid;
+}
+
+#switch-search:checked~.main-form-search {
+  display: grid;
+}
+
+#switch-search:checked~.main-form-url {
+  display: none;
+}
+
+.switch-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.switch-btn {
+  width: 2.875rem;
+  height: 1.75rem;
+
+  border-radius: 1rem;
+
+  background: var(--bg2);
+
+  padding: 0.3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.switch-btn::before {
+  content: '';
+
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+
+  border-radius: 1rem;
+
+  background: var(--bg);
 }
