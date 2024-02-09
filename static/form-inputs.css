@@ -1,18 +1,20 @@
-#url,
-#search {
-  outline: none;
+input[type=text],
+select {
+  outline: 0;
   border: 0;
-  border-bottom: 0.1rem solid var(--fg2);
-
-  padding: 0.25rem 0.75rem;
+  border-bottom: 1px var(--bg2) solid;
+  padding: 0.25rem 0.25rem;
 
   background: var(--bg);
   color: var(--fg);
   font-size: 1rem;
+
+  width: 100%;
+
+  transition: border-bottom 0.25s ease-out;
 }
 
-#url::placeholder,
-#search::placeholder {
-  color: var(--fg2);
-  opacity: 1;
+input[type=text]:focus,
+select:focus {
+  border-bottom-color: var(--accent);
 }

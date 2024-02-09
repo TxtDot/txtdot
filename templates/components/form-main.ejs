@@ -1,22 +1,27 @@
-<% 
-  if (config.search.enabled) {
+<% search = config.search.enabled %>
 
-    %>
-    <form action="/search" method="get" class="input-grid">
-      <div class="input">
-        <input type="text" name="q" id="search" placeholder="Search">
-      </div>
-      <div class="input">
-        <input type="submit" id="submit" class="button" value="Go">
-      </div>
-    </form>
-    <%
+<% if (search) { %>
 
-    %><details style="margin-top: 1rem;"><summary>Advanced</summary><%
-  }
-%>
+  <input type="checkbox" id="switch-search" checked>
 
-<form action="/get" method="get" class="input-grid">
+  <label for="switch-search">
+    <span>URL</span>
+    <span class="switch-btn"></span>
+    <span>Search</span>
+  </label>
+
+  <form action="/search" method="get" class="input-grid main-form-search">
+    <div class="input">
+      <input type="text" name="q" id="search" placeholder="Search">
+    </div>
+    <div class="input">
+      <input type="submit" id="submit" class="button" value="Go">
+    </div>
+  </form>
+
+<% } %>
+
+<form action="/get" method="get" class="input-grid <%= search ? "main-form-url" : "" %>">
   <div class="input">
     <input type="text" name="url" id="url" placeholder="URL">
   </div>
@@ -28,14 +33,11 @@
       <label for="engine">Engine</label>
       <select name="engine">
         <option value="" selected>Default</option>
-        <% engineList.forEach((engine)=> { 
-            %>
-              <option value="<%= engine %>">
-                <%= engine %>
-              </option>
-            <% 
-          }) 
-        %>
+        <% engineList.forEach((engine) => { %>
+          <option value="<%= engine %>">
+            <%= engine %>
+          </option>
+          <% }) %>
       </select>
     </div>
     <div class="input">
@@ -47,9 +49,3 @@
     </div>
   </div>
 </form>
-
-<%
-  if (config.search.enabled) {
-    %></details><%
-  }
-%>

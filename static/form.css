@@ -23,24 +23,10 @@
   flex-direction: row;
   align-items: center;
   gap: 0.25rem;
-}
 
-label {
-  font-size: 0.9rem;
-}
-
-#submit {
   font-size: 1rem;
 }
 
-select {
-  border: 0;
-  border-bottom: 0.125rem solid var(--accent);
-
-  background: var(--bg);
-  color: var(--fg);
-  border-radius: 0.25rem;
-
-  font-weight: 500;
+label {
   font-size: 0.9rem;
 }
