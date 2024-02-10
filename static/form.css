@@ -36,24 +36,24 @@ label {
   display: none;
 }
 
-#switch-search:checked~.switch-label>.switch-btn {
+#switch-search:checked ~ .switch-label > .switch-btn {
   background: var(--accent);
   justify-content: end;
 }
 
-#switch-search:not(:checked)~.main-form-search {
+#switch-search:not(:checked) ~ .main-form-search {
   display: none;
 }
 
-#switch-search:not(:checked)~.main-form-url {
+#switch-search:not(:checked) ~ .main-form-url {
   display: grid;
 }
 
-#switch-search:checked~.main-form-search {
+#switch-search:checked ~ .main-form-search {
   display: grid;
 }
 
-#switch-search:checked~.main-form-url {
+#switch-search:checked ~ .main-form-url {
   display: none;
 }
 

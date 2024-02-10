@@ -1,4 +1,4 @@
-input[type=text],
+input[type='text'],
 select {
   outline: 0;
   border: 0;
@@ -14,7 +14,7 @@ select {
   transition: border-bottom 0.25s ease-out;
 }
 
-input[type=text]:focus,
+input[type='text']:focus,
 select:focus {
   border-bottom-color: var(--accent);
 }
