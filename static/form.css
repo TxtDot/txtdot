@@ -63,7 +63,9 @@ label {
   height: 1rem;
 
   transform: translateX(0);
-  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  transition:
+    transform 0.15s ease-out,
+    opacity 0.15s ease-out;
 
   border-radius: 1rem;
 
