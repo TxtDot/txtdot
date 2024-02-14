@@ -38,7 +38,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run clean-css && copyfiles ./templates/*.ejs .env ./dist/ && tsc",
+    "build": "npm run clean-css && copyfiles ./templates/*.ejs ./templates/**/*.ejs .env ./dist/ && tsc",
     "start": "cd ./dist && node ./src/app.js",
     "start:docker": "node ./src/app.js",
     "clean-css": "cleancss --batch static/*.css -o dist/static --batch-suffix \"\"",
