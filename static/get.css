@@ -1,5 +1,5 @@
 .title {
-  border-bottom: 0.125rem solid var(--bg2);
+  border-bottom: 0.125rem solid var(--outline);
   padding-bottom: 0.125rem;
   font-weight: 600;
 }

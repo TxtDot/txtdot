@@ -2,7 +2,7 @@ input[type='text'],
 select {
   outline: 0;
   border: 0;
-  border-bottom: 1px var(--bg2) solid;
+  border-bottom: 1px var(--outline) solid;
   padding: 0.25rem 0.25rem;
 
   background: var(--bg);

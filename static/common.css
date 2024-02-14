@@ -6,13 +6,15 @@
   --bg: #fdfbff;
   --fg: #1a1c1e;
 
-  --bg2: #74777f;
-  --fg2: #333;
+  --outline: #74777f;
 
   --accent: #255fa4;
   --accent-hl: #003060;
 
-  --error: #ffb4ab;
+  --btn-hl: #4178c1;
+  --btn2-hl: rgba(189, 199, 220, 0.5);
+
+  --error: #ff897d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,13 +22,15 @@
     --bg: #1a1c1e;
     --fg: #e3e2e6;
 
-    --bg2: #8e9199;
-    --fg2: #bbb;
+    --outline: #8e9199;
 
     --accent: #a6c8ff;
-    /* hsl(207, 100%, 60%) */
-    --accent-hl: #003060;
-    /* hsl(207, 100%, 80%) */
+    --accent-hl: #d6e3ff;
+
+    --btn-hl: #79adf9;
+    --btn2-hl: rgba(189, 199, 220, 0.2);
+
+    --error: #ffb4ab;
   }
 }
 
@@ -69,20 +73,22 @@ main {
 
   cursor: pointer;
 
-  transition: box-shadow 0.25s ease-out;
+  transition: background-color 0.15s ease-out;
+}
+
+.button:hover {
+  background: var(--btn-hl);
 }
 
 .button.secondary {
   background: var(--bg);
   color: var(--fg);
 
-  border: 1px solid var(--bg2);
+  border: 1px solid var(--outline);
 }
 
-.button:hover {
-  box-shadow:
-    0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.2),
-    0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.14);
+.button.secondary:hover {
+  background: var(--btn2-hl);
 }
 
 a {
