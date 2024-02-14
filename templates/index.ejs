@@ -9,71 +9,20 @@
     <link rel="stylesheet" href="/static/common.css">
     <link rel="stylesheet" href="/static/index.css">
     <link rel="stylesheet" href="/static/form.css">
+    <link rel="stylesheet" href="/static/form-inputs.css">
   </head>
   <body>
     <main>
       <header>
         <h1>txt<span class="dot">.</span></h1>
-        <p class="menu">
+        <div class="menu">
           <a href="https://github.com/TxtDot/txtdot/releases/latest" class="button secondary">v<%= publicConfig.version %></a>
           <a href="https://github.com/txtdot/txtdot" class="button secondary">GitHub</a>
           <a href="https://txtdot.github.io/documentation" class="button secondary">Docs</a>
-        </p>
+        </div>
         <p><%= publicConfig.description %></p>
       </header>
-      <% 
-        if (config.search.enabled) {
-
-          %>
-          <form action="/search" method="get" class="input-grid">
-            <div class="input">
-              <input type="text" name="q" id="search" placeholder="Search">
-            </div>
-            <div class="input">
-              <input type="submit" id="submit" class="button" value="Go">
-            </div>
-          </form>
-          <%
-
-          %><details style="margin-top: 1rem;"><summary>Advanced</summary><%
-        }
-      %>
-      <form action="/get" method="get" class="input-grid">
-        <div class="input">
-          <input type="text" name="url" id="url" placeholder="URL">
-        </div>
-        <div class="input">
-          <input type="submit" id="submit" class="button" value="Parse">
-        </div>
-        <div class="input-row">
-          <div class="input">
-            <label for="engine">Engine</label>
-            <select name="engine">
-              <option value="" selected>Default</option>
-              <% engineList.forEach((engine)=> { 
-                  %>
-                    <option value="<%= engine %>">
-                      <%= engine %>
-                    </option>
-                  <% 
-                }) 
-              %>
-            </select>
-          </div>
-          <div class="input">
-            <label for="format">Format</label>
-            <select name="format">
-              <option value="html" selected>HTML</option>
-              <option value="text">Text</option>
-            </select>
-          </div>
-        </div>
-      </form>
-      <%
-        if (config.search.enabled) {
-          %></details><%
-        }
-      %>
+      <%- include('./components/form-main.ejs') %>
     </main>
   </body>
 </html>

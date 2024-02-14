@@ -1,38 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="<%= parsed.lang %>">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="robots" content="noindex, nofollow">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="noindex, nofollow" />
     <title><%= parsed.title %></title>
-    <link rel="stylesheet" href="/static/common.css">
-    <link rel="stylesheet" href="/static/get.css">
-    <% 
-      if (config.search.enabled) {
-        %><link rel="stylesheet" href="/static/search.css"><%
-      }
-    %>
+    <link rel="stylesheet" href="/static/common.css" />
+    <link rel="stylesheet" href="/static/get.css" />
+    <%- include('./components/search-styles.ejs') %>
   </head>
   <body>
     <main>
-      <div class="menu">
-        <a class="button secondary" href="/">Home</a>
-        <a class="button secondary" href="<%= remoteUrl %>">Original page</a>
-        <% 
-          if (config.search.enabled) {
-            %>
-            <form class="right" action="/search" method="get">
-              <input type="text" name="q" id="search" placeholder="Search">
-              <input class="button" type="submit" value="Go"/>
-            </form>
-            <%
-          }
-        %>
-      </div>
-      <p class="title">
-        <%= parsed.title %>
-      </p>
+      <%- include('./components/menu.ejs') %>
+      <p class="title"><%= parsed.title %></p>
       <%- parsed.content %>
     </main>
   </body>

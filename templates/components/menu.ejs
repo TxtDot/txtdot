@@ -1,0 +1,14 @@
+<div class="menu">
+  <a class="button secondary" href="/">Home</a>
+  <a class="button secondary" href="<%= remoteUrl %>">Original page</a>
+  <% 
+    if (config.search.enabled) {
+      %>
+      <form class="form-search" action="/search" method="get">
+        <input type="text" name="q" id="search" placeholder="Search">
+        <input class="button" type="submit" value="Go"/>
+      </form>
+      <%
+    }
+  %>
+</div>
