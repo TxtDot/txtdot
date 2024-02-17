@@ -11,7 +11,7 @@ export type EngineMatch = {
   engine: EngineFunction;
 };
 
-interface RouteValues {
+export interface RouteValues {
   [key: string]: string;
 }
 
