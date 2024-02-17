@@ -5,11 +5,8 @@ export default async function searx(
   input: HandlerInput
 ): Promise<IHandlerOutput> {
   const document = input.parseDom().window.document;
-
   const search = document.getElementById('q') as HTMLTextAreaElement;
-
   const url = new URL(input.getUrl());
-
   const page = parseInt(url.searchParams.get('pageno') || '1');
 
   const page_footer = `${
@@ -23,7 +20,6 @@ export default async function searx(
   }"> Next</a>`;
 
   const articles = Array.from(document.querySelectorAll('.result'));
-
   const articles_parsed = articles.map((a) => {
     const parsed = {
       url:
