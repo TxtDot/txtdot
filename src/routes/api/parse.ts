@@ -6,7 +6,7 @@ import {
   parseSchema,
 } from '../../types/requests/api';
 
-import handlePage from '../../handlers/main';
+import distributor from '../../handlers/main';
 import { generateRequestUrl } from '../../utils/generate';
 
 export default async function parseRoute(fastify: FastifyInstance) {
@@ -15,7 +15,7 @@ export default async function parseRoute(fastify: FastifyInstance) {
     { schema: parseSchema },
     async (request: EngineRequest) => {
       return {
-        data: await handlePage(
+        data: await distributor.handlePage(
           request.query.url,
           generateRequestUrl(
             request.protocol,
