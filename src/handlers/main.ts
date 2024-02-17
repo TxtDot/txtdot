@@ -8,10 +8,12 @@ import DOMPurify from 'dompurify';
 
 import { Readable } from 'stream';
 
-import readability from './readability';
-import google, { GoogleDomains } from './google';
-import stackoverflow, { StackOverflowDomains } from './stackoverflow/main';
-import searx, { SearxDomains } from './searx';
+import readability from './engines/readability';
+import google, { GoogleDomains } from './engines/google';
+import stackoverflow, {
+  StackOverflowDomains,
+} from './engines/stackoverflow/main';
+import searx, { SearxDomains } from './engines/searx';
 
 import isLocalResource from '../utils/islocal';
 

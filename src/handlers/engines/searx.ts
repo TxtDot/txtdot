@@ -1,5 +1,5 @@
-import { HandlerInput } from './handler-input';
-import { IHandlerOutput } from './handler.interface';
+import { HandlerInput } from '../handler-input';
+import { IHandlerOutput } from '../handler.interface';
 
 export default async function searx(
   input: HandlerInput

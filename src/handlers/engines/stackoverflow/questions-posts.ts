@@ -1,4 +1,4 @@
-import { IHandlerOutput } from '../handler.interface';
+import { IHandlerOutput } from '../../handler.interface';
 import postParser from './post-parser';
 
 export default async function qPostsHandler(

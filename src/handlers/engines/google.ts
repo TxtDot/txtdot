@@ -1,6 +1,6 @@
-import { HandlerInput } from './handler-input';
-import { IHandlerOutput } from './handler.interface';
-import { EngineParseError } from '../errors/main';
+import { HandlerInput } from '../handler-input';
+import { IHandlerOutput } from '../handler.interface';
+import { EngineParseError } from '../../errors/main';
 
 export default async function google(
   input: HandlerInput
