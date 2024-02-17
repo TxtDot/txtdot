@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 
 import { IParseSchema, rawHtmlSchema } from '../../types/requests/api';
 
-import handlePage from '../../handlers/main';
+import distributor from '../../handlers/main';
 import { generateRequestUrl } from '../../utils/generate';
 
 export default async function rawHtml(fastify: FastifyInstance) {
@@ -12,7 +12,7 @@ export default async function rawHtml(fastify: FastifyInstance) {
     async (request, reply) => {
       reply.type('text/html; charset=utf-8');
       return (
-        await handlePage(
+        await distributor.handlePage(
           request.query.url,
           generateRequestUrl(
             request.protocol,

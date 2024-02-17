@@ -1,16 +1,18 @@
 import { Readability } from '@mozilla/readability';
-import { HandlerInput } from '../handler-input';
-import { IHandlerOutput } from '../handler.interface';
 import { EngineParseError } from '../../errors/main';
 
-export default async function readability(
-  input: HandlerInput
-): Promise<IHandlerOutput> {
+import { Engine } from '../engine';
+
+const ReadabilityEngine = new Engine('Readability');
+
+ReadabilityEngine.route('*path', async (input, req) => {
   const reader = new Readability(input.parseDom().window.document);
   const parsed = reader.parse();
 
   if (!parsed) {
-    throw new EngineParseError('Failed to parse [readability]');
+    throw new EngineParseError(
+      `Parse error (${req.path}). [${ReadabilityEngine.name}]`
+    );
   }
 
   return {
@@ -19,4 +21,6 @@ export default async function readability(
     title: parsed.title,
     lang: parsed.lang,
   };
-}
+});
+
+export default ReadabilityEngine;

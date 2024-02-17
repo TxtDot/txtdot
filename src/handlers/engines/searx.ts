@@ -1,21 +1,20 @@
-import { HandlerInput } from '../handler-input';
-import { IHandlerOutput } from '../handler.interface';
+import { Engine } from '../engine';
 
-export default async function searx(
-  input: HandlerInput
-): Promise<IHandlerOutput> {
+const SearXEngine = new Engine('SearX', ['searx.*']);
+
+SearXEngine.route('/search?q=:search', async (input, req) => {
   const document = input.parseDom().window.document;
-  const search = document.getElementById('q') as HTMLTextAreaElement;
+  const search = req.search;
   const url = new URL(input.getUrl());
   const page = parseInt(url.searchParams.get('pageno') || '1');
 
   const page_footer = `${
     page !== 1
-      ? `<a href="${url.origin}${url.pathname}?q=${search.value}&pageno=${
+      ? `<a href="${url.origin}${url.pathname}?q=${search}&pageno=${
           page - 1
         }">Previous </a>|`
       : ''
-  }<a href="${url.origin}${url.pathname}?q=${search.value}&pageno=${
+  }<a href="${url.origin}${url.pathname}?q=${search}&pageno=${
     page + 1
   }"> Next</a>`;
 
@@ -47,9 +46,9 @@ export default async function searx(
   return {
     content,
     textContent,
-    title: `${search.value} - Searx - Page ${page}`,
+    title: `${search} - Searx - Page ${page}`,
     lang: document.documentElement.lang,
   };
-}
+});
 
-export const SearxDomains = ['searx.*'];
+export default SearXEngine;

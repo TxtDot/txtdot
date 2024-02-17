@@ -4,7 +4,7 @@ import { IHandlerOutput } from './handler.interface';
 import { EngineParseError } from '../errors/main';
 import { EngineFunction } from '../types/handlers';
 
-interface IRoutes {
+interface IRoute {
   route: Route;
   handler: EngineFunction;
 }
@@ -12,8 +12,8 @@ interface IRoutes {
 export class Engine {
   name: string;
   domains: string[];
-  routes: IRoutes[] = [];
-  constructor(name: string, domains: string[]) {
+  routes: IRoute[] = [];
+  constructor(name: string, domains: string[] = []) {
     this.domains = domains;
     this.name = name;
   }
@@ -23,13 +23,16 @@ export class Engine {
   }
 
   async handle(input: HandlerInput): Promise<IHandlerOutput> {
+    const url = new URL(input.getUrl());
+    const path = url.pathname + url.search + url.hash;
     for (const route of this.routes) {
-      const match = route.route.match(input.getUrl());
+      const match = route.route.match(path);
 
       if (match) {
-        return await route.handler(input);
+        return await route.handler(input, match);
       }
     }
-    throw new EngineParseError('No route found');
+
+    throw new EngineParseError(`No handler for ${path}. [${this.name}]`);
   }
 }

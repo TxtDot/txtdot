@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
 import { GetSchema, IGetSchema } from '../../types/requests/browser';
-import handlePage from '../../handlers/main';
+import distributor from '../../handlers/main';
 import { generateRequestUrl } from '../../utils/generate';
 
 import getConfig from '../../config/main';
@@ -14,7 +14,7 @@ export default async function getRoute(fastify: FastifyInstance) {
       const remoteUrl = request.query.url;
       const engine = request.query.engine;
 
-      const parsed = await handlePage(
+      const parsed = await distributor.handlePage(
         remoteUrl,
         generateRequestUrl(
           request.protocol,
