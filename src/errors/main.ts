@@ -19,6 +19,12 @@ export class EngineParseError extends TxtDotError {
   }
 }
 
+export class NoHandlerFoundError extends TxtDotError {
+  constructor(message: string) {
+    super(404, 'NoHandlerFoundError', `No handler found for: ${message}`);
+  }
+}
+
 export class LocalResourceError extends TxtDotError {
   constructor() {
     super(403, 'LocalResourceError', 'Proxying local resources is forbidden.');

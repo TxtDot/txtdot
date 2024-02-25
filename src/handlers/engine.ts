@@ -1,7 +1,7 @@
 import Route from 'route-parser';
 import { HandlerInput } from './handler-input';
 import { IHandlerOutput } from './handler.interface';
-import { EngineParseError } from '../errors/main';
+import { NoHandlerFoundError } from '../errors/main';
 import { EngineFunction, RouteValues } from '../types/handlers';
 
 interface IRoute<TParams extends RouteValues> {
@@ -40,6 +40,6 @@ export class Engine {
       }
     }
 
-    throw new EngineParseError(`No handler for ${path}. [${this.name}]`);
+    throw new NoHandlerFoundError(`${path}. [${this.name}]`);
   }
 }

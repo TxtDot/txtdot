@@ -10,9 +10,7 @@ ReadabilityEngine.route('*path', async (input, ro) => {
   const parsed = reader.parse();
 
   if (!parsed) {
-    throw new EngineParseError(
-      `Parse error (${ro.q.path}). [${ReadabilityEngine.name}]`
-    );
+    throw new EngineParseError(`(${ro.q.path}). [${ReadabilityEngine.name}]`);
   }
 
   return {
