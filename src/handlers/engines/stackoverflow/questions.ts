@@ -19,7 +19,7 @@ async function questions(
     content: `${question}<hr>${answers.length} answers <hr>${answers.join(
       '<hr>'
     )}`,
-    textContent: `${ro.q.id}/${ro.q.slug}\n`,
+    textContent: `${ro.q.id}/${ro.q.slug}\n`, // TODO
     title,
     lang: document.documentElement.lang,
   };

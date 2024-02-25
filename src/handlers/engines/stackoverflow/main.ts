@@ -1,7 +1,7 @@
 import { Engine } from '../../engine';
 import questions from './questions';
 import users from './users';
-const SOE = new Engine('StackOverflow', [
+const soEngine = new Engine('StackOverflow', [
   'stackoverflow.com',
   '*.stackoverflow.com',
   '*.stackexchange.com',
@@ -12,7 +12,7 @@ const SOE = new Engine('StackOverflow', [
   'serverfault.com',
 ]);
 
-SOE.route('/questions/:id/*slug', questions);
-SOE.route('/users/:id/*slug', users);
+soEngine.route('/questions/:id/*slug', questions);
+soEngine.route('/users/:id/*slug', users);
 
-export default SOE;
+export default soEngine;

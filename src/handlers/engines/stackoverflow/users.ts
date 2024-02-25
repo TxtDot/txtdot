@@ -28,9 +28,9 @@ async function users(
 
   return {
     content: `${userInfo}<hr><h3>Top Posts</h3>${topPosts}`,
-    textContent: `${ro.q.id}/${ro.q.slug}\n`,
+    textContent: `${ro.q.id}/${ro.q.slug}\n`, // TODO
     title: document.querySelector('title')?.textContent || '',
-    lang: 'en',
+    lang: document.documentElement.lang,
   };
 }
 
