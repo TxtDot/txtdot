@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="<%= publicConfig.description %>">
+    <meta name="description" content="<%= packageJSON.description %>">
     <title>txt. main page</title>
     <link rel="stylesheet" href="/static/common.css">
     <link rel="stylesheet" href="/static/index.css">
@@ -16,11 +16,11 @@
       <header>
         <h1>txt<span class="dot">.</span></h1>
         <div class="menu">
-          <a href="https://github.com/TxtDot/txtdot/releases/latest" class="button secondary">v<%= publicConfig.version %></a>
+          <a href="https://github.com/TxtDot/txtdot/releases/latest" class="button secondary">v<%= packageJSON.version %></a>
           <a href="https://github.com/txtdot/txtdot" class="button secondary">GitHub</a>
           <a href="https://txtdot.github.io/documentation" class="button secondary">Docs</a>
         </div>
-        <p><%= publicConfig.description %></p>
+        <p><%= packageJSON.description %></p>
       </header>
       <%- include('./components/form-main.ejs') %>
     </main>

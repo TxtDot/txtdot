@@ -13,7 +13,7 @@ import proxyRoute from './routes/browser/proxy';
 import parseRoute from './routes/api/parse';
 import rawHtml from './routes/api/raw-html';
 
-import publicConfig from './publicConfig';
+import packageJSON from './package';
 import errorHandler from './errors/handler';
 import getConfig from './config/main';
 import searchRoute from './routes/browser/search';
@@ -46,8 +46,8 @@ class App {
         swagger: {
           info: {
             title: 'TXTDot API',
-            description: publicConfig.description,
-            version: publicConfig.version,
+            description: packageJSON.description,
+            version: packageJSON.version,
           },
         },
       });
