@@ -1,7 +1,7 @@
 import { Distributor } from './distributor';
 import Readability from './engines/readability';
 import SearX from './engines/searx';
-import StackOverflow from './engines/stackoverflow';
+import StackOverflow from './engines/stackoverflow/main';
 
 const distributor = new Distributor();
 

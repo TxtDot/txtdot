@@ -1,22 +1,22 @@
+import { Route } from '../../types/handlers';
 import { Engine } from '../engine';
+import { HandlerInput } from '../handler-input';
 
 const SearXEngine = new Engine('SearX', ['searx.*']);
 
-SearXEngine.route('/search?q=:search', async (input, req) => {
+async function search(
+  input: HandlerInput,
+  ro: Route<{ search: string; pageno?: string }>
+) {
   const document = input.parseDom().window.document;
-  const search = req.search;
-  const url = new URL(input.getUrl());
-  const page = parseInt(url.searchParams.get('pageno') || '1');
+  const search = ro.q.search;
+  const page = parseInt(ro.q.pageno || '1');
 
   const page_footer = `${
     page !== 1
-      ? `<a href="${url.origin}${url.pathname}?q=${search}&pageno=${
-          page - 1
-        }">Previous </a>|`
+      ? `<a href="${ro.reverse({ search, pageno: page - 1 })}">Previous </a>|`
       : ''
-  }<a href="${url.origin}${url.pathname}?q=${search}&pageno=${
-    page + 1
-  }"> Next</a>`;
+  }<a href="${ro.reverse({ search, pageno: page + 1 })}"> Next</a>`;
 
   const articles = Array.from(document.querySelectorAll('.result'));
   const articles_parsed = articles.map((a) => {
@@ -49,6 +49,9 @@ SearXEngine.route('/search?q=:search', async (input, req) => {
     title: `${search} - Searx - Page ${page}`,
     lang: document.documentElement.lang,
   };
-});
+}
+
+SearXEngine.route('/search?q=:search&pageno=:pageno', search);
+SearXEngine.route('/search?q=:search', search);
 
 export default SearXEngine;
