@@ -1,14 +1,16 @@
-import Route from 'route-parser';
-import { RouteValues } from '../../types/handlers';
+import { Route } from '../../types/handlers';
 import { Engine } from '../engine';
 import { HandlerInput } from '../handler-input';
 
 const SearXEngine = new Engine('SearX', ['searx.*']);
 
-async function search(input: HandlerInput, req: RouteValues, ro: Route) {
+async function search(
+  input: HandlerInput,
+  ro: Route<{ search: string; pageno?: string }>
+) {
   const document = input.parseDom().window.document;
-  const search = req.search;
-  const page = parseInt(req.pageno || '1');
+  const search = ro.q.search;
+  const page = parseInt(ro.q.pageno || '1');
 
   const page_footer = `${
     page !== 1

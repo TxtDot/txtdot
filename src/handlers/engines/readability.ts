@@ -5,13 +5,13 @@ import { Engine } from '../engine';
 
 const ReadabilityEngine = new Engine('Readability');
 
-ReadabilityEngine.route('*path', async (input, req) => {
+ReadabilityEngine.route('*path', async (input, ro) => {
   const reader = new Readability(input.parseDom().window.document);
   const parsed = reader.parse();
 
   if (!parsed) {
     throw new EngineParseError(
-      `Parse error (${req.path}). [${ReadabilityEngine.name}]`
+      `Parse error (${ro.q.path}). [${ReadabilityEngine.name}]`
     );
   }
 

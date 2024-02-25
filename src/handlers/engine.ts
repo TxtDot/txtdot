@@ -2,24 +2,28 @@ import Route from 'route-parser';
 import { HandlerInput } from './handler-input';
 import { IHandlerOutput } from './handler.interface';
 import { EngineParseError } from '../errors/main';
-import { EngineFunction } from '../types/handlers';
+import { EngineFunction, RouteValues } from '../types/handlers';
 
-interface IRoute {
+interface IRoute<TParams extends RouteValues> {
   route: Route;
-  handler: EngineFunction;
+  handler: EngineFunction<TParams>;
 }
 
 export class Engine {
   name: string;
   domains: string[];
-  routes: IRoute[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  routes: IRoute<any>[] = [];
   constructor(name: string, domains: string[] = []) {
     this.domains = domains;
     this.name = name;
   }
 
-  route(path: string, handler: EngineFunction) {
-    this.routes.push({ route: new Route(path), handler: handler });
+  route<TParams extends RouteValues>(
+    path: string,
+    handler: EngineFunction<TParams>
+  ) {
+    this.routes.push({ route: new Route<TParams>(path), handler });
   }
 
   async handle(input: HandlerInput): Promise<IHandlerOutput> {
@@ -29,7 +33,10 @@ export class Engine {
       const match = route.route.match(path);
 
       if (match) {
-        return await route.handler(input, match, route.route);
+        return await route.handler(input, {
+          q: match,
+          reverse: (req) => route.route.reverse(req),
+        });
       }
     }
 

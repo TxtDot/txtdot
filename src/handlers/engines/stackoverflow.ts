@@ -11,26 +11,30 @@ const SOE = new Engine('StackOverflow', [
   'serverfault.com',
 ]);
 
-SOE.route('/questions/:id/:slug', async (input, req) => {
-  const document = input.parseDom().window.document;
+SOE.route<{ id: string; slug: string }>(
+  '/questions/:id/:slug',
+  async (input, ro) => {
+    const document = input.parseDom().window.document;
 
-  const questionEl = document.getElementById('question');
-  const question = postParser(questionEl);
+    const questionEl = document.getElementById('question');
+    const question = postParser(questionEl);
 
-  const title = document.querySelector('.question-hyperlink')?.innerHTML || '';
+    const title =
+      document.querySelector('.question-hyperlink')?.innerHTML || '';
 
-  const allAnswers = [...document.querySelectorAll('.answer')];
-  const answers = allAnswers.map((a) => postParser(a));
+    const allAnswers = [...document.querySelectorAll('.answer')];
+    const answers = allAnswers.map((a) => postParser(a));
 
-  return {
-    content: `${question}<hr>${answers.length} answers <hr>${answers.join(
-      '<hr>'
-    )}`,
-    textContent: `${req.id}/${req.slug}\n`,
-    title,
-    lang: 'en',
-  };
-});
+    return {
+      content: `${question}<hr>${answers.length} answers <hr>${answers.join(
+        '<hr>'
+      )}`,
+      textContent: `${ro.q.id}/${ro.q.slug}\n`,
+      title,
+      lang: 'en',
+    };
+  }
+);
 
 function postParser(el: Element | null): string {
   if (!el) {
