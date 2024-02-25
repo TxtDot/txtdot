@@ -1,3 +1,4 @@
+import Route from 'route-parser';
 import { Engine } from '../handlers/engine';
 import { HandlerInput } from '../handlers/handler-input';
 import { IHandlerOutput } from '../handlers/handler.interface';
@@ -17,6 +18,7 @@ export interface RouteValues {
 
 export type EngineFunction = (
   input: HandlerInput,
-  req: RouteValues
+  req: RouteValues,
+  ro: Route
 ) => Promise<IHandlerOutput>;
 export type EnginesMatch = EngineMatch[];

@@ -29,7 +29,7 @@ export class Engine {
       const match = route.route.match(path);
 
       if (match) {
-        return await route.handler(input, match);
+        return await route.handler(input, match, route.route);
       }
     }
 
