@@ -10,21 +10,27 @@ export interface IProxySchema {
   Querystring: IProxyQuerySchema;
 }
 
-export interface ISearchSchema {
-  Querystring: ISearchQuerySchema;
+export interface IRedirectSchema {
+  Querystring: IRedirectQuerySchema;
 }
 
-export const searchQuerySchema = {
+export const redirectQuerySchema = {
   type: 'object',
-  required: ['q'],
+  required: ['url'],
   properties: {
-    q: {
+    url: {
       type: 'string',
-      description: 'Search query',
+      description: 'URL to redirect without querystring',
     },
   },
+  patternProperties: {
+    '^(?!url).*$': { type: 'string' },
+  },
 } as const;
-export type ISearchQuerySchema = FromSchema<typeof searchQuerySchema>;
+export type IRedirectQuerySchema = {
+  url: string;
+  [key: string]: string;
+};
 
 export const getQuerySchema = {
   type: 'object',
@@ -64,10 +70,10 @@ export const indexSchema = {
   produces: ['text/html'],
 };
 
-export const searchSchema: FastifySchema = {
-  description: 'Search redirection page',
+export const redirectSchema: FastifySchema = {
+  description: 'Universal redirection page',
   hide: true,
-  querystring: searchQuerySchema,
+  querystring: redirectQuerySchema,
 };
 
 export const GetSchema: FastifySchema = {

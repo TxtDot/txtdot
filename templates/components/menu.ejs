@@ -4,9 +4,10 @@
   <% 
     if (config.search.enabled) {
       %>
-      <form class="form-search" action="/search" method="get">
+      <form class="form-search" action="/redirect" method="get">
         <input type="text" name="q" id="search" placeholder="Search">
         <input class="button" type="submit" value="Go"/>
+        <input type="hidden" name="url" value="<%= config.search.searx_url %>/search"/>
       </form>
       <%
     }

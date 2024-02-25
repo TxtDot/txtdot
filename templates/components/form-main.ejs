@@ -10,13 +10,14 @@
     <span>Search</span>
   </label>
 
-  <form action="/search" method="get" class="input-grid main-form-search">
+  <form action="/redirect" method="get" class="input-grid main-form-search">
     <div class="input">
       <input type="text" name="q" id="search" placeholder="Search">
     </div>
     <div class="input">
       <input type="submit" id="submit" class="button" value="Go">
     </div>
+    <input type="hidden" name="url" value="<%= config.search.searx_url %>/search"/>
   </form>
 
 <% } %>

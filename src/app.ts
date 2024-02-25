@@ -16,7 +16,7 @@ import rawHtml from './routes/api/raw-html';
 import packageJSON from './package';
 import errorHandler from './errors/handler';
 import getConfig from './config/main';
-import searchRoute from './routes/browser/search';
+import redirectRoute from './routes/browser/redirect';
 
 class App {
   async init() {
@@ -58,7 +58,7 @@ class App {
     fastify.register(getRoute);
 
     if (config.search.enabled) {
-      fastify.register(searchRoute);
+      fastify.register(redirectRoute);
     }
 
     if (config.proxy_res) fastify.register(proxyRoute);
