@@ -6,7 +6,7 @@
   "main": "dist/app.js",
   "dependencies": {
     "@fastify/static": "^6.12.0",
-    "@fastify/swagger": "^8.13.0",
+    "@fastify/swagger": "^8.14.0",
     "@fastify/swagger-ui": "^2.1.0",
     "@fastify/view": "^8.2.0",
     "@mozilla/readability": "^0.5.0",
