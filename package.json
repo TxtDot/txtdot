@@ -12,7 +12,7 @@
     "@mozilla/readability": "^0.5.0",
     "axios": "^1.6.5",
     "dompurify": "^3.0.8",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
     "fastify": "^4.25.2",
     "iconv-lite": "^0.6.3",
