@@ -41,6 +41,12 @@ export default async function proxyRoute(fastify: FastifyInstance) {
           response.headers['content-length']?.toString() || '0'
         );
 
+        if (mime.startsWith('image/svg')) {
+          reply.header('Content-Type', mime);
+          reply.header('Content-Length', clen);
+          return reply.send(response.data);
+        }
+
         const buffer = await sharp(response.data)
           // .grayscale(true)
           .toFormat('webp', {
