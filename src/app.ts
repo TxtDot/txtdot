@@ -57,11 +57,8 @@ class App {
     fastify.register(indexRoute);
     fastify.register(getRoute);
 
-    if (config.search.enabled) {
-      fastify.register(redirectRoute);
-    }
-
-    if (config.proxy_res) fastify.register(proxyRoute);
+    config.search.enabled && fastify.register(redirectRoute);
+    config.proxy.enabled && fastify.register(proxyRoute);
 
     fastify.register(parseRoute);
     fastify.register(rawHtml);

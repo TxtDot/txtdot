@@ -20,7 +20,8 @@
     "json-schema-to-ts": "^3.0.0",
     "linkedom": "^0.16.8",
     "micromatch": "^4.0.5",
-    "route-parser": "^0.0.5"
+    "route-parser": "^0.0.5",
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
