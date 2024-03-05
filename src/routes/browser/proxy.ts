@@ -33,7 +33,7 @@ export default async function proxyRoute(fastify: FastifyInstance) {
         const mime: string | undefined =
           response.headers['content-type']?.toString();
 
-        if (!(mime && mime.startsWith('image'))) {
+        if (!(mime && mime.startsWith('image/'))) {
           throw new UnsupportedMimetypeError('image/*', mime);
         }
 
