@@ -11,12 +11,14 @@ interface IRoute<TParams extends RouteValues> {
 
 export class Engine {
   name: string;
+  description: string;
   domains: string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   routes: IRoute<any>[] = [];
-  constructor(name: string, domains: string[] = []) {
+  constructor(name: string, description: string, domains: string[] = []) {
     this.domains = domains;
     this.name = name;
+    this.description = description;
   }
 
   route<TParams extends RouteValues>(

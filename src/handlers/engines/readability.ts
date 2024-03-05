@@ -3,7 +3,10 @@ import { EngineParseError } from '../../errors/main';
 
 import { Engine } from '../engine';
 
-const ReadabilityEngine = new Engine('Readability');
+const ReadabilityEngine = new Engine(
+  'Readability',
+  'Engine for parsing content with Readability'
+);
 
 ReadabilityEngine.route('*path', async (input, ro) => {
   const reader = new Readability(input.parseDom().window.document);

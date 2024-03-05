@@ -18,6 +18,9 @@ import errorHandler from './errors/handler';
 import getConfig from './config/main';
 import redirectRoute from './routes/browser/redirect';
 
+import dynConfig from './config/dynamic.config';
+import configurationRoute from './routes/browser/configuration';
+
 class App {
   async init() {
     const config = getConfig();
@@ -42,6 +45,7 @@ class App {
     });
 
     if (config.swagger) {
+      dynConfig.addRoute('/doc');
       await fastify.register(fastifySwagger, {
         swagger: {
           info: {
@@ -54,8 +58,13 @@ class App {
       await fastify.register(fastifySwaggerUi, { routePrefix: '/doc' });
     }
 
+    fastify.addHook('onRoute', (route) => {
+      dynConfig.addRoute(route.url);
+    });
+
     fastify.register(indexRoute);
     fastify.register(getRoute);
+    fastify.register(configurationRoute);
 
     config.search.enabled && fastify.register(redirectRoute);
     config.proxy.enabled && fastify.register(proxyRoute);
