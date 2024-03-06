@@ -11,38 +11,32 @@
 
 HTTP proxy that parses only text, links and pictures from pages
 reducing internet traffic, removing ads and heavy scripts.
+Mozilla's Readability library is used under the hood.
 
 ## Features
 
-- Search with SearXNG
+- Server-side page simplification
+- Media proxy
 - Image compression with Sharp
-- Server side page simplification
-- Page to view parsed data
-- Custom engines for stackoverflow, searxng
-- API for parsing pages
+- Search with SearXNG
+- Custom parsers for StackOverflow and SearXNG
+- Handy API endpoints
+- No client JavaScript
+- Some kind of Material Design 3
 
-## Interface
+## Running
 
-![interface_url](./docs/interface_url.png)
-![interface_search_page](./docs/interface_search_page.png)
-
-## Development
-
-### Installation
+### Development
 
 ```bash
 npm install
-```
-
-### Dev
-
-```bash
 npm run dev
 ```
 
-### Prod
+### Production
 
 ```bash
+npm install
 npm run build
 npm run start
 ```
@@ -50,19 +44,26 @@ npm run start
 ### Docker
 
 ```bash
-docker compose build
 docker compose up -d
 ```
 
+## Screenshots
+
+![Main page with URL input field](./docs/interface_url.png)
+![SearXNG search results page](./docs/interface_search_page.png)
+
+## Performance tests
+// TODO
+
 ## Credits
 
-Uses [Mozilla's readability.js](https://github.com/mozilla/readability),
-[🔗 linkedom](https://github.com/WebReflection/linkedom),
-[Fastify web framework](https://github.com/fastify/fastify),
-[EJS](https://github.com/mde/ejs),
-[Axios](https://github.com/axios/axios),
-[DomPurify](https://github.com/cure53/DOMPurify),
-[Sharp](https://github.com/lovell/sharp),
-[MicroMatch](https://github.com/micromatch/micromatch),
-[RouteParser](https://github.com/rcs/route-parser),
-[IconvLite](https://github.com/ashtuchkin/iconv-lite)
+- [Readability.js](https://github.com/mozilla/readability)
+- [🔗 LinkeDOM](https://github.com/WebReflection/linkedom)
+- [Fastify web framework](https://github.com/fastify/fastify)
+- [EJS](https://github.com/mde/ejs)
+- [Axios](https://github.com/axios/axios)
+- [DOMPurify](https://github.com/cure53/DOMPurify)
+- [Sharp](https://github.com/lovell/sharp)
+- [MicroMatch](https://github.com/micromatch/micromatch)
+- [RouteParser](https://github.com/rcs/route-parser)
+- [IconvLite](https://github.com/ashtuchkin/iconv-lite)
