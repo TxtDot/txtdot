@@ -27,12 +27,13 @@ export function generateParserUrl(
 export function generateProxyUrl(
   requestUrl: URL,
   remoteUrl: URL,
-  href: string
+  href: string,
+  subProxy?: string
 ): string {
   const realHref = getRealURL(href, remoteUrl);
 
   const urlParam = `?url=${encodeURIComponent(realHref.href)}`;
-  return `${requestUrl.origin}/proxy${urlParam}`;
+  return `${requestUrl.origin}/proxy${subProxy ? `/${subProxy}` : ''}${urlParam}`;
 }
 
 function getRealURL(href: string, remoteUrl: URL) {

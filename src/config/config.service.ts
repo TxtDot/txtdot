@@ -5,7 +5,7 @@ export class ConfigService {
   public readonly port: number;
   public readonly timeout: number;
   public readonly reverse_proxy: boolean;
-  public readonly proxy_res: boolean;
+  public readonly proxy: ProxyConfig;
   public readonly swagger: boolean;
   public readonly search: SearchConfig;
 
@@ -19,7 +19,11 @@ export class ConfigService {
 
     this.reverse_proxy = this.parseBool(process.env.REVERSE_PROXY, false);
 
-    this.proxy_res = this.parseBool(process.env.PROXY_RES, true);
+    this.proxy = {
+      enabled: this.parseBool(process.env.PROXY_RES, true),
+      img_compress: this.parseBool(process.env.IMG_COMPRESS, true),
+    };
+
     this.swagger = this.parseBool(process.env.SWAGGER, false);
 
     this.search = {
@@ -32,6 +36,11 @@ export class ConfigService {
     if (!value) return def;
     return value === 'true' || value === '1';
   }
+}
+
+interface ProxyConfig {
+  enabled: boolean;
+  img_compress: boolean;
 }
 
 interface SearchConfig {

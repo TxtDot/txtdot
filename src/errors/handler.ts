@@ -55,7 +55,8 @@ function htmlErrorHandler(error: Error, reply: FastifyReply, url: string) {
       url,
       code: error.code,
       description: error.description,
-      proxyBtn: error instanceof NotHtmlMimetypeError && getConfig().proxy_res,
+      proxyBtn:
+        error instanceof NotHtmlMimetypeError && getConfig().proxy.enabled,
     });
   }
 
