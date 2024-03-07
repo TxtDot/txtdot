@@ -1,7 +1,7 @@
-name: format-check
+name: build-check
 on: pull_request
 jobs:
-  format-check:
+  build-check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,5 +15,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check formatting
-        run: npm run format:check
+      - name: Start build
+        run: npm run build

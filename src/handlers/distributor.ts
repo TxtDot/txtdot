@@ -7,9 +7,7 @@ import DOMPurify from 'dompurify';
 
 import { Readable } from 'stream';
 
-import isLocalResource from '../utils/islocal';
-
-import { LocalResourceError, NotHtmlMimetypeError } from '../errors/main';
+import { NotHtmlMimetypeError } from '../errors/main';
 import { HandlerInput } from './handler-input';
 import { decodeStream, parseEncodingName } from '../utils/http';
 import replaceHref from '../utils/replace-href';
@@ -39,10 +37,6 @@ export class Distributor {
     redirectPath: string = 'get'
   ): Promise<IHandlerOutput> {
     const urlObj = new URL(remoteUrl);
-
-    if (await isLocalResource(urlObj)) {
-      throw new LocalResourceError();
-    }
 
     const response = await axios.get(remoteUrl);
     const data: Readable = response.data;
@@ -76,6 +70,7 @@ export class Distributor {
     if (specified) {
       return this.fallback[this.engines_id[specified]];
     }
+
     for (const engine of this.fallback) {
       if (micromatch.isMatch(host, engine.domains)) {
         return engine;

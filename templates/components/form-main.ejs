@@ -1,26 +1,30 @@
 <% search = config.search.enabled %>
 
-<% if (search) { %>
+<% 
 
-  <input type="checkbox" id="switch-search" checked>
+if (search) { 
+  %>
+    <input type="checkbox" id="switch-search" checked>
 
-  <label for="switch-search" class="switch-label">
-    <span>URL</span>
-    <span class="switch-btn"></span>
-    <span>Search</span>
-  </label>
+    <label for="switch-search" class="switch-label">
+      <span>URL</span>
+      <span class="switch-btn"></span>
+      <span>Search</span>
+    </label>
 
-  <form action="/redirect" method="get" class="input-grid main-form-search">
-    <div class="input">
-      <input type="text" name="q" id="search" placeholder="Search">
-    </div>
-    <div class="input">
-      <input type="submit" id="submit" class="button" value="Go">
-    </div>
-    <input type="hidden" name="url" value="<%= config.search.searx_url %>/search"/>
-  </form>
+    <form action="/redirect" method="get" class="input-grid main-form-search">
+      <div class="input">
+        <input type="text" name="q" id="search" placeholder="Search">
+      </div>
+      <div class="input">
+        <input type="submit" id="submit" class="button" value="Go">
+      </div>
+      <input type="hidden" name="url" value="<%= config.search.searx_url %>/search"/>
+    </form>
+  <% 
+}
 
-<% } %>
+%>
 
 <form action="/get" method="get" class="input-grid <%= search ? "main-form-url" : "" %>">
   <div class="input">

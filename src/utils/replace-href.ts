@@ -15,14 +15,25 @@ export default function replaceHref(
   const proxyUrl = (href: string) =>
     generateProxyUrl(requestUrl, remoteUrl, href);
 
+  const imgProxyUrl = (href: string) =>
+    generateProxyUrl(requestUrl, remoteUrl, href, 'img');
+
   modifyLinks(doc.querySelectorAll('a[href]'), 'href', parserUrl);
   modifyLinks(doc.querySelectorAll('frame,iframe'), 'src', parserUrl);
 
-  if (getConfig().proxy_res) {
+  const config = getConfig();
+
+  if (config.proxy.enabled) {
     modifyLinks(
-      doc.querySelectorAll('img,image,video,audio,embed,track,source'),
+      doc.querySelectorAll('video,audio,embed,track,source'),
       'src',
       proxyUrl
+    );
+
+    modifyLinks(
+      doc.querySelectorAll('img,image'),
+      'src',
+      config.proxy.img_compress ? imgProxyUrl : proxyUrl
     );
 
     modifyLinks(doc.getElementsByTagName('object'), 'data', proxyUrl);

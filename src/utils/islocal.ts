@@ -1,5 +1,5 @@
-import dns from 'dns';
 import ipRangeCheck from 'ip-range-check';
+import dns from 'dns';
 
 const subnets = [
   '0.0.0.0/8',
@@ -35,7 +35,11 @@ const subnets = [
   'ff00::/8',
 ];
 
-export default async function isLocalResource(url: URL): Promise<boolean> {
+export function isLocalResource(addr: string): boolean {
+  return ipRangeCheck(addr, subnets);
+}
+
+export async function isLocalResourceURL(url: URL): Promise<boolean> {
   // Resolve domain name
   const addr = (await dns.promises.lookup(url.hostname)).address;
 
