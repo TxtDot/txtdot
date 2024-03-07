@@ -53,7 +53,44 @@ docker compose up -d
 ![SearXNG search results page](./docs/interface_search_page.png)
 
 ## Performance tests
-// TODO
+
+txtdot is a great tool in case of slow internet connection or weak signal.
+Here is the comparision of performance metrics from pagespeed.web.dev
+between original page and proxied one.
+
+"Mobile" test includes "Slow 4G" artificial network throttling.
+
+<details>
+<summary>Expand</summary>
+
+|  |Original page|Proxied through txtdot|
+|:-|:-----------:|:--------------------:|
+|[Habr][habr-link] Desktop|![56%][habr-do-img]|![99%][habr-dt-img]|
+|[Habr][habr-link] Mobile|![21%][habr-mo-img]|![100%][habr-mt-img]|
+|[Medium][medium-link] Desktop|![44%][medium-do-img]|![100%][medium-dt-img]|
+|[Medium][medium-link] Mobile|![36%][medium-mo-img]|![100%][medium-mt-img]|
+|[Nginx Blog][nginx-link] Desktop|![53%][nginx-do-img]|![100%][nginx-dt-img]|
+|[Nginx Blog][nginx-link] Mobile|![26%][nginx-mo-img]|![100%][nginx-mt-img]|
+
+[habr-link]: https://habr.com/ru/articles/780692/
+[habr-do-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/desktop_orig.png
+[habr-dt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/desktop_txtdot.png
+[habr-mo-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/mobile_orig.png
+[habr-mt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/desktop_txtdot.png
+
+[medium-link]: https://levelup.gitconnected.com/proxy-servers-how-proxies-work-0ec083fc1030
+[medium-do-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/medium/desktop_orig.png
+[medium-dt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/medium/desktop_txtdot.png
+[medium-mo-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/medium/mobile_orig.png
+[medium-mt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/medium/mobile_txtdot.png
+
+[nginx-link]: https://www.nginx.com/blog/rate-limiting-nginx/
+[nginx-do-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/nginx-blog/desktop_orig.png
+[nginx-dt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/nginx-blog/desktop_txtdot.png
+[nginx-mo-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/nginx-blog/mobile_orig.png
+[nginx-mt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/nginx-blog/mobile_txtdot.png
+
+</details>
 
 ## Credits
 
