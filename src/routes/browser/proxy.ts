@@ -5,18 +5,11 @@ import sharp from 'sharp';
 import getConfig from '../../config/main';
 import { UnsupportedMimetypeError } from '../../errors/main';
 
-import isLocalResource from '../../utils/islocal';
-import { LocalResourceError } from '../../errors/main';
-
 export default async function proxyRoute(fastify: FastifyInstance) {
   fastify.get<IProxySchema>(
     '/proxy',
     { schema: ProxySchema },
     async (request, reply) => {
-      if (await isLocalResource(new URL(request.query.url))) {
-        throw new LocalResourceError();
-      }
-
       const response = await axios.get(request.query.url);
       const mime: string | undefined =
         response.headers['content-type']?.toString();
