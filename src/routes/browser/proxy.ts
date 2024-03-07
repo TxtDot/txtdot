@@ -10,6 +10,7 @@ export default async function proxyRoute(fastify: FastifyInstance) {
     '/proxy',
     { schema: ProxySchema },
     async (request, reply) => {
+
       const response = await axios.get(request.query.url);
       const mime: string | undefined =
         response.headers['content-type']?.toString();
@@ -33,7 +34,7 @@ export default async function proxyRoute(fastify: FastifyInstance) {
         const mime: string | undefined =
           response.headers['content-type']?.toString();
 
-        if (!(mime && mime.startsWith('image'))) {
+        if (!(mime && mime.startsWith('image/'))) {
           throw new UnsupportedMimetypeError('image/*', mime);
         }
 
@@ -41,6 +42,12 @@ export default async function proxyRoute(fastify: FastifyInstance) {
           response.headers['content-length']?.toString() || '0'
         );
 
+        if (mime.startsWith('image/svg')) {
+          reply.header('Content-Type', mime);
+          reply.header('Content-Length', clen);
+          return reply.send(response.data);
+        }
+          
         const buffer = await sharp(response.data)
           // .grayscale(true)
           .toFormat('webp', {
