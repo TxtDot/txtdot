@@ -49,8 +49,10 @@ docker compose up -d
 
 ## Screenshots
 
-![Main page with URL input field](./docs/interface_url.png)
-![SearXNG search results page](./docs/interface_search_page.png)
+<div align="center">
+<img src="https://raw.githubusercontent.com/TxtDot/.github/main/imgs/ui_url_input.png" alt="Main page with URL input field">
+<img src="https://raw.githubusercontent.com/TxtDot/.github/main/imgs/ui_search_page.png" alt="SearXNG search results page">
+</div>
 
 ## Performance tests
 
