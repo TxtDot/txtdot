@@ -5,7 +5,8 @@ import { Engine } from '../engine';
 
 const ReadabilityEngine = new Engine(
   'Readability',
-  'Engine for parsing content with Readability'
+  'Engine for parsing content with Readability',
+  ['*']
 );
 
 ReadabilityEngine.route('*path', async (input, ro) => {
