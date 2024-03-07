@@ -76,7 +76,7 @@ between original page and proxied one.
 [habr-do-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/desktop_orig.png
 [habr-dt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/desktop_txtdot.png
 [habr-mo-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/mobile_orig.png
-[habr-mt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/desktop_txtdot.png
+[habr-mt-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/habr/mobile_txtdot.png
 
 [medium-link]: https://levelup.gitconnected.com/proxy-servers-how-proxies-work-0ec083fc1030
 [medium-do-img]: https://raw.githubusercontent.com/TxtDot/.github/main/tests/medium/desktop_orig.png
