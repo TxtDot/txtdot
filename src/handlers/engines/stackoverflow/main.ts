@@ -3,7 +3,7 @@ import questions from './questions';
 import users from './users';
 const soEngine = new Engine(
   'StackOverflow',
-  "Engine for 'StackOverflow'. Available routes: '/questions/:id/*slug' and '/users/:id/*slug",
+  "Engine for 'StackOverflow'. Available routes: '/questions/' and '/users/'",
   [
     'stackoverflow.com',
     '*.stackoverflow.com',
