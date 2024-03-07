@@ -2,7 +2,9 @@ import { Route } from '../../types/handlers';
 import { Engine } from '../engine';
 import { HandlerInput } from '../handler-input';
 
-const SearXEngine = new Engine('SearX', ['searx.*']);
+const SearXEngine = new Engine('SearX', "Engine for searching with 'SearXNG'", [
+  'searx.*',
+]);
 
 async function search(
   input: HandlerInput,

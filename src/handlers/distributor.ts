@@ -76,6 +76,7 @@ export class Distributor {
     if (specified) {
       return this.fallback[this.engines_id[specified]];
     }
+
     for (const engine of this.fallback) {
       if (micromatch.isMatch(host, engine.domains)) {
         return engine;

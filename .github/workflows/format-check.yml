@@ -1,7 +1,7 @@
 name: format-check
 on: pull_request
 jobs:
-  check-formatting:
+  format-check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

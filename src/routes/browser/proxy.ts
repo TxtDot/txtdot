@@ -3,21 +3,13 @@ import { IProxySchema, ProxySchema } from '../../types/requests/browser';
 import axios from '../../types/axios';
 import sharp from 'sharp';
 import getConfig from '../../config/main';
-import {
-  LocalResourceError,
-  UnsupportedMimetypeError,
-} from '../../errors/main';
-import isLocalResource from '../../utils/islocal';
+import { UnsupportedMimetypeError } from '../../errors/main';
 
 export default async function proxyRoute(fastify: FastifyInstance) {
   fastify.get<IProxySchema>(
     '/proxy',
     { schema: ProxySchema },
     async (request, reply) => {
-      if (await isLocalResource(new URL(request.query.url))) {
-        throw new LocalResourceError();
-      }
-
       const response = await axios.get(request.query.url);
       const mime: string | undefined =
         response.headers['content-type']?.toString();
@@ -34,10 +26,6 @@ export default async function proxyRoute(fastify: FastifyInstance) {
       '/proxy/img',
       { schema: ProxySchema },
       async (request, reply) => {
-        if (await isLocalResource(new URL(request.query.url))) {
-          throw new LocalResourceError();
-        }
-
         const response = await axios.get(request.query.url, {
           responseType: 'arraybuffer',
         });
