@@ -104,3 +104,5 @@ between original page and proxied one.
 - [MicroMatch](https://github.com/micromatch/micromatch)
 - [RouteParser](https://github.com/rcs/route-parser)
 - [IconvLite](https://github.com/ashtuchkin/iconv-lite)
+
+<a href="https://www.producthunt.com/posts/txtdot?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-txtdot" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=443317&theme=neutral" alt="txtdot - HTTP&#0032;proxy&#0032;that&#0032;saves&#0032;bandwidth&#0044;&#0032;removing&#0032;ads&#0032;and&#0032;scripts&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
