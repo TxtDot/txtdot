@@ -11,7 +11,7 @@
     "@fastify/view": "^9.0.0",
     "@mozilla/readability": "^0.5.0",
     "axios": "^1.6.8",
-    "dompurify": "^3.0.8",
+    "dompurify": "^3.0.11",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "fastify": "^4.26.2",
