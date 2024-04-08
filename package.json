@@ -37,7 +37,7 @@
     "eslint": "^8.56.0",
     "prettier": "^3.1.1",
     "tsc-watch": "^6.0.4",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
