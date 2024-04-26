@@ -28,6 +28,7 @@ export class ConfigService {
 
     this.third_party = {
       searx_url: process.env.SEARX_URL,
+      webder_url: process.env.WEBDER_URL,
     };
   }
 
@@ -44,4 +45,5 @@ interface ProxyConfig {
 
 interface ThirdPartyConfig {
   searx_url?: string;
+  webder_url?: string;
 }
