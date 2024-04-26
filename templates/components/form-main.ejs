@@ -1,4 +1,4 @@
-<% search = config.search.enabled %>
+<% search = config.third_party.searx_url %>
 
 <% 
 
@@ -19,7 +19,7 @@ if (search) {
       <div class="input">
         <input type="submit" id="submit" class="button" value="Go">
       </div>
-      <input type="hidden" name="url" value="<%= config.search.searx_url %>/search"/>
+      <input type="hidden" name="url" value="<%= config.third_party.searx_url %>/search"/>
     </form>
   <% 
 }

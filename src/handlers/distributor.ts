@@ -1,5 +1,5 @@
 import { IHandlerOutput } from './handler.interface';
-import axios from '../types/axios';
+import axios, { oaxios } from '../types/axios';
 
 import micromatch from 'micromatch';
 
@@ -13,6 +13,7 @@ import { decodeStream, parseEncodingName } from '../utils/http';
 import replaceHref from '../utils/replace-href';
 import { parseHTML } from 'linkedom';
 import { Engine } from './engine';
+import getConfig from '../config/main';
 
 interface IEngineId {
   [key: string]: number;
@@ -38,7 +39,14 @@ export class Distributor {
   ): Promise<IHandlerOutput> {
     const urlObj = new URL(remoteUrl);
 
-    const response = await axios.get(remoteUrl);
+    const webder_url = getConfig().third_party.webder_url;
+
+    const response = webder_url
+      ? await oaxios.get(
+          `${webder_url}/render?url=${encodeURIComponent(remoteUrl)}`
+        )
+      : await axios.get(remoteUrl);
+
     const data: Readable = response.data;
     const mime: string | undefined =
       response.headers['content-type']?.toString();
