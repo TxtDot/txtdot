@@ -7,7 +7,7 @@ export class ConfigService {
   public readonly reverse_proxy: boolean;
   public readonly proxy: ProxyConfig;
   public readonly swagger: boolean;
-  public readonly search: SearchConfig;
+  public readonly third_party: ThirdPartyConfig;
 
   constructor() {
     config();
@@ -26,8 +26,7 @@ export class ConfigService {
 
     this.swagger = this.parseBool(process.env.SWAGGER, false);
 
-    this.search = {
-      enabled: this.parseBool(process.env.SEARCH_ENABLED, false),
+    this.third_party = {
       searx_url: process.env.SEARX_URL,
     };
   }
@@ -43,7 +42,6 @@ interface ProxyConfig {
   img_compress: boolean;
 }
 
-interface SearchConfig {
-  enabled: boolean;
+interface ThirdPartyConfig {
   searx_url?: string;
 }

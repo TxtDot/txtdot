@@ -66,7 +66,7 @@ class App {
     fastify.register(getRoute);
     fastify.register(configurationRoute);
 
-    config.search.enabled && fastify.register(redirectRoute);
+    config.third_party.searx_url && fastify.register(redirectRoute);
     config.proxy.enabled && fastify.register(proxyRoute);
 
     fastify.register(parseRoute);
