@@ -2,12 +2,12 @@
   <a class="button secondary" href="/">Home</a>
   <a class="button secondary" href="<%= remoteUrl %>">Original page</a>
   <% 
-    if (config.third_party.searx_url) {
+    if (config.env.third_party.searx_url) {
       %>
       <form class="form-search" action="/redirect" method="get">
         <input type="text" name="q" id="search" placeholder="Search">
         <input class="button" type="submit" value="Go"/>
-        <input type="hidden" name="url" value="<%= config.third_party.searx_url %>/search"/>
+        <input type="hidden" name="url" value="<%= config.env.third_party.searx_url %>/search"/>
       </form>
       <%
     }

@@ -6,7 +6,7 @@ import {
   parseSchema,
 } from '../../types/requests/api';
 
-import distributor from '../../handlers/main';
+import { distributor } from '../../plugin_manager';
 import { generateRequestUrl } from '../../utils/generate';
 
 export default async function parseRoute(fastify: FastifyInstance) {

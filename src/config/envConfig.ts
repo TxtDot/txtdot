@@ -1,6 +1,6 @@
-import { config } from 'dotenv';
+import { config as dconfig } from 'dotenv';
 
-export class ConfigService {
+class EnvConfig {
   public readonly host: string;
   public readonly port: number;
   public readonly timeout: number;
@@ -10,7 +10,7 @@ export class ConfigService {
   public readonly third_party: ThirdPartyConfig;
 
   constructor() {
-    config();
+    dconfig();
 
     this.host = process.env.HOST || '0.0.0.0';
     this.port = Number(process.env.PORT) || 8080;
@@ -37,6 +37,8 @@ export class ConfigService {
     return value === 'true' || value === '1';
   }
 }
+const env_config = new EnvConfig();
+export default env_config;
 
 interface ProxyConfig {
   enabled: boolean;

@@ -1,4 +1,4 @@
-class DynConfigService {
+class DynConfig {
   public routes: Set<string> = new Set();
   constructor() {}
   addRoute(route: string) {
@@ -6,5 +6,5 @@ class DynConfigService {
   }
 }
 
-const config = new DynConfigService();
-export default config;
+const dyn_config = new DynConfig();
+export default dyn_config;

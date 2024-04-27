@@ -1,5 +1,5 @@
+import config from '../config';
 import { generateParserUrl, generateProxyUrl } from './generate';
-import getConfig from '../config/main';
 
 export default function replaceHref(
   dom: Window,
@@ -21,9 +21,7 @@ export default function replaceHref(
   modifyLinks(doc.querySelectorAll('a[href]'), 'href', parserUrl);
   modifyLinks(doc.querySelectorAll('frame,iframe'), 'src', parserUrl);
 
-  const config = getConfig();
-
-  if (config.proxy.enabled) {
+  if (config.env.proxy.enabled) {
     modifyLinks(
       doc.querySelectorAll('video,audio,embed,track,source'),
       'src',
@@ -33,7 +31,7 @@ export default function replaceHref(
     modifyLinks(
       doc.querySelectorAll('img,image'),
       'src',
-      config.proxy.img_compress ? imgProxyUrl : proxyUrl
+      config.env.proxy.img_compress ? imgProxyUrl : proxyUrl
     );
 
     modifyLinks(doc.getElementsByTagName('object'), 'data', proxyUrl);

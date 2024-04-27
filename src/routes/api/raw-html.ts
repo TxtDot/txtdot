@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 
 import { IParseSchema, rawHtmlSchema } from '../../types/requests/api';
 
-import distributor from '../../handlers/main';
+import { distributor } from '../../plugin_manager';
 import { generateRequestUrl } from '../../utils/generate';
 
 export default async function rawHtml(fastify: FastifyInstance) {
