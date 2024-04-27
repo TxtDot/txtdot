@@ -1,6 +1,5 @@
-import { Route } from '../../types/handlers';
-import { Engine } from '../engine';
-import { HandlerInput } from '../handler-input';
+import { Engine } from '@txtdot/sdk';
+import { HandlerInput, Route } from '@txtdot/sdk/dist/types/handler';
 
 const SearXEngine = new Engine('SearX', "Engine for searching with 'SearXNG'", [
   'searx.*',

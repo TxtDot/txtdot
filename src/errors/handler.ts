@@ -1,6 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { NotHtmlMimetypeError, TxtDotError } from './main';
+import { NotHtmlMimetypeError } from './main';
 import { getFastifyError } from './validation';
+
+import { TxtDotError } from '@txtdot/sdk/dist/types/errors';
 
 import { IGetSchema } from '../types/requests/browser';
 import getConfig from '../config/main';
