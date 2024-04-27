@@ -1,4 +1,4 @@
-import getConfig from '../config/main';
+import env_config from '../config/envConfig';
 import { TxtDotError } from '@txtdot/sdk/dist/types/errors';
 
 export class LocalResourceError extends TxtDotError {
@@ -23,7 +23,7 @@ export class NotHtmlMimetypeError extends TxtDotError {
       421,
       'NotHtmlMimetypeError',
       'Received non-HTML content, ' +
-        (getConfig().proxy.enabled
+        (env_config.proxy.enabled
           ? 'use proxy instead of parser.'
           : 'proxying is disabled by the instance admin.')
     );

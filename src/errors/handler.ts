@@ -5,7 +5,7 @@ import { getFastifyError } from './validation';
 import { TxtDotError } from '@txtdot/sdk/dist/types/errors';
 
 import { IGetSchema } from '../types/requests/browser';
-import getConfig from '../config/main';
+import env_config from '../config/envConfig';
 
 export default function errorHandler(
   error: Error,
@@ -58,7 +58,7 @@ function htmlErrorHandler(error: Error, reply: FastifyReply, url: string) {
       code: error.code,
       description: error.description,
       proxyBtn:
-        error instanceof NotHtmlMimetypeError && getConfig().proxy.enabled,
+        error instanceof NotHtmlMimetypeError && env_config.proxy.enabled,
     });
   }
 

@@ -15,20 +15,18 @@ import rawHtml from './routes/api/raw-html';
 
 import packageJSON from './package';
 import errorHandler from './errors/handler';
-import getConfig from './config/main';
 import redirectRoute from './routes/browser/redirect';
 
-import dynConfig from './config/dynamic.config';
+import dynConfig from './config/dynConfig';
 import configurationRoute from './routes/browser/configuration';
+import env_config from './config/envConfig';
 
 class App {
   async init() {
-    const config = getConfig();
-
     const fastify = Fastify({
       logger: true,
-      trustProxy: config.reverse_proxy,
-      connectionTimeout: config.timeout,
+      trustProxy: env_config.reverse_proxy,
+      connectionTimeout: env_config.timeout,
     });
 
     fastify.setErrorHandler(errorHandler);
@@ -44,7 +42,7 @@ class App {
       },
     });
 
-    if (config.swagger) {
+    if (env_config.swagger) {
       dynConfig.addRoute('/doc');
       await fastify.register(fastifySwagger, {
         swagger: {
@@ -66,13 +64,13 @@ class App {
     fastify.register(getRoute);
     fastify.register(configurationRoute);
 
-    config.third_party.searx_url && fastify.register(redirectRoute);
-    config.proxy.enabled && fastify.register(proxyRoute);
+    env_config.third_party.searx_url && fastify.register(redirectRoute);
+    env_config.proxy.enabled && fastify.register(proxyRoute);
 
     fastify.register(parseRoute);
     fastify.register(rawHtml);
 
-    fastify.listen({ host: config.host, port: config.port }, (err) => {
+    fastify.listen({ host: env_config.host, port: env_config.port }, (err) => {
       err && console.log(err);
     });
   }

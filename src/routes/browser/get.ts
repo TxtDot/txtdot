@@ -4,7 +4,7 @@ import { GetSchema, IGetSchema } from '../../types/requests/browser';
 import distributor from '../../handlers/main';
 import { generateRequestUrl } from '../../utils/generate';
 
-import getConfig from '../../config/main';
+import env_config from '../../config/envConfig';
 
 export default async function getRoute(fastify: FastifyInstance) {
   fastify.get<IGetSchema>(
@@ -32,7 +32,7 @@ export default async function getRoute(fastify: FastifyInstance) {
         return reply.view('/templates/get.ejs', {
           parsed,
           remoteUrl,
-          config: getConfig(),
+          config: env_config,
         });
       }
     }

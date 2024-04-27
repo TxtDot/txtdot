@@ -4,8 +4,8 @@ import packageJSON from '../../package';
 import distributor from '../../handlers/main';
 import { indexSchema } from '../../types/requests/browser';
 
-import getConfig from '../../config/main';
-import dynConfig from '../../config/dynamic.config';
+import env_config from '../../config/envConfig';
+import dynConfig from '../../config/dynConfig';
 
 export default async function configurationRoute(fastify: FastifyInstance) {
   fastify.get('/configuration', { schema: indexSchema }, async (_, reply) => {
@@ -13,7 +13,7 @@ export default async function configurationRoute(fastify: FastifyInstance) {
       packageJSON,
       engines: distributor.fallback,
       dynConfig,
-      config: getConfig(),
+      config: env_config,
     });
   });
 }
