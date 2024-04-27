@@ -21,8 +21,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0
       '@txtdot/plugins':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.1.1
+        version: 1.1.1
       '@txtdot/sdk':
         specifier: ^1.1.1
         version: 1.1.1
@@ -310,8 +310,8 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@txtdot/plugins@1.0.0':
-    resolution: {integrity: sha512-RJLVNHFBxiEUo8my6eSgkfrSpxPDIUYdGsI0hfw8lyI5aZ30/OjhFfzfK0Jsf1b7xxw5acZn1My0yrF9RpdHBA==}
+  '@txtdot/plugins@1.1.1':
+    resolution: {integrity: sha512-rCRCzi18xdFK/JpdB+dQF1PaN+w6tNhVJum5YJu05PY0vsz5Rgx9ct7HmPi8W01Ek+iwec8GUeP1IKkUDHF6BQ==}
 
   '@txtdot/sdk@1.1.1':
     resolution: {integrity: sha512-H1YYXdDX3sjZdBfb+osDlDVBVlW8lNeyAIl0j7DhwbOmW3bNCFI9pdMiWGDIyotH6UqOncFP0u+jBugW/5N4Wg==}
@@ -1666,7 +1666,7 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@txtdot/plugins@1.0.0':
+  '@txtdot/plugins@1.1.1':
     dependencies:
       '@mozilla/readability': 0.5.0
       '@txtdot/sdk': 1.1.1
