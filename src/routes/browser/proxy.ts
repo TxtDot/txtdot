@@ -2,8 +2,8 @@ import { FastifyInstance } from 'fastify';
 import { IProxySchema, ProxySchema } from '../../types/requests/browser';
 import axios from '../../types/axios';
 import sharp from 'sharp';
-import env_config from '../../config/envConfig';
 import { UnsupportedMimetypeError } from '../../errors/main';
+import config from '../../config';
 
 export default async function proxyRoute(fastify: FastifyInstance) {
   fastify.get<IProxySchema>(
@@ -21,7 +21,7 @@ export default async function proxyRoute(fastify: FastifyInstance) {
     }
   );
 
-  if (env_config.proxy.img_compress)
+  if (config.env.proxy.img_compress)
     fastify.get<IProxySchema>(
       '/proxy/img',
       { schema: ProxySchema },

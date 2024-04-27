@@ -7,9 +7,9 @@ import { decodeStream, parseEncodingName } from './utils/http';
 import replaceHref from './utils/replace-href';
 import { parseHTML } from 'linkedom';
 
-import env_config from './config/envConfig';
 import { Engine } from '@txtdot/sdk';
 import { HandlerInput, IHandlerOutput } from '@txtdot/sdk/dist/types/handler';
+import config from './config';
 
 interface IEngineId {
   [key: string]: number;
@@ -35,7 +35,7 @@ export class Distributor {
   ): Promise<IHandlerOutput> {
     const urlObj = new URL(remoteUrl);
 
-    const webder_url = env_config.third_party.webder_url;
+    const webder_url = config.env.third_party.webder_url;
 
     const response = webder_url
       ? await oaxios.get(

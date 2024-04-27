@@ -1,17 +1,14 @@
 import { FastifyInstance } from 'fastify';
 
-import packageJSON from '../../package';
 import { engineList } from '../../plugin_manager';
 import { indexSchema } from '../../types/requests/browser';
-
-import env_config from '../../config/envConfig';
+import config from '../../config';
 
 export default async function indexRoute(fastify: FastifyInstance) {
   fastify.get('/', { schema: indexSchema }, async (_, reply) => {
     return reply.view('/templates/index.ejs', {
-      packageJSON,
       engineList,
-      config: env_config,
+      config,
     });
   });
 }

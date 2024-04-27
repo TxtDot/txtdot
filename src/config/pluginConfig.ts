@@ -6,7 +6,7 @@ import { engines } from '@txtdot/plugins';
  * Here you can add your own plugins
  */
 const plugin_config: IAppConfig = {
-  engines: [engines.StackOverflow, engines.SearX, engines.Readability],
+  engines: [...Object.values(engines)],
 };
 
 export default plugin_config;
