@@ -1,12 +1,6 @@
 import getConfig from '../config/main';
 import { TxtDotError } from '@txtdot/sdk/dist/types/errors';
 
-export class EngineParseError extends TxtDotError {
-  constructor(message: string) {
-    super(422, 'EngineParseError', `Parse error: ${message}`);
-  }
-}
-
 export class LocalResourceError extends TxtDotError {
   constructor() {
     super(403, 'LocalResourceError', 'Proxying local resources is forbidden.');
