@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
 import packageJSON from '../../package';
-import { engineList } from '../../handlers/main';
+import { engineList } from '../../plugin_manager';
 import { indexSchema } from '../../types/requests/browser';
 
 import env_config from '../../config/envConfig';

@@ -1,13 +1,13 @@
-import axios, { oaxios } from '../types/axios';
+import axios, { oaxios } from './types/axios';
 import micromatch from 'micromatch';
 import DOMPurify from 'dompurify';
 import { Readable } from 'stream';
-import { NotHtmlMimetypeError } from '../errors/main';
-import { decodeStream, parseEncodingName } from '../utils/http';
-import replaceHref from '../utils/replace-href';
+import { NotHtmlMimetypeError } from './errors/main';
+import { decodeStream, parseEncodingName } from './utils/http';
+import replaceHref from './utils/replace-href';
 import { parseHTML } from 'linkedom';
 
-import env_config from '../config/envConfig';
+import env_config from './config/envConfig';
 import { Engine } from '@txtdot/sdk';
 import { HandlerInput, IHandlerOutput } from '@txtdot/sdk/dist/types/handler';
 

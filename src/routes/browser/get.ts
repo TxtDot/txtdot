@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
 import { GetSchema, IGetSchema } from '../../types/requests/browser';
-import distributor from '../../handlers/main';
+import { distributor } from '../../plugin_manager';
 import { generateRequestUrl } from '../../utils/generate';
 
 import env_config from '../../config/envConfig';

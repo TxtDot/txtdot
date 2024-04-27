@@ -1,5 +1,5 @@
 import { FastifySchema } from 'fastify';
-import { engineList } from '../../handlers/main';
+import { engineList } from '../../plugin_manager';
 import { FromSchema } from 'json-schema-to-ts';
 
 export interface IGetSchema {

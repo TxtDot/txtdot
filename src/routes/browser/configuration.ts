@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
 import packageJSON from '../../package';
-import distributor from '../../handlers/main';
+import { distributor } from '../../plugin_manager';
 import { indexSchema } from '../../types/requests/browser';
 
 import env_config from '../../config/envConfig';
