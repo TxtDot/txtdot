@@ -1,19 +1,15 @@
-import { IHandlerOutput } from './handler.interface';
 import axios, { oaxios } from '../types/axios';
-
 import micromatch from 'micromatch';
-
 import DOMPurify from 'dompurify';
-
 import { Readable } from 'stream';
-
 import { NotHtmlMimetypeError } from '../errors/main';
-import { HandlerInput } from './handler-input';
 import { decodeStream, parseEncodingName } from '../utils/http';
 import replaceHref from '../utils/replace-href';
 import { parseHTML } from 'linkedom';
-import { Engine } from './engine';
+
 import getConfig from '../config/main';
+import { Engine } from '@txtdot/sdk';
+import { HandlerInput, IHandlerOutput } from '@txtdot/sdk/dist/types/handler';
 
 interface IEngineId {
   [key: string]: number;
@@ -64,7 +60,7 @@ export class Distributor {
     );
 
     // post-process
-
+    // TODO: generate dom in handler and not parse here twice
     const dom = parseHTML(output.content);
     replaceHref(dom, requestUrl, new URL(remoteUrl), engineName, redirectPath);
 
