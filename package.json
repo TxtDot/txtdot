@@ -1,57 +1,20 @@
 {
-  "name": "txtdot",
-  "version": "1.7.0",
+  "name": "root",
   "private": true,
-  "description": "txtdot is an HTTP proxy that parses only text, links and pictures from pages reducing internet bandwidth usage, removing ads and heavy scripts",
-  "main": "dist/app.js",
-  "dependencies": {
-    "@fastify/static": "^7.0.3",
-    "@fastify/swagger": "^8.14.0",
-    "@fastify/swagger-ui": "^3.0.0",
-    "@fastify/view": "^9.0.0",
-    "@txtdot/plugins": "^1.1.1",
-    "@txtdot/sdk": "^1.1.1",
-    "axios": "^1.6.8",
-    "dompurify": "^3.1.0",
-    "dotenv": "^16.3.1",
-    "ejs": "^3.1.10",
-    "fastify": "^4.26.2",
-    "iconv-lite": "^0.6.3",
-    "ip-range-check": "^0.2.0",
-    "json-schema-to-ts": "^3.0.1",
-    "linkedom": "^0.16.11",
-    "micromatch": "^4.0.5",
-    "sharp": "^0.33.3"
-  },
-  "devDependencies": {
-    "@types/dompurify": "^3.0.5",
-    "@types/ejs": "^3.1.5",
-    "@types/jsdom": "^21.1.6",
-    "@types/micromatch": "^4.0.7",
-    "@types/node": "^20.12.7",
-    "@typescript-eslint/eslint-plugin": "^7.7.0",
-    "@typescript-eslint/parser": "^7.7.0",
-    "clean-css-cli": "^5.6.3",
-    "copyfiles": "^2.4.1",
-    "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
-    "tsc-watch": "^6.2.0",
-    "typescript": "^5.4.5"
-  },
+  "dependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run clean-css && copyfiles ./templates/*.ejs ./templates/**/*.ejs .env ./dist/ && tsc",
-    "start": "cd ./dist && node ./src/app.js",
-    "start:docker": "node ./src/app.js",
-    "clean-css": "cleancss --batch static/*.css -o dist/static --batch-suffix \"\"",
-    "dev": "tsc-watch --onSuccess \"node ./dist/src/app.js\"",
+    "build": "lerna run build",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
-  "keywords": [],
-  "authors": [
-    "Artemy Egorov <me@artegoser.ru> https://github.com/artegoser",
-    "DarkCat09 <darkcat09@vivaldi.net> https://dc09.ru/"
-  ],
-  "license": "MIT"
+  "devDependencies": {
+    "lerna": "^8.1.2",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "tsc-watch": "^6.2.0",
+    "typescript": "^5.4.5",
+    "@types/node": "^20.12.7",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0"
+  }
 }

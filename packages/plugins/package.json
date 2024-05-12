@@ -1,0 +1,27 @@
+{
+  "name": "@txtdot/plugins",
+  "version": "1.1.1",
+  "description": "Official txtdot plugins",
+  "main": "dist/lib.js",
+  "types": "dist/lib.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/txtdot/plugins.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [],
+  "authors": [
+    "Artemy Egorov <me@artegoser.ru> https://github.com/artegoser"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@mozilla/readability": "^0.5.0",
+    "@txtdot/sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
