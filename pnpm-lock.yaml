@@ -8,9 +8,30 @@ importers:
 
   .:
     devDependencies:
+      '@types/node':
+        specifier: ^20.12.7
+        version: 20.12.11
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.7.0
+        version: 7.8.0(@typescript-eslint/parser@7.8.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/parser':
+        specifier: ^7.7.0
+        version: 7.8.0(eslint@8.57.0)(typescript@5.4.5)
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.0
       lerna:
         specifier: ^8.1.2
         version: 8.1.2(encoding@0.1.13)
+      prettier:
+        specifier: ^3.1.1
+        version: 3.2.5
+      tsc-watch:
+        specifier: ^6.2.0
+        version: 6.2.0(typescript@5.4.5)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
 
   packages/plugins:
     dependencies:
@@ -107,33 +128,12 @@ importers:
       '@types/micromatch':
         specifier: ^4.0.7
         version: 4.0.7
-      '@types/node':
-        specifier: ^20.12.7
-        version: 20.12.11
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^7.7.0
-        version: 7.8.0(@typescript-eslint/parser@7.8.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/parser':
-        specifier: ^7.7.0
-        version: 7.8.0(eslint@8.57.0)(typescript@5.4.5)
       clean-css-cli:
         specifier: ^5.6.3
         version: 5.6.3
       copyfiles:
         specifier: ^2.4.1
         version: 2.4.1
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.0
-      prettier:
-        specifier: ^3.1.1
-        version: 3.2.5
-      tsc-watch:
-        specifier: ^6.2.0
-        version: 6.2.0(typescript@5.4.5)
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
 
 packages:
 

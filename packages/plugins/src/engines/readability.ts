@@ -1,15 +1,15 @@
-import { Readability as OReadability } from "@mozilla/readability";
-import { EngineParseError } from "@txtdot/sdk/dist/types/errors";
+import { Readability as OReadability } from '@mozilla/readability';
+import { EngineParseError } from '@txtdot/sdk/dist/types/errors';
 
-import { Engine } from "@txtdot/sdk";
+import { Engine } from '@txtdot/sdk';
 
 const Readability = new Engine(
-  "Readability",
-  "Engine for parsing content with Readability",
-  ["*"]
+  'Readability',
+  'Engine for parsing content with Readability',
+  ['*']
 );
 
-Readability.route("*path", async (input, ro) => {
+Readability.route('*path', async (input, ro) => {
   const reader = new OReadability(input.parseDom().window.document);
   const parsed = reader.parse();
 

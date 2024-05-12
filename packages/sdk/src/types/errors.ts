@@ -13,12 +13,12 @@ export abstract class TxtDotError extends Error {
 
 export class NoHandlerFoundError extends TxtDotError {
   constructor(message: string) {
-    super(404, "NoHandlerFoundError", `No handler found for: ${message}`);
+    super(404, 'NoHandlerFoundError', `No handler found for: ${message}`);
   }
 }
 
 export class EngineParseError extends TxtDotError {
   constructor(message: string) {
-    super(422, "EngineParseError", `Parse error: ${message}`);
+    super(422, 'EngineParseError', `Parse error: ${message}`);
   }
 }

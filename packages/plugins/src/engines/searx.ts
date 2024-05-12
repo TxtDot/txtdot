@@ -1,8 +1,8 @@
-import { Engine } from "@txtdot/sdk";
-import { HandlerInput, Route } from "@txtdot/sdk/dist/types/handler";
+import { Engine } from '@txtdot/sdk';
+import { HandlerInput, Route } from '@txtdot/sdk/dist/types/handler';
 
-const SearX = new Engine("SearX", "Engine for searching with 'SearXNG'", [
-  "searx.*",
+const SearX = new Engine('SearX', "Engine for searching with 'SearXNG'", [
+  'searx.*',
 ]);
 
 async function search(
@@ -11,26 +11,26 @@ async function search(
 ) {
   const document = input.parseDom().window.document;
   const search = ro.q.search;
-  const page = parseInt(ro.q.pageno || "1");
+  const page = parseInt(ro.q.pageno || '1');
 
   const page_footer = `${
     page !== 1
       ? `<a href="${ro.reverse({ search, pageno: page - 1 })}">Previous </a>|`
-      : ""
+      : ''
   }<a href="${ro.reverse({ search, pageno: page + 1 })}"> Next</a>`;
 
-  const articles = Array.from(document.querySelectorAll(".result"));
+  const articles = Array.from(document.querySelectorAll('.result'));
   const articles_parsed = articles.map((a) => {
     const parsed = {
       url:
-        (a.getElementsByClassName("url_wrapper")[0] as HTMLAnchorElement)
-          .href || "",
+        (a.getElementsByClassName('url_wrapper')[0] as HTMLAnchorElement)
+          .href || '',
       title:
-        (a.getElementsByTagName("h3")[0] as HTMLHeadingElement).textContent ||
-        "",
+        (a.getElementsByTagName('h3')[0] as HTMLHeadingElement).textContent ||
+        '',
       content:
-        (a.getElementsByClassName("content")[0] as HTMLDivElement)
-          .textContent || "",
+        (a.getElementsByClassName('content')[0] as HTMLDivElement)
+          .textContent || '',
     };
 
     return {
@@ -41,8 +41,8 @@ async function search(
 
   const content = `${articles_parsed
     .map((a) => a.html)
-    .join("")}${page_footer}`;
-  const textContent = articles_parsed.map((a) => a.text).join("");
+    .join('')}${page_footer}`;
+  const textContent = articles_parsed.map((a) => a.text).join('');
 
   return {
     content,
@@ -52,7 +52,7 @@ async function search(
   };
 }
 
-SearX.route("/search?q=:search&pageno=:pageno", search);
-SearX.route("/search?q=:search", search);
+SearX.route('/search?q=:search&pageno=:pageno', search);
+SearX.route('/search?q=:search', search);
 
 export default SearX;

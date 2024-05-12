@@ -1,13 +1,13 @@
-import Route from "route-parser";
+import Route from 'route-parser';
 
 import {
   HandlerInput,
   IHandlerOutput,
   EngineFunction,
   RouteValues,
-} from "./types/handler";
+} from './types/handler';
 
-import { NoHandlerFoundError } from "./types/errors";
+import { NoHandlerFoundError } from './types/errors';
 
 interface IRoute<TParams extends RouteValues> {
   route: Route;
