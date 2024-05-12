@@ -10,10 +10,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '20'
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
-      - name: Check formatting
-        run: npm run format:check
+      - name: Start build
+        run: pnpm run format:check
