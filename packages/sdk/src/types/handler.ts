@@ -4,7 +4,7 @@ import { Engine } from '../engine';
 export class HandlerInput {
   private data: string;
   private url: string;
-  private dom?: Window;
+  private window?: Window;
 
   constructor(data: string, url: string) {
     this.data = data;
@@ -15,19 +15,26 @@ export class HandlerInput {
     return this.url;
   }
 
-  parseDom(): Window {
-    if (this.dom) {
-      return this.dom;
+  get document(): Document {
+    if (this.window) {
+      return this.window.document;
     }
 
-    this.dom = parseHTML(this.data);
-    return this.dom;
+    this.window = parseHTML(this.data);
+    return this.window.document;
   }
 }
 
-export interface IHandlerOutput {
+export interface HandlerOutput {
   content: string;
   textContent: string;
+  title: string;
+  lang: string;
+}
+
+export interface EngineOutput {
+  content: string;
+  textContent?: string;
   title?: string;
   lang?: string;
 }
@@ -66,7 +73,7 @@ export interface RouteValues {
 export type EngineFunction<TParams extends RouteValues> = (
   input: HandlerInput,
   ro: Route<TParams>
-) => Promise<IHandlerOutput>;
+) => Promise<EngineOutput>;
 
 export type EnginesMatch<TParams extends RouteValues> = EngineMatch<TParams>[];
 

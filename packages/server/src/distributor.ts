@@ -5,11 +5,11 @@ import { Readable } from 'stream';
 import { NotHtmlMimetypeError } from './errors/main';
 import { decodeStream, parseEncodingName } from './utils/http';
 import replaceHref from './utils/replace-href';
-import { parseHTML } from 'linkedom';
 
 import { Engine } from '@txtdot/sdk';
-import { HandlerInput, IHandlerOutput } from '@txtdot/sdk/dist/types/handler';
+import { HandlerInput, HandlerOutput } from '@txtdot/sdk';
 import config from './config';
+import { parseHTML } from 'linkedom';
 
 interface IEngineId {
   [key: string]: number;
@@ -32,7 +32,7 @@ export class Distributor {
     requestUrl: URL, // proxy URL
     engineName?: string,
     redirectPath: string = 'get'
-  ): Promise<IHandlerOutput> {
+  ): Promise<HandlerOutput> {
     const urlObj = new URL(remoteUrl);
 
     const webder_url = config.env.third_party.webder_url;
@@ -52,6 +52,7 @@ export class Distributor {
     }
 
     const engine = this.getFallbackEngine(urlObj.hostname, engineName);
+
     const output = await engine.handle(
       new HandlerInput(
         await decodeStream(data, parseEncodingName(mime)),
@@ -59,15 +60,28 @@ export class Distributor {
       )
     );
 
+    const dom = parseHTML(output.content);
+
     // post-process
     // TODO: generate dom in handler and not parse here twice
-    const dom = parseHTML(output.content);
-    replaceHref(dom, requestUrl, new URL(remoteUrl), engineName, redirectPath);
+    replaceHref(
+      dom.document,
+      requestUrl,
+      new URL(remoteUrl),
+      engineName,
+      redirectPath
+    );
 
-    const purify = DOMPurify(dom.window);
-    output.content = purify.sanitize(dom.document.toString());
+    const purify = DOMPurify(dom);
+    const content = purify.sanitize(dom.document.toString());
 
-    return output;
+    return {
+      content,
+      textContent:
+        output.textContent || dom.document.documentElement.textContent || '',
+      title: output.title || dom.document.title,
+      lang: output.lang || dom.document.documentElement.lang,
+    };
   }
 
   getFallbackEngine(host: string, specified?: string): Engine {

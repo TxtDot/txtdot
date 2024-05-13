@@ -2,13 +2,12 @@ import config from '../config';
 import { generateParserUrl, generateProxyUrl } from './generate';
 
 export default function replaceHref(
-  dom: Window,
+  doc: Document,
   requestUrl: URL,
   remoteUrl: URL,
   engine?: string,
   redirectPath: string = 'get'
 ) {
-  const doc: Document = dom.window.document;
   const parserUrl = (href: string) =>
     generateParserUrl(requestUrl, remoteUrl, href, engine, redirectPath);
 
