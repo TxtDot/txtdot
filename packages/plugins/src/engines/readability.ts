@@ -1,7 +1,6 @@
 import { Readability as OReadability } from '@mozilla/readability';
-import { EngineParseError } from '@txtdot/sdk/dist/types/errors';
 
-import { Engine } from '@txtdot/sdk';
+import { Engine, EngineParseError } from '@txtdot/sdk';
 
 const Readability = new Engine(
   'Readability',

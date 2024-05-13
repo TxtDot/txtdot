@@ -8,7 +8,7 @@ import replaceHref from './utils/replace-href';
 import { parseHTML } from 'linkedom';
 
 import { Engine } from '@txtdot/sdk';
-import { HandlerInput, IHandlerOutput } from '@txtdot/sdk/dist/types/handler';
+import { HandlerInput, IHandlerOutput } from '@txtdot/sdk';
 import config from './config';
 
 interface IEngineId {

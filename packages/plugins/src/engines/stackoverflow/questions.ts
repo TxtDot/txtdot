@@ -1,4 +1,4 @@
-import { HandlerInput, Route } from '@txtdot/sdk/dist/types/handler';
+import { HandlerInput, Route } from '@txtdot/sdk';
 
 async function questions(
   input: HandlerInput,

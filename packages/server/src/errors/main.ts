@@ -1,5 +1,5 @@
 import config from '../config';
-import { TxtDotError } from '@txtdot/sdk/dist/types/errors';
+import { TxtDotError } from '@txtdot/sdk';
 
 export class LocalResourceError extends TxtDotError {
   constructor() {
