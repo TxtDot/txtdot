@@ -1,5 +1,6 @@
 import { Engine } from '@txtdot/sdk';
 import { HandlerInput, Route } from '@txtdot/sdk';
+import { parseHTML } from 'linkedom';
 
 const SearX = new Engine('SearX', "Engine for searching with 'SearXNG'", [
   'searx.*',
@@ -9,7 +10,7 @@ async function search(
   input: HandlerInput,
   ro: Route<{ search: string; pageno?: string }>
 ) {
-  const document = input.parseDom().window.document;
+  const document = input.document;
   const search = ro.q.search;
   const page = parseInt(ro.q.pageno || '1');
 
@@ -45,7 +46,7 @@ async function search(
   const textContent = articles_parsed.map((a) => a.text).join('');
 
   return {
-    content,
+    document: parseHTML(content).document,
     textContent,
     title: `${search} - Searx - Page ${page}`,
     lang: document.documentElement.lang,

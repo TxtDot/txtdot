@@ -13,7 +13,7 @@ import {
   RouteValues,
   EnginesMatch,
   HandlerInput,
-  IHandlerOutput,
+  HandlerOutput,
   Route,
   handlerSchema,
 } from './types/handler';
@@ -29,7 +29,7 @@ export {
   RouteValues,
   EnginesMatch,
   HandlerInput,
-  IHandlerOutput,
+  HandlerOutput,
   Route,
   handlerSchema,
 };

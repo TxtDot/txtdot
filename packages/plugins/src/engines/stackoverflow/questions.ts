@@ -1,10 +1,11 @@
 import { HandlerInput, Route } from '@txtdot/sdk';
+import { parseHTML } from 'linkedom';
 
 async function questions(
   input: HandlerInput,
   ro: Route<{ id: string; slug: string }>
 ) {
-  const document = input.parseDom().window.document;
+  const document = input.document;
 
   const questionEl = document.getElementById('question');
   const question = postParser(questionEl);
@@ -15,9 +16,9 @@ async function questions(
   const answers = allAnswers.map((a) => postParser(a));
 
   return {
-    content: `${question}<hr>${answers.length} answers <hr>${answers.join(
-      '<hr>'
-    )}`,
+    document: parseHTML(
+      `${question}<hr>${answers.length} answers <hr>${answers.join('<hr>')}`
+    ).document,
     textContent: `${ro.q.id}/${ro.q.slug}\nText output not supported`, // TODO
     title,
     lang: document.documentElement.lang,

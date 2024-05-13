@@ -2,9 +2,9 @@ import Route from 'route-parser';
 
 import {
   HandlerInput,
-  IHandlerOutput,
   EngineFunction,
   RouteValues,
+  EngineOutput,
 } from './types/handler';
 
 import { NoHandlerFoundError } from './types/errors';
@@ -33,7 +33,7 @@ export class Engine {
     this.routes.push({ route: new Route<TParams>(path), handler });
   }
 
-  async handle(input: HandlerInput): Promise<IHandlerOutput> {
+  async handle(input: HandlerInput): Promise<EngineOutput> {
     const url = new URL(input.getUrl());
     const path = url.pathname + url.search + url.hash;
     for (const route of this.routes) {

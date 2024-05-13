@@ -1,10 +1,11 @@
 import { HandlerInput, Route } from '@txtdot/sdk';
+import { parseHTML } from 'linkedom';
 
 async function users(
   input: HandlerInput,
   ro: Route<{ id: string; slug: string }>
 ) {
-  const document = input.parseDom().window.document;
+  const document = input.document;
 
   const userInfo =
     document.querySelector('.md\\:ai-start > div:nth-child(2)')?.textContent ||
@@ -26,7 +27,8 @@ async function users(
     .join('<br/>');
 
   return {
-    content: `${userInfo}<hr><h3>Top Posts</h3>${topPosts}`,
+    document: parseHTML(`${userInfo}<hr><h3>Top Posts</h3>${topPosts}`)
+      .document,
     textContent: `${ro.q.id}/${ro.q.slug}\n`, // TODO
     title: document.querySelector('title')?.textContent || '',
     lang: document.documentElement.lang,

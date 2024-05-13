@@ -1,6 +1,7 @@
 import { Readability as OReadability } from '@mozilla/readability';
 
 import { Engine, EngineParseError } from '@txtdot/sdk';
+import { parseHTML } from 'linkedom';
 
 const Readability = new Engine(
   'Readability',
@@ -9,7 +10,7 @@ const Readability = new Engine(
 );
 
 Readability.route('*path', async (input, ro) => {
-  const reader = new OReadability(input.parseDom().window.document);
+  const reader = new OReadability(input.document);
   const parsed = reader.parse();
 
   if (!parsed) {
@@ -17,7 +18,7 @@ Readability.route('*path', async (input, ro) => {
   }
 
   return {
-    content: parsed.content,
+    document: parseHTML(parsed.content).document,
     textContent: parsed.textContent,
     title: parsed.title,
     lang: parsed.lang,
