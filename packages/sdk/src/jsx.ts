@@ -23,7 +23,10 @@ export function createElement(
         else return `${key}=${value}`;
       })
       .join(' ');
-    return `<${name} ${propsstr}>${content.join('')}</${name}>`;
+
+    return content.length === 0
+      ? `<${name} ${propsstr}/>`
+      : `<${name} ${propsstr}>${content.join('')}</${name}>`;
   } else if (typeof name === 'function') {
     return name(props, ...content);
   } else {

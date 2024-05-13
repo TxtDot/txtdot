@@ -1,5 +1,5 @@
 import { HandlerInput, Route } from '@txtdot/sdk';
-import { parseHTML } from 'linkedom';
+import { JSX } from '@txtdot/sdk';
 
 async function users(
   input: HandlerInput,
@@ -22,15 +22,28 @@ async function users(
       const type =
         el.querySelector('.iconAnswer, .iconQuestion')?.textContent || '';
 
-      return `<strong>${type} (${votes}) </strong><a href="${url}">${title}</a>`;
+      return (
+        <>
+          <strong>
+            {type} ({votes}){' '}
+          </strong>
+          <a href={url}>{title}</a>
+        </>
+      );
     })
-    .join('<br/>');
+    .join(<br />);
 
   return {
-    content: `${userInfo}<hr><h3>Top Posts</h3>${topPosts}`,
+    content: (
+      <>
+        {userInfo}
+        <hr />
+        <h3>Top Posts</h3>
+        {topPosts}
+      </>
+    ),
     textContent: `${ro.q.id}/${ro.q.slug}\n`, // TODO
     title: document.querySelector('title')?.textContent || '',
-    lang: document.documentElement.lang,
   };
 }
 

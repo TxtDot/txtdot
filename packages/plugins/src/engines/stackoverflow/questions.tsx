@@ -1,5 +1,5 @@
 import { HandlerInput, Route } from '@txtdot/sdk';
-import { parseHTML } from 'linkedom';
+import { JSX } from '@txtdot/sdk';
 
 async function questions(
   input: HandlerInput,
@@ -16,10 +16,15 @@ async function questions(
   const answers = allAnswers.map((a) => postParser(a));
 
   return {
-    content: `${question}<hr>${answers.length} answers <hr>${answers.join('<hr>')}`,
-    textContent: `${ro.q.id}/${ro.q.slug}\nText output not supported`, // TODO
+    content: (
+      <>
+        {question}
+        <hr />
+        {answers.length} answers <hr />
+        {answers.join(<hr />)}
+      </>
+    ),
     title,
-    lang: document.documentElement.lang,
   };
 }
 
@@ -36,12 +41,27 @@ function postParser(el: Element | null): string {
       (el.querySelector('.user-details a') as HTMLAnchorElement)?.href || '';
     const userTitle = el.querySelector('.user-action-time')?.textContent || '';
 
-    return `<h4>${userTitle}${
-      userUrl ? ` by <a href="${userUrl}">${userName}</a>` : ''
-    }</h4>`;
+    return (
+      <h4>
+        {userTitle}
+        {userUrl ? (
+          <>
+            by <a href={userUrl}>{userName}</a>
+          </>
+        ) : (
+          <></>
+        )}
+      </h4>
+    );
   });
 
-  return `<h3>${voteCount} votes</h3>${body}${footer.join('')}`;
+  return (
+    <>
+      <h3>{voteCount} votes</h3>
+      {body}
+      {footer.join('')}
+    </>
+  );
 }
 
 export default questions;
