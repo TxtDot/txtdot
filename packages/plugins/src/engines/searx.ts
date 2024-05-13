@@ -46,7 +46,7 @@ async function search(
   const textContent = articles_parsed.map((a) => a.text).join('');
 
   return {
-    document: parseHTML(content).document,
+    content: content,
     textContent,
     title: `${search} - Searx - Page ${page}`,
     lang: document.documentElement.lang,

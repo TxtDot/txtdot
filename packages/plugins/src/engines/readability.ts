@@ -18,7 +18,7 @@ Readability.route('*path', async (input, ro) => {
   }
 
   return {
-    document: parseHTML(parsed.content).document,
+    content: parsed.content,
     textContent: parsed.textContent,
     title: parsed.title,
     lang: parsed.lang,

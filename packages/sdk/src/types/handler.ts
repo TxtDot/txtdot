@@ -33,7 +33,7 @@ export interface HandlerOutput {
 }
 
 export interface EngineOutput {
-  document: Document;
+  content: string;
   textContent?: string;
   title?: string;
   lang?: string;

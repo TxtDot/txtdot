@@ -9,6 +9,7 @@ import replaceHref from './utils/replace-href';
 import { Engine } from '@txtdot/sdk';
 import { HandlerInput, HandlerOutput } from '@txtdot/sdk';
 import config from './config';
+import { parseHTML } from 'linkedom';
 
 interface IEngineId {
   [key: string]: number;
@@ -51,6 +52,7 @@ export class Distributor {
     }
 
     const engine = this.getFallbackEngine(urlObj.hostname, engineName);
+
     const output = await engine.handle(
       new HandlerInput(
         await decodeStream(data, parseEncodingName(mime)),
@@ -58,22 +60,25 @@ export class Distributor {
       )
     );
 
+    const dom = parseHTML(output.content);
+
     // post-process
     // TODO: generate dom in handler and not parse here twice
     replaceHref(
-      output.document,
+      dom.document,
       requestUrl,
       new URL(remoteUrl),
       engineName,
       redirectPath
     );
 
-    const purify = DOMPurify();
-    const content = purify.sanitize(output.document.toString());
+    const purify = DOMPurify(dom);
+    const content = purify.sanitize(output.content);
 
     return {
       content,
-      textContent: output.textContent || output.document.textContent || '',
+      textContent:
+        output.textContent || dom.document.documentElement.textContent || '',
       title: output.title,
       lang: output.lang,
     };

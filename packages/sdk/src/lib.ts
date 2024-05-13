@@ -18,6 +18,8 @@ import {
   handlerSchema,
 } from './types/handler';
 
+import * as JSX from './jsx';
+
 export {
   Engine,
   EngineParseError,
@@ -32,4 +34,5 @@ export {
   HandlerOutput,
   Route,
   handlerSchema,
+  JSX,
 };

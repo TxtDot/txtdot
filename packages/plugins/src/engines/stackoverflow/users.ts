@@ -27,8 +27,7 @@ async function users(
     .join('<br/>');
 
   return {
-    document: parseHTML(`${userInfo}<hr><h3>Top Posts</h3>${topPosts}`)
-      .document,
+    content: `${userInfo}<hr><h3>Top Posts</h3>${topPosts}`,
     textContent: `${ro.q.id}/${ro.q.slug}\n`, // TODO
     title: document.querySelector('title')?.textContent || '',
     lang: document.documentElement.lang,

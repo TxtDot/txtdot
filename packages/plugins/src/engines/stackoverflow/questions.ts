@@ -16,9 +16,7 @@ async function questions(
   const answers = allAnswers.map((a) => postParser(a));
 
   return {
-    document: parseHTML(
-      `${question}<hr>${answers.length} answers <hr>${answers.join('<hr>')}`
-    ).document,
+    content: `${question}<hr>${answers.length} answers <hr>${answers.join('<hr>')}`,
     textContent: `${ro.q.id}/${ro.q.slug}\nText output not supported`, // TODO
     title,
     lang: document.documentElement.lang,
