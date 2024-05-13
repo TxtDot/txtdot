@@ -8,17 +8,25 @@ export namespace JSX {
 }
 
 export function createElement(
-  name: string,
-  props: { [id: string]: string },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  name: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  props: { [id: string]: any },
   ...content: string[]
 ) {
-  props = props || {};
-  const propsstr = Object.keys(props)
-    .map((key) => {
-      const value = props[key];
-      if (key === 'className') return `class=${value}`;
-      else return `${key}=${value}`;
-    })
-    .join(' ');
-  return `<${name} ${propsstr}>${content.join('')}</${name}>`;
+  if (typeof name === 'string') {
+    props = props || {};
+    const propsstr = Object.keys(props)
+      .map((key) => {
+        const value = props[key];
+        if (key === 'className') return `class=${value}`;
+        else return `${key}=${value}`;
+      })
+      .join(' ');
+    return `<${name} ${propsstr}>${content.join('')}</${name}>`;
+  } else if (typeof name === 'function') {
+    return name(props, ...content);
+  } else {
+    return content.join('');
+  }
 }

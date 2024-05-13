@@ -73,14 +73,14 @@ export class Distributor {
     );
 
     const purify = DOMPurify(dom);
-    const content = purify.sanitize(output.content);
+    const content = purify.sanitize(dom.document.toString());
 
     return {
       content,
       textContent:
         output.textContent || dom.document.documentElement.textContent || '',
-      title: output.title,
-      lang: output.lang,
+      title: output.title || dom.document.title,
+      lang: output.lang || dom.document.documentElement.lang,
     };
   }
 

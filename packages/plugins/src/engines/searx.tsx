@@ -1,6 +1,7 @@
-import { Engine } from '@txtdot/sdk';
+import { Engine, JSX } from '@txtdot/sdk';
 import { HandlerInput, Route } from '@txtdot/sdk';
 import { parseHTML } from 'linkedom';
+import { PageFooter, ResultItem } from '../components/searchers';
 
 const SearX = new Engine('SearX', "Engine for searching with 'SearXNG'", [
   'searx.*',
@@ -14,13 +15,19 @@ async function search(
   const search = ro.q.search;
   const page = parseInt(ro.q.pageno || '1');
 
-  const page_footer = `${
-    page !== 1
-      ? `<a href="${ro.reverse({ search, pageno: page - 1 })}">Previous </a>|`
-      : ''
-  }<a href="${ro.reverse({ search, pageno: page + 1 })}"> Next</a>`;
+  let previous: string | false;
+  let next: string | false;
+
+  if (ro.q.pageno) {
+    previous = ro.reverse({ search, pageno: page - 1 });
+    next = ro.reverse({ search, pageno: page + 1 });
+  } else {
+    previous = false;
+    next = `/search?q=${search}&pageno=${page + 1}`;
+  }
 
   const articles = Array.from(document.querySelectorAll('.result'));
+
   const articles_parsed = articles.map((a) => {
     const parsed = {
       url:
@@ -35,21 +42,24 @@ async function search(
     };
 
     return {
-      html: `<a href="${parsed.url}">${parsed.title}</a><p>${parsed.content}</p><hr>`,
+      html: <ResultItem {...parsed} />,
       text: `${parsed.title} (${parsed.url})\n${parsed.content}\n---\n\n`,
     };
   });
 
-  const content = `${articles_parsed
-    .map((a) => a.html)
-    .join('')}${page_footer}`;
+  const content = (
+    <>
+      {articles_parsed.map((a) => a.html).join('')}
+      <PageFooter page={page} previous={previous} next={next} />
+    </>
+  );
+
   const textContent = articles_parsed.map((a) => a.text).join('');
 
   return {
     content: content,
     textContent,
     title: `${search} - Searx - Page ${page}`,
-    lang: document.documentElement.lang,
   };
 }
 

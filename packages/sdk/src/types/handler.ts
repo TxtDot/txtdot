@@ -28,8 +28,8 @@ export class HandlerInput {
 export interface HandlerOutput {
   content: string;
   textContent: string;
-  title?: string;
-  lang?: string;
+  title: string;
+  lang: string;
 }
 
 export interface EngineOutput {
