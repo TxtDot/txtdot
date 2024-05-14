@@ -41,24 +41,17 @@ async function search(
           .textContent || '',
     };
 
-    return {
-      html: <ResultItem {...parsed} />,
-      text: `${parsed.title} (${parsed.url})\n${parsed.content}\n---\n\n`,
-    };
+    return <ResultItem {...parsed} />;
   });
 
   const content = (
     <>
-      {articles_parsed.map((a) => a.html)}
+      {articles_parsed}
       <PageFooter page={page} previous={previous} next={next} />
     </>
   );
-
-  const textContent = articles_parsed.map((a) => a.text).join('');
-
   return {
     content: content,
-    textContent,
     title: `"${(document.getElementById('q') as HTMLInputElement).value}" - Searx - Page ${page}`,
   };
 }

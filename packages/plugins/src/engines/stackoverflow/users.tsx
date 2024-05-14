@@ -42,7 +42,6 @@ async function users(
         {topPosts}
       </>
     ),
-    textContent: `${ro.q.id}/${ro.q.slug}\n`, // TODO
     title: document.querySelector('title')?.textContent || '',
   };
 }

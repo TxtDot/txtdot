@@ -10,7 +10,7 @@ export namespace JSX {
 export function createElement(
   name: any,
   props: { [id: string]: any },
-  ...inner: any[]
+  ...inner: (string | string[])[]
 ) {
   const content = inner.flat().join('');
 
