@@ -63,6 +63,9 @@ export class Distributor {
 
     const dom = parseHTML(output.content);
 
+    // Get text content before link replacement, because in text format we need original links
+    const stdTextContent = dom.document.documentElement.textContent;
+
     // post-process
     // TODO: generate dom in handler and not parse here twice
     replaceHref(
@@ -78,7 +81,7 @@ export class Distributor {
     const title = output.title || dom.document.title;
     const lang = output.lang || dom.document.documentElement.lang;
     const textContent =
-      html2text(output, dom.document, title) ||
+      html2text(stdTextContent, output, title) ||
       'Text output cannot be generated.';
 
     return {

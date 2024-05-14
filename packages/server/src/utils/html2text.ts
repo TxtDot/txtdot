@@ -6,9 +6,13 @@ function setTitle(body: string | null, title: string) {
   return `${title.toUpperCase()}\n${'='.repeat(title.length)}\n\n${body}`;
 }
 
-export function html2text(output: EngineOutput, doc: Document, title: string) {
+export function html2text(
+  stdTextContent: string | null,
+  output: EngineOutput,
+  title: string
+) {
   if (output.textContent) return output.textContent;
   else if (config.plugin.html2text)
     return setTitle(config.plugin.html2text(output.content), title);
-  else return setTitle(doc.documentElement.textContent, title);
+  else return setTitle(stdTextContent, title);
 }
