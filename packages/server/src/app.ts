@@ -23,7 +23,11 @@ import config from './config';
 class App {
   async init() {
     const fastify = Fastify({
-      logger: true,
+      logger: {
+        transport: {
+          target: '@fastify/one-line-logger',
+        },
+      },
       trustProxy: config.env.reverse_proxy,
       connectionTimeout: config.env.timeout,
     });

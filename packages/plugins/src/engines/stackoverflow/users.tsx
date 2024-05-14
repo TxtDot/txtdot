@@ -1,10 +1,11 @@
-import { HandlerInput, Route } from '@txtdot/sdk/dist/types/handler';
+import { HandlerInput, Route } from '@txtdot/sdk';
+import { JSX } from '@txtdot/sdk';
 
 async function users(
   input: HandlerInput,
   ro: Route<{ id: string; slug: string }>
 ) {
-  const document = input.parseDom().window.document;
+  const document = input.document;
 
   const userInfo =
     document.querySelector('.md\\:ai-start > div:nth-child(2)')?.textContent ||
@@ -21,15 +22,27 @@ async function users(
       const type =
         el.querySelector('.iconAnswer, .iconQuestion')?.textContent || '';
 
-      return `<strong>${type} (${votes}) </strong><a href="${url}">${title}</a>`;
+      return (
+        <>
+          <strong>
+            {type} ({votes}){' '}
+          </strong>
+          <a href={url}>{title}</a>
+        </>
+      );
     })
-    .join('<br/>');
+    .join(<br />);
 
   return {
-    content: `${userInfo}<hr><h3>Top Posts</h3>${topPosts}`,
-    textContent: `${ro.q.id}/${ro.q.slug}\n`, // TODO
+    content: (
+      <>
+        {userInfo}
+        <hr />
+        <h3>Top Posts</h3>
+        {topPosts}
+      </>
+    ),
     title: document.querySelector('title')?.textContent || '',
-    lang: document.documentElement.lang,
   };
 }
 

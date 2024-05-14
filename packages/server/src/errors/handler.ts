@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { NotHtmlMimetypeError } from './main';
 import { getFastifyError } from './validation';
 
-import { TxtDotError } from '@txtdot/sdk/dist/types/errors';
+import { TxtDotError } from '@txtdot/sdk';
 
 import { IGetSchema } from '../types/requests/browser';
 import config from '../config';

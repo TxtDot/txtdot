@@ -2,7 +2,7 @@ import { FastifySchema, FastifyRequest } from 'fastify';
 import { IApiError, errorResponseSchema } from '../../errors/api';
 import { engineList } from '../../plugin_manager';
 import { FromSchema } from 'json-schema-to-ts';
-import { handlerSchema } from '@txtdot/sdk/dist/types/handler';
+import { handlerSchema } from '@txtdot/sdk';
 
 export interface IApiResponse<T> {
   data?: T;
