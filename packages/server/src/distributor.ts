@@ -75,13 +75,17 @@ export class Distributor {
 
     const purify = DOMPurify(dom);
     const content = purify.sanitize(dom.document.toString());
+    const title = output.title || dom.document.title;
+    const lang = output.lang || dom.document.documentElement.lang;
+    const textContent =
+      html2text(output, dom.document, title) ||
+      'Text output cannot be generated.';
 
     return {
       content,
-      textContent:
-        html2text(output, dom.document) || 'Text output cannot be generated.',
-      title: output.title || dom.document.title,
-      lang: output.lang || dom.document.documentElement.lang,
+      textContent,
+      title,
+      lang,
     };
   }
 
