@@ -11,5 +11,8 @@ export const engineList = [
 import { compile } from 'html-to-text';
 
 export const html2text = compile({
+  longWordSplit: {
+    forceWrapOnLimit: true,
+  },
   selectors: [{ selector: 'img', format: 'skip' }],
 });

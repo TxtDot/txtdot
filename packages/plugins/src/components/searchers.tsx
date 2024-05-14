@@ -6,8 +6,8 @@ export function PageFooter({
   next,
 }: {
   page: number;
-  previous: string | false;
-  next: string | false;
+  previous: string | null;
+  next: string | null;
 }) {
   return (
     <>

@@ -15,14 +15,14 @@ async function search(
   const search = ro.q.search;
   const page = parseInt(ro.q.pageno || '1');
 
-  let previous: string | false;
-  let next: string | false;
+  let previous: string | null;
+  let next: string | null;
 
   if (ro.q.pageno) {
-    previous = ro.reverse({ search, pageno: page - 1 });
-    next = ro.reverse({ search, pageno: page + 1 });
+    previous = ro.reverse({ search, pageno: page - 1 }) || null;
+    next = ro.reverse({ search, pageno: page + 1 }) || null;
   } else {
-    previous = false;
+    previous = null;
     next = `/search?q=${search}&pageno=${page + 1}`;
   }
 
