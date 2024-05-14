@@ -10,6 +10,7 @@ import { Engine } from '@txtdot/sdk';
 import { HandlerInput, HandlerOutput } from '@txtdot/sdk';
 import config from './config';
 import { parseHTML } from 'linkedom';
+import { html2text } from './utils/html2text';
 
 interface IEngineId {
   [key: string]: number;
@@ -78,7 +79,7 @@ export class Distributor {
     return {
       content,
       textContent:
-        output.textContent || dom.document.documentElement.textContent || '',
+        html2text(output, dom.document) || 'Text output cannot be generated.',
       title: output.title || dom.document.title,
       lang: output.lang || dom.document.documentElement.lang,
     };

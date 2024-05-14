@@ -1,5 +1,6 @@
 import { IAppConfig } from '../types/appConfig';
 import { engineList } from '@txtdot/plugins';
+import { compile } from 'html-to-text';
 
 /**
  * Configuration of plugins
@@ -7,6 +8,7 @@ import { engineList } from '@txtdot/plugins';
  */
 const plugin_config: IAppConfig = {
   engines: [...engineList],
+  html2text: compile(),
 };
 
 export default plugin_config;
