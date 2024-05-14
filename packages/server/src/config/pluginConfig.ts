@@ -1,4 +1,4 @@
-import { IAppConfig } from '../types/appConfig';
+import { IAppConfig } from '../types/pluginConfig';
 import { engineList } from '@txtdot/plugins';
 import { compile } from 'html-to-text';
 
