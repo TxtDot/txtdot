@@ -41,10 +41,16 @@ importers:
       '@txtdot/sdk':
         specifier: workspace:*
         version: link:../sdk
+      html-to-text:
+        specifier: ^9.0.5
+        version: 9.0.5
       linkedom:
         specifier: ^0.18.0
         version: 0.18.0
     devDependencies:
+      '@types/html-to-text':
+        specifier: ^9.0.4
+        version: 9.0.4
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -103,9 +109,6 @@ importers:
       fastify:
         specifier: ^4.26.2
         version: 4.27.0
-      html-to-text:
-        specifier: ^9.0.5
-        version: 9.0.5
       iconv-lite:
         specifier: ^0.6.3
         version: 0.6.3
@@ -131,9 +134,6 @@ importers:
       '@types/ejs':
         specifier: ^3.1.5
         version: 3.1.5
-      '@types/html-to-text':
-        specifier: ^9.0.4
-        version: 9.0.4
       '@types/jsdom':
         specifier: ^21.1.6
         version: 21.1.6

@@ -19,10 +19,12 @@
   "license": "MIT",
   "dependencies": {
     "@mozilla/readability": "^0.5.0",
-    "linkedom": "^0.18.0",
-    "@txtdot/sdk": "workspace:*"
+    "@txtdot/sdk": "workspace:*",
+    "html-to-text": "^9.0.5",
+    "linkedom": "^0.18.0"
   },
   "devDependencies": {
+    "@types/html-to-text": "^9.0.4",
     "typescript": "^5.4.5"
   }
 }
