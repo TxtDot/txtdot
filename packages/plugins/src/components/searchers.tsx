@@ -11,13 +11,7 @@ export function PageFooter({
 }) {
   return (
     <>
-      {page !== 1 ? (
-        <>
-          <a href={previous}>Previous </a> |
-        </>
-      ) : (
-        <></>
-      )}
+      {page !== 1 ? <a href={previous}>Previous </a> : <></>}| {page} |
       <a href={next}> Next</a>
     </>
   );

@@ -49,7 +49,7 @@ async function search(
 
   const content = (
     <>
-      {articles_parsed.map((a) => a.html).join('')}
+      {articles_parsed.map((a) => a.html)}
       <PageFooter page={page} previous={previous} next={next} />
     </>
   );
@@ -59,7 +59,7 @@ async function search(
   return {
     content: content,
     textContent,
-    title: `${search} - Searx - Page ${page}`,
+    title: `"${(document.getElementById('q') as HTMLInputElement).value}" - Searx - Page ${page}`,
   };
 }
 

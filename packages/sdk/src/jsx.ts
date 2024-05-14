@@ -1,19 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/no-namespace
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-namespace */
 export namespace JSX {
   export type Element = string;
   export interface IntrinsicElements {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [elemName: string]: any;
   }
 }
 
 export function createElement(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   name: any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props: { [id: string]: any },
-  ...content: string[]
+  ...inner: any[]
 ) {
+  const content = inner.flat().join('');
+
   if (typeof name === 'string') {
     props = props || {};
     const propsstr = Object.keys(props)
@@ -24,12 +24,12 @@ export function createElement(
       })
       .join(' ');
 
-    return content.length === 0
+    return inner.length === 0
       ? `<${name} ${propsstr}/>`
-      : `<${name} ${propsstr}>${content.join('')}</${name}>`;
+      : `<${name} ${propsstr}>${content}</${name}>`;
   } else if (typeof name === 'function') {
-    return name(props, ...content);
+    return name(props, content);
   } else {
-    return content.join('');
+    return content;
   }
 }
