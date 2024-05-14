@@ -35,31 +35,34 @@ function postParser(el: Element | null): string {
   const body = el.querySelector('.js-post-body')?.innerHTML || '';
   const voteCount = el.querySelector('.js-vote-count')?.textContent || '';
 
-  const footer = [...el.querySelectorAll('.post-signature')].map((el) => {
-    const userName = el.querySelector('.user-details a')?.textContent || '';
-    const userUrl =
-      (el.querySelector('.user-details a') as HTMLAnchorElement)?.href || '';
-    const userTitle = el.querySelector('.user-action-time')?.textContent || '';
+  const footer = [...el.querySelectorAll('.post-signature')]
+    .map((el) => {
+      const userName = el.querySelector('.user-details a')?.textContent || '';
+      const userUrl =
+        (el.querySelector('.user-details a') as HTMLAnchorElement)?.href || '';
+      const userTitle =
+        el.querySelector('.user-action-time')?.textContent || '';
 
-    return (
-      <h4>
-        {userTitle}
-        {userUrl ? (
-          <>
-            by <a href={userUrl}>{userName}</a>
-          </>
-        ) : (
-          <></>
-        )}
-      </h4>
-    );
-  });
+      return (
+        <h4>
+          {userTitle}
+          {userUrl ? (
+            <>
+              by <a href={userUrl}>{userName}</a>
+            </>
+          ) : (
+            <></>
+          )}
+        </h4>
+      );
+    })
+    .join('');
 
   return (
     <>
       <h3>{voteCount} votes</h3>
       {body}
-      {footer.join('')}
+      {footer}
     </>
   );
 }
