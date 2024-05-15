@@ -63,14 +63,12 @@ export class Distributor {
       throw new NotHtmlMimetypeError();
     }
 
-    const engine = this.getFallbackEngine(urlObj.hostname, engineName);
-
     const input = new HandlerInput(
       await decodeStream(data, parseEncodingName(mime)),
       remoteUrl
     );
 
-    let output = await engine.handle(input);
+    let output = await this.processEngines(urlObj.hostname, input, engineName);
 
     // Sanitize output before middlewares, because middlewares can add unsafe tags
     output = {
@@ -108,18 +106,28 @@ export class Distributor {
     };
   }
 
-  getFallbackEngine(host: string, specified?: string): Engine {
+  async processEngines(
+    host: string,
+    input: HandlerInput,
+    specified?: string
+  ): Promise<EngineOutput> {
     if (specified) {
-      return this.engines_fallback[this.engines_id[specified]];
+      return await this.engines_fallback[this.engines_id[specified]].handle(
+        input
+      );
     }
 
     for (const engine of this.engines_fallback) {
       if (micromatch.isMatch(host, engine.domains)) {
-        return engine;
+        try {
+          return await engine.handle(input);
+        } catch {
+          /*Try next engine*/
+        }
       }
     }
 
-    return this.engines_fallback[0];
+    return await this.engines_fallback[0].handle(input);
   }
 
   async processMiddlewares(
