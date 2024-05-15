@@ -1,16 +1,16 @@
 import axios, { oaxios } from './types/axios';
 import micromatch from 'micromatch';
-import DOMPurify from 'dompurify';
 import { Readable } from 'stream';
 import { NotHtmlMimetypeError } from './errors/main';
 import { decodeStream, parseEncodingName } from './utils/http';
 import replaceHref from './utils/replace-href';
 
-import { Engine } from '@txtdot/sdk';
+import { Engine, EngineOutput, Middleware } from '@txtdot/sdk';
 import { HandlerInput, HandlerOutput } from '@txtdot/sdk';
 import config from './config';
 import { parseHTML } from 'linkedom';
 import { html2text } from './utils/html2text';
+import DOMPurify from 'isomorphic-dompurify';
 
 interface IEngineId {
   [key: string]: number;
@@ -18,14 +18,25 @@ interface IEngineId {
 
 export class Distributor {
   engines_id: IEngineId = {};
-  fallback: Engine[] = [];
-  list: string[] = [];
+  engines_fallback: Engine[] = [];
+  engines_list: string[] = [];
+
+  middles_id: IEngineId = {};
+  middles_fallback: Middleware[] = [];
+  middles_list: string[] = [];
+
   constructor() {}
 
   engine(engine: Engine) {
-    this.engines_id[engine.name] = this.list.length;
-    this.fallback.push(engine);
-    this.list.push(engine.name);
+    this.engines_id[engine.name] = this.engines_list.length;
+    this.engines_fallback.push(engine);
+    this.engines_list.push(engine.name);
+  }
+
+  middleware(middleware: Middleware) {
+    this.middles_id[middleware.name] = this.middles_list.length;
+    this.middles_fallback.push(middleware);
+    this.middles_list.push(middleware.name);
   }
 
   async handlePage(
@@ -52,14 +63,20 @@ export class Distributor {
       throw new NotHtmlMimetypeError();
     }
 
-    const engine = this.getFallbackEngine(urlObj.hostname, engineName);
-
-    const output = await engine.handle(
-      new HandlerInput(
-        await decodeStream(data, parseEncodingName(mime)),
-        remoteUrl
-      )
+    const input = new HandlerInput(
+      await decodeStream(data, parseEncodingName(mime)),
+      remoteUrl
     );
+
+    let output = await this.processEngines(urlObj.hostname, input, engineName);
+
+    // Sanitize output before middlewares, because middlewares can add unsafe tags
+    output = {
+      ...output,
+      content: DOMPurify.sanitize(output.content),
+    };
+
+    output = await this.processMiddlewares(urlObj.hostname, input, output);
 
     const dom = parseHTML(output.content);
 
@@ -67,7 +84,6 @@ export class Distributor {
     const stdTextContent = dom.document.documentElement.textContent;
 
     // post-process
-    // TODO: generate dom in handler and not parse here twice
     replaceHref(
       dom.document,
       requestUrl,
@@ -76,8 +92,6 @@ export class Distributor {
       redirectPath
     );
 
-    const purify = DOMPurify(dom);
-    const content = purify.sanitize(dom.document.toString());
     const title = output.title || dom.document.title;
     const lang = output.lang || dom.document.documentElement.lang;
     const textContent =
@@ -85,24 +99,50 @@ export class Distributor {
       'Text output cannot be generated.';
 
     return {
-      content,
+      content: dom.document.toString(),
       textContent,
       title,
       lang,
     };
   }
 
-  getFallbackEngine(host: string, specified?: string): Engine {
+  async processEngines(
+    host: string,
+    input: HandlerInput,
+    specified?: string
+  ): Promise<EngineOutput> {
     if (specified) {
-      return this.fallback[this.engines_id[specified]];
+      return await this.engines_fallback[this.engines_id[specified]].handle(
+        input
+      );
     }
 
-    for (const engine of this.fallback) {
+    for (const engine of this.engines_fallback) {
       if (micromatch.isMatch(host, engine.domains)) {
-        return engine;
+        try {
+          return await engine.handle(input);
+        } catch {
+          /*Try next engine*/
+        }
       }
     }
 
-    return this.fallback[0];
+    return await this.engines_fallback[0].handle(input);
+  }
+
+  async processMiddlewares(
+    host: string,
+    input: HandlerInput,
+    output: EngineOutput
+  ): Promise<EngineOutput> {
+    let processed_output = output;
+
+    for (const middle of this.middles_fallback) {
+      if (micromatch.isMatch(host, middle.domains)) {
+        processed_output = await middle.handle(input, processed_output);
+      }
+    }
+
+    return processed_output;
   }
 }

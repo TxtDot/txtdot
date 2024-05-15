@@ -1,5 +1,5 @@
 import { IAppConfig } from '../types/pluginConfig';
-import { engineList, html2text } from '@txtdot/plugins';
+import { engineList, middlewareList, html2text } from '@txtdot/plugins';
 
 /**
  * Configuration of plugins
@@ -7,6 +7,7 @@ import { engineList, html2text } from '@txtdot/plugins';
  */
 const plugin_config: IAppConfig = {
   engines: [...engineList],
+  middlewares: [...middlewareList],
   html2text,
 };
 
