@@ -20,11 +20,10 @@ Mozilla's Readability library is used under the hood.
 - Image compression with Sharp
 - Rendering client-side apps (Vanilla, React, Vue, etc) with [webder](https://github.com/TxtDot/webder)
 - Search with SearXNG
-- Custom parsers for StackOverflow and SearXNG
 - Handy API endpoints
 - No client JavaScript
 - Some kind of Material Design 3
-- Customization with plugins, see [@txtdot/sdk](https://github.com/TxtDot/sdk) and [@txtdot/plugins](https://github.com/TxtDot/plugins)
+- Customization with plugins, see [@txtdot/sdk](https://github.com/TxtDot/txtdot/tree/main/packages/sdk) and [@txtdot/plugins](https://github.com/TxtDot/txtdot/tree/main/packages/plugins)
 
 ## Running
 
