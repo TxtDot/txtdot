@@ -6,7 +6,7 @@ import { NotHtmlMimetypeError } from './errors/main';
 import { decodeStream, parseEncodingName } from './utils/http';
 import replaceHref from './utils/replace-href';
 
-import { Engine } from '@txtdot/sdk';
+import { Engine, EngineOutput, Middleware } from '@txtdot/sdk';
 import { HandlerInput, HandlerOutput } from '@txtdot/sdk';
 import config from './config';
 import { parseHTML } from 'linkedom';
@@ -18,14 +18,25 @@ interface IEngineId {
 
 export class Distributor {
   engines_id: IEngineId = {};
-  fallback: Engine[] = [];
-  list: string[] = [];
+  engines_fallback: Engine[] = [];
+  engines_list: string[] = [];
+
+  middles_id: IEngineId = {};
+  middles_fallback: Middleware[] = [];
+  middles_list: string[] = [];
+
   constructor() {}
 
   engine(engine: Engine) {
-    this.engines_id[engine.name] = this.list.length;
-    this.fallback.push(engine);
-    this.list.push(engine.name);
+    this.engines_id[engine.name] = this.engines_list.length;
+    this.engines_fallback.push(engine);
+    this.engines_list.push(engine.name);
+  }
+
+  middleware(middleware: Middleware) {
+    this.middles_id[middleware.name] = this.middles_list.length;
+    this.middles_fallback.push(middleware);
+    this.middles_list.push(middleware.name);
   }
 
   async handlePage(
@@ -54,12 +65,12 @@ export class Distributor {
 
     const engine = this.getFallbackEngine(urlObj.hostname, engineName);
 
-    const output = await engine.handle(
-      new HandlerInput(
-        await decodeStream(data, parseEncodingName(mime)),
-        remoteUrl
-      )
+    const input = new HandlerInput(
+      await decodeStream(data, parseEncodingName(mime)),
+      remoteUrl
     );
+
+    const output = await engine.handle(input);
 
     const dom = parseHTML(output.content);
 
@@ -77,15 +88,27 @@ export class Distributor {
     );
 
     const purify = DOMPurify(dom);
-    const content = purify.sanitize(dom.document.toString());
-    const title = output.title || dom.document.title;
-    const lang = output.lang || dom.document.documentElement.lang;
+    const purified_content = purify.sanitize(dom.document.toString());
+
+    const purified = {
+      ...output,
+      content: purified_content,
+    };
+
+    const processed = await this.processMiddlewares(
+      urlObj.hostname,
+      input,
+      purified
+    );
+
+    const title = processed.title || dom.document.title;
+    const lang = processed.lang || dom.document.documentElement.lang;
     const textContent =
-      html2text(stdTextContent, output, title) ||
+      html2text(stdTextContent, processed, title) ||
       'Text output cannot be generated.';
 
     return {
-      content,
+      content: processed.content,
       textContent,
       title,
       lang,
@@ -94,15 +117,31 @@ export class Distributor {
 
   getFallbackEngine(host: string, specified?: string): Engine {
     if (specified) {
-      return this.fallback[this.engines_id[specified]];
+      return this.engines_fallback[this.engines_id[specified]];
     }
 
-    for (const engine of this.fallback) {
+    for (const engine of this.engines_fallback) {
       if (micromatch.isMatch(host, engine.domains)) {
         return engine;
       }
     }
 
-    return this.fallback[0];
+    return this.engines_fallback[0];
+  }
+
+  async processMiddlewares(
+    host: string,
+    input: HandlerInput,
+    output: EngineOutput
+  ): Promise<EngineOutput> {
+    let processed_output = output;
+
+    for (const middle of this.middles_fallback) {
+      if (micromatch.isMatch(host, middle.domains)) {
+        processed_output = await middle.handle(input, processed_output);
+      }
+    }
+
+    return processed_output;
   }
 }

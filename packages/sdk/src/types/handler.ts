@@ -2,26 +2,30 @@ import { parseHTML } from 'linkedom';
 import { Engine } from '../engine';
 
 export class HandlerInput {
-  private data: string;
-  private url: string;
-  private window?: Window;
+  private _data: string;
+  private _url: string;
+  private _window?: Window;
 
   constructor(data: string, url: string) {
-    this.data = data;
-    this.url = url;
+    this._data = data;
+    this._url = url;
   }
 
-  getUrl(): string {
-    return this.url;
+  get url(): string {
+    return this._url;
+  }
+
+  get data(): string {
+    return this._data;
   }
 
   get document(): Document {
-    if (this.window) {
-      return this.window.document;
+    if (this._window) {
+      return this._window.document;
     }
 
-    this.window = parseHTML(this.data);
-    return this.window.document;
+    this._window = parseHTML(this._data);
+    return this._window.document;
   }
 }
 
@@ -73,6 +77,12 @@ export interface RouteValues {
 export type EngineFunction<TParams extends RouteValues> = (
   input: HandlerInput,
   ro: Route<TParams>
+) => Promise<EngineOutput>;
+
+export type MiddleFunction<TParams extends RouteValues> = (
+  input: HandlerInput,
+  ro: Route<TParams>,
+  out: EngineOutput
 ) => Promise<EngineOutput>;
 
 export type EnginesMatch<TParams extends RouteValues> = EngineMatch<TParams>[];
