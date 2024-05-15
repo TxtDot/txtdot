@@ -34,7 +34,7 @@ export class Engine {
   }
 
   async handle(input: HandlerInput): Promise<EngineOutput> {
-    const url = new URL(input.getUrl());
+    const url = new URL(input.url);
     const path = url.pathname + url.search + url.hash;
     for (const route of this.routes) {
       const match = route.route.match(path);

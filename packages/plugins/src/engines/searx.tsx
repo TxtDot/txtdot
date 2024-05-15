@@ -1,6 +1,5 @@
 import { Engine, JSX } from '@txtdot/sdk';
 import { HandlerInput, Route } from '@txtdot/sdk';
-import { parseHTML } from 'linkedom';
 import { PageFooter, ResultItem } from '../components/searchers';
 
 const SearX = new Engine('SearX', "Engine for searching with 'SearXNG'", [

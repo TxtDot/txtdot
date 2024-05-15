@@ -24,9 +24,7 @@ export function createElement(
       })
       .join(' ');
 
-    return inner.length === 0
-      ? `<${name} ${propsstr}/>`
-      : `<${name} ${propsstr}>${content}</${name}>`;
+    return `<${name} ${propsstr}>${content}</${name}>`;
   } else if (typeof name === 'function') {
     return name(props, content);
   } else {

@@ -1,7 +1,5 @@
 import { Readability as OReadability } from '@mozilla/readability';
-
-import { Engine, EngineParseError } from '@txtdot/sdk';
-import { parseHTML } from 'linkedom';
+import { Engine, EngineParseError, Route } from '@txtdot/sdk';
 
 const Readability = new Engine(
   'Readability',
@@ -9,8 +7,8 @@ const Readability = new Engine(
   ['*']
 );
 
-Readability.route('*path', async (input, ro) => {
-  const reader = new OReadability(input.document);
+Readability.route('*path', async (input, ro: Route<{ path: string }>) => {
+  const reader = new OReadability(input.document.cloneNode(true) as Document);
   const parsed = reader.parse();
 
   if (!parsed) {
