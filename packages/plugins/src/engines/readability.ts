@@ -8,7 +8,7 @@ const Readability = new Engine(
 );
 
 Readability.route('*path', async (input, ro: Route<{ path: string }>) => {
-  const reader = new OReadability(input.document);
+  const reader = new OReadability(input.document.cloneNode(true) as Document);
   const parsed = reader.parse();
 
   if (!parsed) {

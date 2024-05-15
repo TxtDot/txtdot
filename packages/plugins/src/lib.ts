@@ -8,7 +8,7 @@ export const engineList = [
 
 import * as middlewares from './middlewares';
 export { middlewares };
-export const middlewareList = [middlewares.Highlight];
+export const middlewareList = [middlewares.Highlight, middlewares.HabrNav];
 
 import { compile } from 'html-to-text';
 export const html2text = compile({

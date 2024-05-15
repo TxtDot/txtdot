@@ -1,6 +1,5 @@
 import axios, { oaxios } from './types/axios';
 import micromatch from 'micromatch';
-import DOMPurify from 'dompurify';
 import { Readable } from 'stream';
 import { NotHtmlMimetypeError } from './errors/main';
 import { decodeStream, parseEncodingName } from './utils/http';
@@ -11,6 +10,7 @@ import { HandlerInput, HandlerOutput } from '@txtdot/sdk';
 import config from './config';
 import { parseHTML } from 'linkedom';
 import { html2text } from './utils/html2text';
+import DOMPurify from 'isomorphic-dompurify';
 
 interface IEngineId {
   [key: string]: number;
@@ -70,7 +70,15 @@ export class Distributor {
       remoteUrl
     );
 
-    const output = await engine.handle(input);
+    let output = await engine.handle(input);
+
+    // Sanitize output before middlewares, because middlewares can add unsafe tags
+    output = {
+      ...output,
+      content: DOMPurify.sanitize(output.content),
+    };
+
+    output = await this.processMiddlewares(urlObj.hostname, input, output);
 
     const dom = parseHTML(output.content);
 
@@ -78,7 +86,6 @@ export class Distributor {
     const stdTextContent = dom.document.documentElement.textContent;
 
     // post-process
-    // TODO: generate dom in handler and not parse here twice
     replaceHref(
       dom.document,
       requestUrl,
@@ -87,28 +94,14 @@ export class Distributor {
       redirectPath
     );
 
-    const purify = DOMPurify(dom);
-    const purified_content = purify.sanitize(dom.document.toString());
-
-    const purified = {
-      ...output,
-      content: purified_content,
-    };
-
-    const processed = await this.processMiddlewares(
-      urlObj.hostname,
-      input,
-      purified
-    );
-
-    const title = processed.title || dom.document.title;
-    const lang = processed.lang || dom.document.documentElement.lang;
+    const title = output.title || dom.document.title;
+    const lang = output.lang || dom.document.documentElement.lang;
     const textContent =
-      html2text(stdTextContent, processed, title) ||
+      html2text(stdTextContent, output, title) ||
       'Text output cannot be generated.';
 
     return {
-      content: processed.content,
+      content: output.content,
       textContent,
       title,
       lang,
