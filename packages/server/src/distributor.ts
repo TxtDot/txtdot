@@ -101,7 +101,7 @@ export class Distributor {
       'Text output cannot be generated.';
 
     return {
-      content: output.content,
+      content: dom.document.toString(),
       textContent,
       title,
       lang,
