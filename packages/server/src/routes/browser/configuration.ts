@@ -9,6 +9,7 @@ export default async function configurationRoute(fastify: FastifyInstance) {
   fastify.get('/configuration', { schema: indexSchema }, async (_, reply) => {
     return reply.view('/templates/configuration.ejs', {
       engines: distributor.engines_fallback,
+      middlewares: distributor.middles_fallback,
       config,
     });
   });

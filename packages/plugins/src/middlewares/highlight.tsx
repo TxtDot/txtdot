@@ -1,8 +1,8 @@
 import { Middleware, JSX } from '@txtdot/sdk';
 
 const Highlight = new Middleware(
-  'highlight',
-  'Highlights code with highlight.js',
+  'Highlight',
+  'Highlights code with highlight.js only when needed',
   ['*']
 );
 

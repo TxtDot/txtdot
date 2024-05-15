@@ -42,6 +42,14 @@
             }
           %>
         </ol>
+        <h2>Available middlewares</h2>
+        <ol>
+          <%
+            for (const middleware of middlewares) {
+              %><li><%= middleware.name %>: <%= middleware.description %></li><%
+            }
+          %>
+        </ol>
         <h2>Available routes</h2>
         <% 
           for (const route of config.dyn.routes) {
