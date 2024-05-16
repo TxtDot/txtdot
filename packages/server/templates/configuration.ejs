@@ -31,6 +31,9 @@
         </div>
         <p><%= config.package.description %></p>
       </header>
+      <div>
+        <%- include("./big_badge.ejs", {base_url, config}) %>
+      </div>
       <div class="configuration">
         <h2>Configuration</h2>
         <pre>  version: <%= config.package.version %><%= to_pretty(config.env) %></pre>
