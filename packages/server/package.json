@@ -32,7 +32,7 @@
     "iconv-lite": "^0.6.3",
     "ip-range-check": "^0.2.0",
     "isomorphic-dompurify": "^2.10.0",
-    "json-schema-to-ts": "^3.0.1",
+    "json-schema-to-ts": "^3.1.0",
     "linkedom": "^0.18.0",
     "micromatch": "^4.0.5",
     "sharp": "^0.33.3"

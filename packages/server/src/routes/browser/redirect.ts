@@ -1,6 +1,13 @@
 import { FastifyInstance } from 'fastify';
 
-import { redirectSchema, IRedirectSchema } from '../../types/requests/browser';
+import {
+  redirectSchema,
+  IRedirectSchema,
+  ISearchSchema,
+  searchSchema,
+} from '../../types/requests/browser';
+
+import config from '../../config';
 
 export default async function redirectRoute(fastify: FastifyInstance) {
   fastify.get<IRedirectSchema>(
@@ -17,4 +24,20 @@ export default async function redirectRoute(fastify: FastifyInstance) {
       );
     }
   );
+
+  if (config.env.third_party.searx_url) {
+    fastify.get<ISearchSchema>(
+      '/search',
+      { schema: searchSchema },
+      async (request, reply) => {
+        reply.redirect(
+          `/get?url=${encodeURIComponent(
+            config.env.third_party.searx_url +
+              '/search?q=' +
+              encodeURIComponent(request.query.q)
+          )}`
+        );
+      }
+    );
+  }
 }

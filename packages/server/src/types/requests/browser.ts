@@ -1,18 +1,15 @@
 import { FastifySchema } from 'fastify';
 import { engineList } from '../../plugin_manager';
-import { FromSchema } from 'json-schema-to-ts';
+import { FromSchema, JSONSchema } from 'json-schema-to-ts';
 
-export interface IGetSchema {
-  Querystring: IGetQuerySchema;
+export interface Query<T> {
+  Querystring: T;
+}
+export interface SQuery<T extends JSONSchema> {
+  Querystring: FromSchema<T>;
 }
 
-export interface IProxySchema {
-  Querystring: IProxyQuerySchema;
-}
-
-export interface IRedirectSchema {
-  Querystring: IRedirectQuerySchema;
-}
+// #region Query Schemas
 
 export const redirectQuerySchema = {
   type: 'object',
@@ -27,11 +24,16 @@ export const redirectQuerySchema = {
     '^(?!url).*$': { type: 'string' },
   },
 } as const;
-export type IRedirectQuerySchema = {
-  url: string;
-  [key: string]: string;
-};
-
+export const searchQuerySchema = {
+  type: 'object',
+  required: ['q'],
+  properties: {
+    q: {
+      type: 'string',
+      description: 'Search query',
+    },
+  },
+} as const;
 export const getQuerySchema = {
   type: 'object',
   required: ['url'],
@@ -51,8 +53,6 @@ export const getQuerySchema = {
     },
   },
 } as const;
-export type IGetQuerySchema = FromSchema<typeof getQuerySchema>;
-
 export const proxyQuerySchema = {
   type: 'object',
   required: ['url'],
@@ -63,28 +63,47 @@ export const proxyQuerySchema = {
     },
   },
 } as const;
-export type IProxyQuerySchema = FromSchema<typeof proxyQuerySchema>;
+
+// #endregion
+
+// #region Interfaces for typed requests
+
+export type IGetSchema = SQuery<typeof getQuerySchema>;
+export type IProxySchema = SQuery<typeof proxyQuerySchema>;
+export type IRedirectSchema = Query<{
+  url: string;
+  [key: string]: string;
+}>;
+export type ISearchSchema = SQuery<typeof searchQuerySchema>;
+
+// #endregion
+
+// #region Schemas for fastify
 
 export const indexSchema = {
   hide: true,
   produces: ['text/html'],
 };
-
 export const redirectSchema: FastifySchema = {
   description: 'Universal redirection page',
   hide: true,
   querystring: redirectQuerySchema,
 };
-
+export const searchSchema: FastifySchema = {
+  description: 'Search page',
+  hide: true,
+  querystring: searchQuerySchema,
+};
 export const GetSchema: FastifySchema = {
   description: 'Get page',
   hide: true,
   querystring: getQuerySchema,
   produces: ['text/html', 'text/plain'],
 };
-
 export const ProxySchema: FastifySchema = {
   description: 'Proxy resource',
   hide: true,
   querystring: proxyQuerySchema,
 };
+
+// #endregion
