@@ -83,8 +83,8 @@ importers:
         specifier: ^8.14.0
         version: 8.14.0
       '@fastify/swagger-ui':
-        specifier: ^3.0.0
-        version: 3.0.0
+        specifier: ^4.0.0
+        version: 4.0.0
       '@fastify/view':
         specifier: ^9.0.0
         version: 9.1.0
@@ -277,8 +277,8 @@ packages:
       glob: 10.4.1
     dev: false
 
-  /@fastify/swagger-ui@3.0.0:
-    resolution: {integrity: sha512-8P5OwHVv6QR4XSE6cW4fsENeMbW4yWWWj6Dz/5tvQN2pwNyTiSWxYpsY3+VP+uiZucNaDrAE2xm11rqytqAocA==}
+  /@fastify/swagger-ui@4.0.0:
+    resolution: {integrity: sha512-ZbVJg4bQHNyd10f6DZftMMuSPKpkh6ePB5TfbZLSjUQmfIDnNYBWhGv8o0iUxYbLAyIz1oa5xqp2e/Z9B7wlFg==}
     dependencies:
       '@fastify/static': 7.0.4
       fastify-plugin: 4.5.1
