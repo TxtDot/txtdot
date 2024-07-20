@@ -127,7 +127,9 @@ export class Distributor {
       }
     }
 
-    return await this.engines_fallback[0].handle(input);
+    return await this.engines_fallback[this.engines_fallback.length - 1].handle(
+      input
+    );
   }
 
   async processMiddlewares(
