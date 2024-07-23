@@ -1,5 +1,7 @@
 <h1 align="center">
-  <a href="https://github.com/TxtDot/txtdot"><img src="https://github.com/TxtDot/.github/blob/main/imgs/TXTDot%20gh.png?raw=true" alt="txt." width="200"></a>
+
+  ![txtdot logo](https://github.com/TxtDot/.github/raw/main/imgs/txtdot.png)
+
   <br>
   <a href="https://txtdot.github.io/documentation"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-green"></a>
   <a href="https://github.com/TxtDot/instances"><img alt="Instances" src="https://img.shields.io/badge/Instances-green"></a>
