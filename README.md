@@ -1,15 +1,16 @@
-<h1 align="center">
+<div align="center">
 
   ![txtdot logo](https://github.com/TxtDot/.github/raw/main/imgs/txtdot.png)
 
-  <br>
+  # txtdot
+  
   <a href="https://txtdot.github.io/documentation"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-green"></a>
   <a href="https://github.com/TxtDot/instances"><img alt="Instances" src="https://img.shields.io/badge/Instances-green"></a>
   <br>
   <a href="https://github.com/TxtDot/txtdot/blob/main/LICENSE"><img alt="MIT license" src="https://img.shields.io/github/license/txtdot/txtdot?color=blue"></a>
   <a href="https://github.com/TxtDot/txtdot/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/TxtDot/txtdot?display_name=release"></a>
   <a href="https://matrix.to/#/#txtdot:matrix.org"><img alt="Matrix chat" src="https://img.shields.io/badge/chat-matrix-blue"></a>
-</h1>
+</div>
 
 HTTP proxy that parses only text, links and pictures from pages
 reducing internet traffic, removing ads and heavy scripts.
