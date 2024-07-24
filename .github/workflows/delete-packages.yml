@@ -1,0 +1,20 @@
+name: Delete untagged packages
+
+on:
+  workflow_run:
+    workflows:
+      - build-check
+      - Create and publish a Docker image
+      - format-check
+    types:
+      - completed
+
+jobs:
+  delete-untagged-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/delete-package-versions@v5
+        with: 
+          package-name: 'txtdot'
+          package-type: 'container'
+          delete-only-untagged-versions: 'true'
