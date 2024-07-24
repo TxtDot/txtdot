@@ -1,4 +1,4 @@
-<% search = config.env.third_party.searx_url %>
+<% const search = config.env.third_party.searx_url %>
 
 <% 
 
@@ -12,14 +12,8 @@ if (search) {
       <span>Search</span>
     </label>
 
-    <form action="/redirect" method="get" class="input-grid main-form-search">
-      <div class="input">
-        <input type="text" name="q" id="search" placeholder="Search">
-      </div>
-      <div class="input">
-        <input type="submit" id="submit" class="button" value="Go">
-      </div>
-      <input type="hidden" name="url" value="<%= config.env.third_party.searx_url %>/search"/>
+    <form action="/search" method="get" class="input-grid main-form-search">
+      <%- include("./search-form.ejs") %> 
     </form>
   <% 
 }
@@ -38,11 +32,15 @@ if (search) {
       <label for="engine">Engine</label>
       <select name="engine">
         <option value="" selected>Default</option>
-        <% engineList.forEach((engine) => { %>
-          <option value="<%= engine %>">
-            <%= engine %>
-          </option>
-          <% }) %>
+        <% 
+          engineList.forEach((engine) => { 
+            %>
+              <option value="<%= engine %>">
+                <%= engine %>
+              </option>
+            <% 
+          }) 
+        %>
       </select>
     </div>
     <div class="input">

@@ -20,14 +20,12 @@ function Highlighter({ content }: { content: string }) {
   return (
     <>
       <style>
-        @import
-        "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-light.min.css";
-        @import
-        "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css"
-        screen and (prefers-color-scheme: dark);
+        @import "/static/third-party/styles/atom-one-light.min.css"; @import
+        "/static/third-party/styles/atom-one-dark.min.css" screen and
+        (prefers-color-scheme: dark);
       </style>
       <script
-        src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"
+        src="/static/third-party/scripts/highlight.min.js"
         type="text/javascript"
       />
       <script>hljs.highlightAll();</script>

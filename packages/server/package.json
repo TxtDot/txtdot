@@ -1,6 +1,6 @@
 {
   "name": "@txtdot/server",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": true,
   "description": "txtdot is an HTTP proxy that parses only text, links and pictures from pages reducing internet bandwidth usage, removing ads and heavy scripts",
   "main": "dist/app.js",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run clean-css && copyfiles ./templates/*.ejs ./templates/**/*.ejs .env ./dist/ && tsc",
+    "build": "npm run clean-css && copyfiles ./templates/*.ejs ./templates/**/*.ejs ./static/third-party/* ./static/third-party/**/* .env ./dist/ && tsc",
     "start": "cd ./dist && node ./src/app.js",
     "clean-css": "cleancss --batch static/*.css -o dist/static --batch-suffix \"\"",
     "dev": "tsc-watch --onSuccess \"node ./dist/src/app.js\""
@@ -21,7 +21,7 @@
     "@fastify/one-line-logger": "^1.3.0",
     "@fastify/static": "^7.0.3",
     "@fastify/swagger": "^8.14.0",
-    "@fastify/swagger-ui": "^3.0.0",
+    "@fastify/swagger-ui": "^4.0.0",
     "@fastify/view": "^9.0.0",
     "@txtdot/plugins": "workspace:*",
     "@txtdot/sdk": "workspace:*",
@@ -32,7 +32,7 @@
     "iconv-lite": "^0.6.3",
     "ip-range-check": "^0.2.0",
     "isomorphic-dompurify": "^2.10.0",
-    "json-schema-to-ts": "^3.0.1",
+    "json-schema-to-ts": "^3.1.0",
     "linkedom": "^0.18.0",
     "micromatch": "^4.0.5",
     "sharp": "^0.33.3"
