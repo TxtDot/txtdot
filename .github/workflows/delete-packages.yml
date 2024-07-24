@@ -12,7 +12,8 @@ on:
 jobs:
   delete-untagged-packages:
     runs-on: ubuntu-latest
-    permissions: repo
+    permissions:
+      packages: repo
     steps:
       - uses: actions/delete-package-versions@v5
         with: 
