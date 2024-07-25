@@ -17,7 +17,7 @@ jobs:
       packages: write
     steps:
       - uses: actions/delete-package-versions@v5
-        with: 
+        with:
           package-name: 'txtdot'
           package-type: 'container'
           delete-only-untagged-versions: 'true'
