@@ -9,4 +9,4 @@
 
 ## Reporting a Vulnerability
 
-Pleas submit vulnerabilities at [Security Tab](https://github.com/TxtDot/txtdot/security)
+Submit vulnerabilities at [Security Tab](https://github.com/TxtDot/txtdot/security)
