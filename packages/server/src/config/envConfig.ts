@@ -7,6 +7,7 @@ class EnvConfig {
   public readonly reverse_proxy: boolean;
   public readonly proxy: ProxyConfig;
   public readonly swagger: boolean;
+  public readonly search_by_default: boolean;
   public readonly third_party: ThirdPartyConfig;
 
   constructor() {
@@ -25,6 +26,11 @@ class EnvConfig {
     };
 
     this.swagger = this.parseBool(process.env.SWAGGER, false);
+
+    this.search_by_default = this.parseBool(
+      process.env.SEARCH_BY_DEFAULT,
+      false
+    );
 
     this.third_party = {
       searx_url: process.env.SEARX_URL,

@@ -4,7 +4,7 @@
 
 if (search) { 
   %>
-    <input type="checkbox" id="switch-search" checked>
+    <input type="checkbox" id="switch-search" <%= config.env.search_by_default ? "checked" : "" %>>
 
     <label for="switch-search" class="switch-label">
       <span>URL</span>
@@ -13,7 +13,7 @@ if (search) {
     </label>
 
     <form action="/search" method="get" class="input-grid main-form-search">
-      <%- include("./search-form.ejs") %> 
+      <%- include("./search-form.ejs", {focus: true}) %> 
     </form>
   <% 
 }
@@ -22,7 +22,7 @@ if (search) {
 
 <form action="/get" method="get" class="input-grid <%= search ? "main-form-url" : "" %>">
   <div class="input">
-    <input type="text" name="url" id="url" placeholder="URL">
+    <input type="text" name="url" id="url" placeholder="URL" autofocus>
   </div>
   <div class="input">
     <input type="submit" id="submit" class="button" value="Parse">
