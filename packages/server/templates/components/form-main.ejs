@@ -4,7 +4,7 @@
 
 if (search) { 
   %>
-    <input type="checkbox" id="switch-search" checked>
+    <input type="checkbox" id="switch-search" <%= config.env.search_by_default ? "checked" : "" %>>
 
     <label for="switch-search" class="switch-label">
       <span>URL</span>
