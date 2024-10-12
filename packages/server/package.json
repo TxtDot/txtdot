@@ -25,7 +25,7 @@
     "@fastify/view": "^10.0.1",
     "@txtdot/plugins": "workspace:*",
     "@txtdot/sdk": "workspace:*",
-    "axios": "^1.6.8",
+    "axios": "^1.7.4",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.10",
     "fastify": "^5.0.0",
@@ -34,7 +34,7 @@
     "isomorphic-dompurify": "^2.10.0",
     "json-schema-to-ts": "^3.1.0",
     "linkedom": "^0.18.0",
-    "micromatch": "^4.0.5",
+    "micromatch": "^4.0.8",
     "sharp": "^0.33.3"
   },
   "devDependencies": {
