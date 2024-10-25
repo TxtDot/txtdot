@@ -1,20 +1,19 @@
 {
   "name": "root",
   "private": true,
-  "dependencies": {},
   "scripts": {
     "build": "lerna run build",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "lerna": "^8.1.2",
-    "eslint": "^9.7.0",
-    "prettier": "^3.1.1",
+    "@types/node": "^22.8.0",
+    "@typescript-eslint/eslint-plugin": "^8.11.0",
+    "@typescript-eslint/parser": "^8.11.0",
+    "eslint": "^9.13.0",
+    "lerna": "^8.1.8",
+    "prettier": "^3.3.3",
     "tsc-watch": "^6.2.0",
-    "typescript": "^5.4.5",
-    "@types/node": "^22.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0"
+    "typescript": "^5.6.3"
   }
 }
