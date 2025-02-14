@@ -1,3 +1,6 @@
+> [!WARNING]
+> The project is frozen for a while. txtdot needs a complete rewrite in rust and dalet integration, which is not finished yet.
+
 <div align="center">
 
 ![txtdot logo](https://github.com/TxtDot/.github/raw/main/imgs/txtdot.png)
