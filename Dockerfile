@@ -1,7 +1,10 @@
-FROM node:20-alpine as base
+FROM node:23-alpine as base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN \
+  npm i -g corepack@latest \
+  corepack enable \
+  corepack use pnpm@latest-10 
 COPY . /app
 WORKDIR /app
 
@@ -16,7 +19,10 @@ FROM node:20-alpine as run
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN \
+  npm i -g corepack@latest \
+  corepack enable \
+  corepack use pnpm@latest-10
 WORKDIR /app
 
 COPY --from=prod-deps /app/node_modules /app/node_modules

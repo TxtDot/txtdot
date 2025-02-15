@@ -18,6 +18,7 @@ export default async function getRoute(fastify: FastifyInstance) {
         generateRequestUrl(
           request.protocol,
           request.hostname,
+          request.port,
           request.originalUrl
         ),
         engine

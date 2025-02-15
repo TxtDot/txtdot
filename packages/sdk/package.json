@@ -18,11 +18,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "linkedom": "^0.18.0",
+    "linkedom": "^0.18.9",
     "route-parser": "^0.0.5"
   },
   "devDependencies": {
-    "@types/route-parser": "^0.1.7",
-    "typescript": "^5.4.5"
+    "@types/route-parser": "^0.1.7"
   }
 }
