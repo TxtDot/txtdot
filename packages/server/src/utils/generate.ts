@@ -4,13 +4,9 @@ export function generateRequestUrl(
   port: number,
   originalUrl: string
 ): URL {
-  let actual_port =
-    protocol === 'https' && port === 443
-      ? ''
-      : protocol === 'http' && port === 80
-        ? ''
-        : `:${port}`;
-  return new URL(`${protocol}://${host}${actual_port}${originalUrl}`);
+  return new URL(
+    `${protocol}://${host}${port === null ? '' : `:${port}`}${originalUrl}`
+  );
 }
 
 export function generateParserUrl(
