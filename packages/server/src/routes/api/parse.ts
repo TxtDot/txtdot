@@ -20,6 +20,7 @@ export default async function parseRoute(fastify: FastifyInstance) {
           generateRequestUrl(
             request.protocol,
             request.hostname,
+            request.port,
             request.originalUrl
           ),
           request.query.engine

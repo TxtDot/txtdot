@@ -30,8 +30,8 @@ async function search(
   const articles_parsed = articles.map((a) => {
     const parsed = {
       url:
-        (a.getElementsByClassName('url_wrapper')[0] as HTMLAnchorElement)
-          .href || '',
+        (a.getElementsByClassName('url_header')[0] as HTMLAnchorElement).href ||
+        '',
       title:
         (a.getElementsByTagName('h3')[0] as HTMLHeadingElement).textContent ||
         '',

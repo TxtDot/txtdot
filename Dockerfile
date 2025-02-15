@@ -1,7 +1,10 @@
-FROM node:20-alpine as base
+FROM node:23-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN \
+  npm i -g corepack@latest \
+  corepack enable \
+  corepack use pnpm@latest-10 
 COPY . /app
 WORKDIR /app
 
@@ -12,11 +15,14 @@ FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM node:20-alpine as run
+FROM node:23-alpine AS run
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN \
+  npm i -g corepack@latest \
+  corepack enable \
+  corepack use pnpm@latest-10
 WORKDIR /app
 
 COPY --from=prod-deps /app/node_modules /app/node_modules
